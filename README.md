@@ -7,7 +7,7 @@ Supported OS:
 
 
 Features:
-- N/A
+- Auto Updating
 
 Planned Features:
 - Support for BepInEx auto installation.
