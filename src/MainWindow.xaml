@@ -1,0 +1,25 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Techtonica_Mod_Loader"
+        xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf" x:Class="Techtonica_Mod_Loader.MainWindow"
+        mc:Ignorable="d"
+        Title="Techtonica Mod Loader" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="57*"/>
+            <ColumnDefinition Width="743*"/>
+        </Grid.ColumnDefinitions>
+
+        <Wpf:WebView2 Grid.ColumnSpan="2" Height="100" Width="100"/>
+        <Canvas x:Name="Canvas_Launch_Options" HorizontalAlignment="Left" Height="150" VerticalAlignment="Top" Width="150" Grid.ColumnSpan="2" RenderTransformOrigin="0.01,0.013">
+            <Button x:Name="Check_for_updates_" Content="Check for updates!" Width="150" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Check_For_Updates_Click"/>
+
+            <Button x:Name="Button_Launch_Modded" Content="Launch with mods" Height="26" Width="150" IsDefault="True" Background="#FF18CD49" Canvas.Left="0" Canvas.Top="45" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Button x:Name="Button_Launch_Vanilla" Content="Launch without mods" Height="25" Width="150" Background="#FFFF0808" Foreground="White" Canvas.Left="0" Canvas.Top="20" Click="Button_Launch_Vanilla_Click" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        </Canvas>
+
+    </Grid>
+</Window>
