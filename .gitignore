@@ -3,3 +3,4 @@ Techtonica Mod Loader.runtimeconfig.dev.json
 src/Techtonica Mod Loader/bin/*
 src/Techtonica Mod Loader/obj/*
 src/Techtonica Mod Loader/properties/*
+.vs
