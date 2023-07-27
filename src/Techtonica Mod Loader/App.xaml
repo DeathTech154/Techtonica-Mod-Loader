@@ -5,5 +5,29 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          
+        <!--Colours-->
+        <Color x:Key="darkBackground">#161626</Color>
+        <Color x:Key="lightBackground">#222238</Color>
+        <Color x:Key="orangeDim">#442E37</Color>
+        <Color x:Key="orangeMid">#5B4136</Color>
+        <Color x:Key="orangeBright">#795933</Color>
+        <Color x:Key="orangeBrightest">#947022</Color>
+        <Color x:Key="yellow">#FFFF16</Color>
+        
+        <Color x:Key="darkText">#22164F</Color>
+        <Color x:Key="orangeText">#F4B819</Color>
+        
+        <!--Brushes-->
+        <SolidColorBrush x:Key="darkBackgroundBrush" Color="{DynamicResource darkBackground}"/>
+        <SolidColorBrush x:Key="lightBackgroundBrush" Color="{DynamicResource lightBackground}"/>
+        <SolidColorBrush x:Key="orangeDimBrush" Color="{DynamicResource orangeDim}"/>
+        <SolidColorBrush x:Key="orangeMidBrush" Color="{DynamicResource orangeMid}"/>
+        <SolidColorBrush x:Key="orangeBrightBrush" Color="{DynamicResource orangeBright}"/>
+        <SolidColorBrush x:Key="orangeBrightestBrush" Color="{DynamicResource orangeBrightest}"/>
+        <SolidColorBrush x:Key="yellowBrush" Color="{DynamicResource yellow}"/>
+
+        <SolidColorBrush x:Key="darkTextBrush" Color="{DynamicResource darkText}"/>
+        <SolidColorBrush x:Key="orangeTextBrush" Color="{DynamicResource orangeText}"/>
+        
     </Application.Resources>
 </Application>
