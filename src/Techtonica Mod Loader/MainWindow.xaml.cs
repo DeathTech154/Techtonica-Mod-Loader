@@ -31,6 +31,8 @@ namespace Techtonica_Mod_Loader
             Debug.WriteLine(Str);
         }
 
+        public static MainWindow current => (MainWindow)Application.Current.MainWindow;
+
         public string GameLocation;
         public Brush LaunchVanillaDisabledBrush = new SolidColorBrush(Colors.DarkRed);
         public string version = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
@@ -43,7 +45,7 @@ namespace Techtonica_Mod_Loader
             AutoUpdater.Start("https://www.DeeTeeNetwork.com/TechtonicaML_AutoUpdate.xml");
             //AutoUpdater.ReportErrors = true;
             AutoUpdater.UpdateFormSize = new System.Drawing.Size(800, 600);
-            this.Title = "Techtonica Mod Loader v"+ version;
+            this.Title = "Techtonica Mod Loader v"+ version; // ToDo: Move to label
             RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Valve\Steam"); // Gets steam folder location from registry.
             if (key != null) { 
                 string SteamPath = (string)key.GetValue("SteamPath");
