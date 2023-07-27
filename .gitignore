@@ -4,3 +4,4 @@ src/Techtonica Mod Loader/bin/*
 src/Techtonica Mod Loader/obj/*
 src/Techtonica Mod Loader/properties/*
 .vs
+src/TechtonicaML_AutoUpdate.xml
