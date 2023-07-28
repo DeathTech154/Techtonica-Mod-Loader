@@ -1,7 +1,7 @@
 
 Techtonica Mod Loader.runtimeconfig.dev.json
-src/Techtonica Mod Loader/bin/*
-src/Techtonica Mod Loader/obj/*
-src/Techtonica Mod Loader/properties/*
+Techtonica Mod Loader/bin/*
+Techtonica Mod Loader/obj/*
+Techtonica Mod Loader/properties/*
 .vs
-src/TechtonicaML_AutoUpdate.xml
+TechtonicaML_AutoUpdate.xml
