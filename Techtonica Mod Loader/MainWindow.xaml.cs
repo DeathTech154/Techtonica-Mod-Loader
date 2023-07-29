@@ -66,6 +66,7 @@ namespace Techtonica_Mod_Loader
         {
             SendDebugLine("Logtest!");
             InitializeComponent();
+            ProgramData.Paths.createFolderStructure();
             //string[] SplitSelfLoc = SelfLoc.Split("/");
 
             SendDebugLine(SelfLoc);

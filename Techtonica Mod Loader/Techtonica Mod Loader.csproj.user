@@ -7,6 +7,44 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Controls\TButton.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\TCheckBox.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\TComboBox.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\TComboBoxOptionLabel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\TFancyButton.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\TTextBox.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\TButton.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\TCheckBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\TComboBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\TComboBoxOptionLabel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\TFancyButton.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\TTextBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>

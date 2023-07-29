@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,10 @@ namespace Techtonica_Mod_Loader
                 }
             }
             public static string settingsFile = $"{dataFolder}\\Settings.json";
+
+            public static void createFolderStructure() {
+                Directory.CreateDirectory(dataFolder);
+            }
         }
     }
 }
