@@ -12,13 +12,13 @@
         <TextBox x:Name="inputBox" Foreground="White" CaretBrush="White"
                  Text="{Binding ElementName=thisControl, Path=Input, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                  FontSize="{Binding ElementName=thisControl, Path=FontSize, UpdateSourceTrigger=PropertyChanged}"
-                 Background="Transparent" BorderThickness="0"
-                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                 PreviewKeyUp="inputBoxPreviewKeyUp" LostFocus="inputBoxLostFocus"/>
+                 Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center"
+                 HorizontalContentAlignment="{Binding ElementName=thisControl, Path=InputAlignment, UpdateSourceTrigger=PropertyChanged}"
+                 PreviewKeyUp="inputBoxPreviewKeyUp" LostFocus="inputBoxLostFocus" Margin="5,0"/>
         <TextBlock Text="{Binding ElementName=thisControl, Path=Hint, UpdateSourceTrigger=PropertyChanged}" 
                    FontSize="{Binding ElementName=thisControl, Path=FontSize, UpdateSourceTrigger=PropertyChanged}"
-                   Foreground="Gray" IsHitTestVisible="False"
-                   HorizontalAlignment="Center" VerticalAlignment="Center">
+                   Foreground="Gray" IsHitTestVisible="False" VerticalAlignment="Center" Margin="5,0"
+                   HorizontalAlignment="{Binding ElementName=thisControl, Path=InputAlignment, UpdateSourceTrigger=PropertyChanged}">
             <TextBlock.Style>
                 <Style TargetType="TextBlock">
                     <Setter Property="Visibility" Value="Hidden"/>
