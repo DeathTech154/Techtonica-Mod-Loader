@@ -20,9 +20,12 @@ namespace Techtonica_Mod_Loader
         }
         
         public static class Paths {
-            private static string dataFolder {
+
+
+            // Folders
+            public static string dataFolder {
                 get {
-                    if(!isDebugBuild) {
+                    if (!isDebugBuild) {
                         return $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\Techtonica-Mod-Loader Data";
                     }
                     else {
@@ -30,10 +33,17 @@ namespace Techtonica_Mod_Loader
                     }
                 }
             }
+            public static string modsFolder = $"{dataFolder}\\Mods";
+
+            // Files
+
             public static string settingsFile = $"{dataFolder}\\Settings.json";
+            public static string profilesFile = $"{dataFolder}\\Profiles.json";
+            public static string modsFile = $"{dataFolder}\\Mods.json";
 
             public static void createFolderStructure() {
                 Directory.CreateDirectory(dataFolder);
+                Directory.CreateDirectory(modsFolder);
             }
         }
     }

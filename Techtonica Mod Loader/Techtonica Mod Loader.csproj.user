@@ -25,6 +25,12 @@
     <Compile Update="Controls\TTextBox.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Panels\InstalledModPanel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Panels\OnlineModPanel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Controls\TButton.xaml">
@@ -46,6 +52,12 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Panels\InstalledModPanel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Panels\OnlineModPanel.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

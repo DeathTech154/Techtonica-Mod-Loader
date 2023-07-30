@@ -38,6 +38,17 @@ namespace Techtonica_Mod_Loader.Controls
 
         #endregion
 
+        #region InputAlignment Property
+
+        public static readonly DependencyProperty InputAlignmentProperty = DependencyProperty.Register("InputAlignment", typeof(HorizontalAlignment), typeof(TTextBox), new PropertyMetadata(HorizontalAlignment.Left));
+
+        public HorizontalAlignment InputAlignment {
+            get => (HorizontalAlignment)GetValue(InputAlignmentProperty);
+            set => SetValue(InputAlignmentProperty, value);
+        }
+
+        #endregion
+
         #region Hint Property
 
         public static readonly DependencyProperty HintProperty = DependencyProperty.Register("Hint", typeof(string), typeof(TTextBox), new PropertyMetadata("Hint..."));
