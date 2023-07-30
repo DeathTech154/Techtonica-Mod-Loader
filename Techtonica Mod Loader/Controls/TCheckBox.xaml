@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="Techtonica_Mod_Loader.Controls.TCheckBox" x:Name="thisControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Techtonica_Mod_Loader.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="20" d:DesignWidth="20"
+             MouseLeftButtonUp="mouseLeftButtonUp">
+    <Grid>
+        <Border Background="{DynamicResource lightestBackgroundBrush}" BorderBrush="{DynamicResource yellowBrush}"
+                BorderThickness="1">
+            <Border Margin="3">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=thisControl, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource yellowBrush}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+            </Border>
+        </Border>
+    </Grid>
+</UserControl>

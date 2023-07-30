@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace Techtonica_Mod_Loader
 {
-    internal class Utils
+    public static class DebugUtils
     {
+        public static void CrashIfDebug(string errorMessage) {
+            if (ProgramData.isDebugBuild) {
+                throw new Exception(errorMessage);
+            }
+        }
     }
 }
