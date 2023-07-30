@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mod>
+  <id>com.example</id>
+  <name>CheatEnabler</name>
+  <tagLine>Doing examples is our thing.</tagLine>
+  <description>An example mod.</description>
+  <icon>icon.png</icon>
+  <banner>banner.png</banner>
+</mod>

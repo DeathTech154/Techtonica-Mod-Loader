@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Mods>
+  <Mod>
+    <Name>ExampleMod</Name>
+    <Versions>
+      <1.0.0>false</1.0.0>
+    </Versions>
+  </Mod>
+  <Mod>
+    <Name>WalrusLib</Name>
+    <Versions>
+      <1.0.0>true</1.0.0>
+    </Versions>
+  </Mod>
+  <Mod>
+    <Name>CheatEnabler</Name>
+    <Versions>
+      <1.0.0>true</1.0.0>
+    </Versions>
+  </Mod>
+</Mods>
