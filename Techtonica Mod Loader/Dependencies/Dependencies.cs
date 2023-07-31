@@ -23,10 +23,10 @@ using System.IO.Compression;
 
 namespace Techtonica_Mod_Loader.Dependencies
 {
-    public class Dependency
+    public static class Dependency
     {
 
-        private void DownloadFileCallback(object sender, AsyncCompletedEventArgs e)
+        public static void DownloadFileCallback(object sender, AsyncCompletedEventArgs e)
         {
             if (e.Cancelled)
             {
@@ -39,18 +39,18 @@ namespace Techtonica_Mod_Loader.Dependencies
             }
             else
             {
-                ZipFile.ExtractToDirectory(BepFullPath, BepPath);
+                ZipFile.ExtractToDirectory(ProgramData.BepFullPath, ProgramData.BepPath);
             }
         }
 
-        public int HandleDependencies(DependencyStatusEnum Status)
+        public static int HandleDependencies(ProgramData.DependencyStatusEnum Status)
         {
-            if (Status == DependencyStatusEnum.MissingBepFolder)
+            if (Status == ProgramData.DependencyStatusEnum.MissingBepFolder)
             {
                 GenerateBepFolders();
-                EnumDownloadStatus ZipDownloadStatus;
-                ZipDownloadStatus = Dependencies.DownloadFile("https://github.com/BepInEx/BepInEx/releases/download/v5.4.21/BepInEx_x64_5.4.21.0.zip", BepFullPath);
-                if (ZipDownloadStatus == EnumDownloadStatus.FAIL)
+                ProgramData.EnumDownloadStatus ZipDownloadStatus;
+                ZipDownloadStatus = MainWindow.DownloadFile("https://github.com/BepInEx/BepInEx/releases/download/v5.4.21/BepInEx_x64_5.4.21.0.zip", ProgramData.BepFullPath);
+                if (ZipDownloadStatus == ProgramData.EnumDownloadStatus.FAIL)
                 {
                     DebugUtils.SendDebugLine("Downloading BepInEx failed somehow.");
                 }
@@ -58,7 +58,7 @@ namespace Techtonica_Mod_Loader.Dependencies
             return 0;
         }
 
-        public int GenerateBepFolders()
+        public static int GenerateBepFolders()
         {
             try
             {
@@ -78,16 +78,16 @@ namespace Techtonica_Mod_Loader.Dependencies
         }
 
         // DeathTech: TODO: Push to seperate file.
-        public DependencyStatusEnum CheckDependencies()
+        public static ProgramData.DependencyStatusEnum CheckDependencies()
         {
             bool BepFolderExists = Directory.Exists("Dependencies/BepInEx");
             bool BepFilesValid = true;
             if (!BepFolderExists)
             {
                 DebugUtils.SendDebugLine("BEP Folder Missing!");
-                return DependencyStatusEnum.MissingBepFolder;
+                return ProgramData.DependencyStatusEnum.MissingBepFolder;
             }
-            foreach (string FilePath in BepFilesList)
+            foreach (string FilePath in ProgramData.BepFilesList)
             {
                 bool Exists = File.Exists(FilePath);
                 if (Exists == false)
@@ -99,12 +99,12 @@ namespace Techtonica_Mod_Loader.Dependencies
             if (!BepFilesValid)
             {
                 DebugUtils.SendDebugLine("Bep is missing expected files.");
-                return DependencyStatusEnum.MissingBepFiles;
+                return ProgramData.DependencyStatusEnum.MissingBepFiles;
             }
             else
             {
                 DebugUtils.SendDebugLine("No issues with Dependencies!");
-                return DependencyStatusEnum.OK;
+                return ProgramData.DependencyStatusEnum.OK;
             }
         }
     }

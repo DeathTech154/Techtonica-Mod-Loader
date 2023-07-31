@@ -37,7 +37,7 @@ namespace Techtonica_Mod_Loader
 
         // DeathTech: TODO: Push to seperate file.
         // LocalPath = "C:/Filename.ext"
-        public EnumDownloadStatus DownloadFile(string RemoteURL, string LocalPath)
+        public static ProgramData.EnumDownloadStatus DownloadFile(string RemoteURL, string LocalPath)
         {
             try
             {
@@ -45,13 +45,13 @@ namespace Techtonica_Mod_Loader
                 webClient.Headers.Add("Accept: text/html, application/xhtml+xml, */*");
                 webClient.Headers.Add("User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)");
                 webClient.DownloadFileAsync(new Uri(RemoteURL), LocalPath);
-                webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCallback);
+                webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Dependencies.Dependency.DownloadFileCallback);
             }
             catch
             {
-                return EnumDownloadStatus.FAIL;
+                return ProgramData.EnumDownloadStatus.FAIL;
             }
-            return EnumDownloadStatus.DOWNLOADING;
+            return ProgramData.EnumDownloadStatus.DOWNLOADING;
         }
         // Objects & Variables
 
@@ -79,8 +79,8 @@ namespace Techtonica_Mod_Loader
             AutoUpdater.InstallationPath = NewLoc;
             DebugUtils.SendDebugLine(AutoUpdater.InstallationPath);
             AutoUpdater.Start("https://www.DeeTeeNetwork.com/TechtonicaML_AutoUpdate.xml");
-            DependancyStatus = CheckDependencies();
-            HandleDependencies(DependancyStatus);
+            ProgramData.DependancyStatus = Dependencies.Dependency.CheckDependencies();
+            Dependencies.Dependency.HandleDependencies(ProgramData.DependancyStatus);
             AutoUpdater.UpdateFormSize = new System.Drawing.Size(800, 600);
             this.Title = "Techtonica Mod Loader v"+ version; // ToDo: Move to label
             RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Valve\Steam"); // Gets steam folder location from registry.
