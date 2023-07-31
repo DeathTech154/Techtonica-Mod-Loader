@@ -31,7 +31,6 @@
 
   <ItemGroup>
     <Resource Include="Background.jpg" />
-    <Resource Include="BepInEx.png" />
   </ItemGroup>
 
 </Project>

@@ -31,6 +31,12 @@
     <Compile Update="Panels\OnlineModPanel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Windows\GetYesNoWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Windows\WarningWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Controls\TButton.xaml">
@@ -58,6 +64,12 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Panels\OnlineModPanel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\GetYesNoWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\WarningWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

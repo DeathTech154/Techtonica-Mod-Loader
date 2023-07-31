@@ -19,9 +19,8 @@ namespace Techtonica_Mod_Loader
             }
         }
         
-        public static class Paths {
-
-
+        public static class Paths 
+        {
             // Folders
             public static string dataFolder {
                 get {
@@ -34,9 +33,9 @@ namespace Techtonica_Mod_Loader
                 }
             }
             public static string modsFolder = $"{dataFolder}\\Mods";
+            public static string resourcesFolder = $"{dataFolder}\\Resources";
 
             // Files
-
             public static string settingsFile = $"{dataFolder}\\Settings.json";
             public static string profilesFile = $"{dataFolder}\\Profiles.json";
             public static string modsFile = $"{dataFolder}\\Mods.json";
@@ -44,6 +43,7 @@ namespace Techtonica_Mod_Loader
             public static void createFolderStructure() {
                 Directory.CreateDirectory(dataFolder);
                 Directory.CreateDirectory(modsFolder);
+                Directory.CreateDirectory(resourcesFolder);
             }
         }
     }
