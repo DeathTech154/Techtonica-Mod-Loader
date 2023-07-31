@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <None Remove="Background.jpg" />
-    <None Remove="BepInEx.png" />
     <None Remove="Controls\BepInEx.png" />
   </ItemGroup>
 

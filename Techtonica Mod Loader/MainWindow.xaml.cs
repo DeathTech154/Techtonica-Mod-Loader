@@ -35,6 +35,24 @@ namespace Techtonica_Mod_Loader
             InitializeComponent();
         }
 
+        // DeathTech: TODO: Push to seperate file.
+        // LocalPath = "C:/Filename.ext"
+        public static ProgramData.EnumDownloadStatus DownloadFile(string RemoteURL, string LocalPath)
+        {
+            try
+            {
+                WebClient webClient = new WebClient();
+                webClient.Headers.Add("Accept: text/html, application/xhtml+xml, */*");
+                webClient.Headers.Add("User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)");
+                webClient.DownloadFileAsync(new Uri(RemoteURL), LocalPath);
+                webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Dependencies.Dependency.DownloadFileCallback);
+            }
+            catch
+            {
+                return ProgramData.EnumDownloadStatus.FAIL;
+            }
+            return ProgramData.EnumDownloadStatus.DOWNLOADING;
+        }
         // Objects & Variables
 
         public static MainWindow current => (MainWindow)Application.Current.MainWindow;
@@ -61,7 +79,8 @@ namespace Techtonica_Mod_Loader
             AutoUpdater.InstallationPath = NewLoc;
             DebugUtils.SendDebugLine(AutoUpdater.InstallationPath);
             AutoUpdater.Start("https://www.DeeTeeNetwork.com/TechtonicaML_AutoUpdate.xml");
-            //AutoUpdater.ReportErrors = true;
+            ProgramData.DependancyStatus = Dependencies.Dependency.CheckDependencies();
+            Dependencies.Dependency.HandleDependencies(ProgramData.DependancyStatus);
             AutoUpdater.UpdateFormSize = new System.Drawing.Size(800, 600);
             this.Title = "Techtonica Mod Loader v"+ version; // ToDo: Move to label
             RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Valve\Steam"); // Gets steam folder location from registry.
@@ -172,20 +191,7 @@ namespace Techtonica_Mod_Loader
             AutoUpdater.LetUserSelectRemindLater = true;
             AutoUpdater.ShowRemindLaterButton = true;
             AutoUpdater.ShowSkipButton = true;
-            //AutoUpdater.RemindLaterAt = 0;
-            //AutoUpdater.RemindLaterTimeSpan = 0;
-            //AutoUpdater.LetUserSelectRemindLater = true;
             AutoUpdater.Start("https://www.DeeTeeNetwork.com/TechtonicaML_AutoUpdate.xml");
-            //UpdateArgs.ChangelogURL = AutoUpdater.AppCastURL;
-            //UpdateArgs.InstalledVersion = AutoUpdater.InstalledVersion;
-            //UpdateArgs.DownloadURL = AutoUpdater.DownloadPath;
-            //UpdateArgs.ExecutablePath = AutoUpdater.ExecutablePath;
-            //UpdateArgs.Mandatory = new Mandatory();
-            //UpdateArgs.Mandatory.Value = AutoUpdater.Mandatory;
-            //UpdateArgs.Mandatory.MinimumVersion = "0.0.0.1";
-            //UpdateArgs.Mandatory.UpdateMode = Mode.Normal;
-            //UpdateArgs.CurrentVersion = version;
-            //AutoUpdater.ShowUpdateForm(Args);
         }
 
         private void saveData() {
