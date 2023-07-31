@@ -45,7 +45,9 @@ namespace Techtonica_Mod_Loader
                 }
             }
             return NewString;
+        }
     }
+
     public static class GuiUtils 
     {
         public static void showShader() {
