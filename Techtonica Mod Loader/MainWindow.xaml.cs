@@ -95,6 +95,13 @@ namespace Techtonica_Mod_Loader
                 DebugUtils.SendDebugLine("Error: Failed to obtain steam path. Disabling launch.");
                 Button_Launch_Vanilla.IsEnabled = false;
             }
+
+            if (GuiUtils.getUserConfirmation("Oh really?", "Are you sure you want to do that?")) {
+                MessageBox.Show("Confirmed");
+            }
+            else {
+                MessageBox.Show("Denied");
+            }
         }
 
         private void OnProgramClosing(object sender, CancelEventArgs e) {
