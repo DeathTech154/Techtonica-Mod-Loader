@@ -36,7 +36,8 @@ namespace Techtonica_Mod_Loader
                 #endif
             }
         }
-        
+        public static bool skipLoadingScreenDelay = false;
+
         public static class Paths 
         {
             // Folders

@@ -66,11 +66,21 @@ namespace Techtonica_Mod_Loader
 
         // Events
 
-        private void OnProgramLoaded(object sender, RoutedEventArgs e) {
+        private async void OnProgramLoaded(object sender, RoutedEventArgs e) {
+            loader.Visibility = Visibility.Visible;
+            mainGrid.Visibility = Visibility.Hidden;
+
             DebugUtils.SendDebugLine("Logtest!");
             ProgramData.Paths.createFolderStructure();
             loadData();
             initialiseGUI();
+
+            if (!ProgramData.skipLoadingScreenDelay) {
+                await Task.Delay(3000); // Let users bask in the glory of the loading screen
+            }
+
+            loader.Visibility = Visibility.Hidden;
+            mainGrid.Visibility = Visibility.Visible;
 
             //string[] SplitSelfLoc = SelfLoc.Split("/");
 
@@ -82,7 +92,7 @@ namespace Techtonica_Mod_Loader
             ProgramData.DependancyStatus = Dependencies.Dependency.CheckDependencies();
             Dependencies.Dependency.HandleDependencies(ProgramData.DependancyStatus);
             AutoUpdater.UpdateFormSize = new System.Drawing.Size(800, 600);
-            this.Title = "Techtonica Mod Loader v"+ version; // ToDo: Move to label
+            this.Title = "Techtonica Mod Loader v"+ version;
             RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Valve\Steam"); // Gets steam folder location from registry.
             if (key != null) {
                 string SteamPath = (string)key.GetValue("SteamPath");
@@ -94,13 +104,6 @@ namespace Techtonica_Mod_Loader
             else {
                 DebugUtils.SendDebugLine("Error: Failed to obtain steam path. Disabling launch.");
                 Button_Launch_Vanilla.IsEnabled = false;
-            }
-
-            if (GuiUtils.getUserConfirmation("Oh really?", "Are you sure you want to do that?")) {
-                MessageBox.Show("Confirmed");
-            }
-            else {
-                MessageBox.Show("Denied");
             }
         }
 
