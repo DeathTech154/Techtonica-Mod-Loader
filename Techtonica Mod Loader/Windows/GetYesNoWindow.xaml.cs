@@ -18,7 +18,7 @@ namespace Techtonica_Mod_Loader.Windows
     {
         public GetYesNoWindow(string title, string description)
         {
-            GuiUtils.showShader();
+            GuiUtils.ShowShader();
             Owner = Application.Current.MainWindow;
             InitializeComponent();
             titleLabel.Content = title;
@@ -29,24 +29,24 @@ namespace Techtonica_Mod_Loader.Windows
 
         private void OnYesClicked(object sender, EventArgs e) {
             result = true;
-            GuiUtils.hideShader();
+            GuiUtils.HideShader();
             Close();
         }
 
         private void OnNoClicked(object sender, EventArgs e) {
             result = false;
-            GuiUtils.hideShader();
+            GuiUtils.HideShader();
             Close();
         }
 
         // Return Functions
 
         private bool result;
-        private bool getResult() { return result; }
-        public static bool getYesNo(string title, string description) {
+        private bool GetResult() { return result; }
+        public static bool GetYesNo(string title, string description) {
             GetYesNoWindow window = new GetYesNoWindow(title, description);
             window.ShowDialog();
-            return window.getResult();
+            return window.GetResult();
         }
     }
 }

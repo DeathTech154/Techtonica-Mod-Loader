@@ -8,8 +8,8 @@
              d:DesignHeight="40" d:DesignWidth="200">
     <Grid>
         <Border BorderBrush="{DynamicResource yellowBrush}" BorderThickness="1"
-                MouseLeftButtonUp="mouseLeftButtonUp"
-                MouseRightButtonUp="mouseRightButtonUp">
+                MouseLeftButtonUp="OnMouseLeftButtonUp"
+                MouseRightButtonUp="OnMouseRightButtonUp">
             <Border.Style>
                 <Style TargetType="Border">
                     <Setter Property="Background" Value="{DynamicResource lightestBackgroundBrush}"/>

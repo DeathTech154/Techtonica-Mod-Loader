@@ -29,11 +29,11 @@ namespace Techtonica_Mod_Loader.Classes
 
         // Public Functions
 
-        public void install() {
+        public void Install() {
             // ToDo: DeathTech - Install Mod
         }
 
-        public void uninstall() {
+        public void Uninstall() {
             // ToDo: DeathTech - Uninstall Mod
         }
     }

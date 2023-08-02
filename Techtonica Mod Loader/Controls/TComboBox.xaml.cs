@@ -56,31 +56,31 @@ namespace Techtonica_Mod_Loader.Controls
 
         // Events
 
-        private void comboBoxMouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
+        private void OnComboBoxMouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
 
             if (!itemsPopup.IsMouseOver && !itemsPopup.IsOpen) {
-                openOptions();
+                OpenOptions();
             }
             else if(itemsPopup.IsOpen) {
-                closeOptions();
+                CloseOptions();
             }
         }
 
-        private void comboBoxMouseLeave(object sender, MouseEventArgs e) {
+        private void OnComboBoxMouseLeave(object sender, MouseEventArgs e) {
             if(!thisControl.IsMouseOver && !itemsPopup.IsMouseOver) {
-                closeOptions();
+                CloseOptions();
             }
         }
 
-        private void optionLabelClicked(object sender, EventArgs e) {
+        private void OnOptionLabelClicked(object sender, EventArgs e) {
             TComboBoxOptionLabel clickedLabel = sender as TComboBoxOptionLabel;
-            setSelectedItem(clickedLabel.getItem());
-            closeOptions();
+            SetSelectedItem(clickedLabel.GetItem());
+            CloseOptions();
         }
 
         // Public Functions
 
-        public void setSelectedItem(string item) {
+        public void SetSelectedItem(string item) {
             SelectedItem = item;
             SelectedItemChanged?.Invoke(this, EventArgs.Empty);
             if (!Items.Contains(item)) {
@@ -88,7 +88,7 @@ namespace Techtonica_Mod_Loader.Controls
             }
         }
 
-        public void setSelectedItem(int index) {
+        public void SetSelectedItem(int index) {
             if(index < Items.Count) {
                 SelectedItem = Items[index];
             }
@@ -100,45 +100,45 @@ namespace Techtonica_Mod_Loader.Controls
             SelectedItemChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        public void setItems(List<string> items) {
+        public void SetItems(List<string> items) {
             Items = items;
-            populateItems();
-            setSelectedItem(0);
+            PopulateItems();
+            SetSelectedItem(0);
         }
 
-        public void setItems(List<int> items) {
+        public void SetItems(List<int> items) {
             List<string> itemsAsString = new List<string>();
             foreach(int item in items) {
                 itemsAsString.Add(item.ToString());
             }
 
-            setItems(items);
+            SetItems(items);
         }
 
         // Private Functions
 
-        private void populateItems() {
+        private void PopulateItems() {
             itemsPanel.Children.Clear();
             foreach(string item in Items) {
-                addItemLabelToOptions(item);
+                AddItemLabelToOptions(item);
             }
         }
 
-        private void addItemLabelToOptions(string item) {
+        private void AddItemLabelToOptions(string item) {
             TComboBoxOptionLabel label = new TComboBoxOptionLabel(item) {
                 Height = 40
             };
-            label.LeftClicked += optionLabelClicked;
+            label.LeftClicked += OnOptionLabelClicked;
             itemsPanel.Children.Add(label);
         }
 
-        private void openOptions() {
+        private void OpenOptions() {
             itemsPopup.IsOpen = true;
             rotator.Angle = 180;
             arrow.Margin = new Thickness(0, 2, 0, -2);
         }
 
-        private void closeOptions() {
+        private void CloseOptions() {
             itemsPopup.IsOpen = false;
             rotator.Angle = 0;
             arrow.Margin = new Thickness(0, -2, 0, 2);

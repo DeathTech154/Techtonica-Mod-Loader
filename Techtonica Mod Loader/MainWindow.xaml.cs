@@ -71,9 +71,9 @@ namespace Techtonica_Mod_Loader
             mainGrid.Visibility = Visibility.Hidden;
 
             DebugUtils.SendDebugLine("Logtest!");
-            ProgramData.Paths.createFolderStructure();
-            loadData();
-            initialiseGUI();
+            ProgramData.Paths.CreateFolderStructure();
+            LoadData();
+            InitialiseGUI();
 
             if (!ProgramData.skipLoadingScreenDelay) {
                 await Task.Delay(3000); // Let users bask in the glory of the loading screen
@@ -108,19 +108,19 @@ namespace Techtonica_Mod_Loader
         }
 
         private void OnProgramClosing(object sender, CancelEventArgs e) {
-            saveData();
+            SaveData();
         }
 
         private void OnSelectedProfileChanged(object sender, EventArgs e) {
-            Profile chosenProfile = ProfileManager.getProfileByName(profilesBox.SelectedItem);
-            ProfileManager.loadProfile(chosenProfile);
-            loadInstalledModList();
+            Profile chosenProfile = ProfileManager.GetProfileByName(profilesBox.SelectedItem);
+            ProfileManager.LoadProfile(chosenProfile);
+            LoadInstalledModList();
         }
 
         private void OnModsToShowChanged(object sender, EventArgs e) {
             switch (showingBox.SelectedItem) {
-                case "Downloaded": loadInstalledModList(); break;
-                case "Online": loadOnlineModList(); break;
+                case "Downloaded": LoadInstalledModList(); break;
+                case "Online": LoadOnlineModList(); break;
                 default:
                     string error = $"Cannot show mod set '{showingBox.SelectedItem}'";
                     DebugUtils.SendDebugLine($"Error: {error}");
@@ -133,11 +133,12 @@ namespace Techtonica_Mod_Loader
             // ToDo: Elliot - Sort Mods List
         }
 
-        private void Button_Check_For_Updates_Click(object sender, RoutedEventArgs e) {
+        private void OnCheckForUpdatesClicked(object sender, RoutedEventArgs e) {
             CallUpdateWindow();
         }
 
-        private void Button_Launch_Vanilla_Click(object sender, RoutedEventArgs e) {
+        // ToDo: Elliot - Move elsewhere or delete, launching vanilla handled by profile
+        private void OnButtonLaunchVanillaClicked(object sender, RoutedEventArgs e) {
             ProcessStartInfo start = new ProcessStartInfo();
             start.Arguments = e.ToString();
             start.FileName = "Techtonica.exe";
@@ -197,43 +198,43 @@ namespace Techtonica_Mod_Loader
             AutoUpdater.Start("https://www.DeeTeeNetwork.com/TechtonicaML_AutoUpdate.xml");
         }
 
-        private void saveData() {
-            ModManager.save();
-            ProfileManager.save();
+        private void SaveData() {
+            ModManager.Save();
+            ProfileManager.Save();
         }
 
-        private void loadData() {
-            ModManager.load();
-            ProfileManager.load();
+        private void LoadData() {
+            ModManager.Load();
+            ProfileManager.Load();
         }
 
-        private void initialiseGUI() {
-            profilesBox.setItems(ProfileManager.getProfileNames());
-            showingBox.setItems(new List<string>() { "Downloaded", "Online" });
-            sortBox.setItems(new List<string>() { "Last Updated", "Alphabetical", "Downloads", "Popularity" });
+        private void InitialiseGUI() {
+            profilesBox.SetItems(ProfileManager.GetProfileNames());
+            showingBox.SetItems(new List<string>() { "Downloaded", "Online" });
+            sortBox.SetItems(new List<string>() { "Last Updated", "Alphabetical", "Downloads", "Popularity" });
         }
 
-        private void loadInstalledModList() {
+        private void LoadInstalledModList() {
             modsPanel.Children.Clear();
-            Profile profile = ProfileManager.getActiveProfile();
+            Profile profile = ProfileManager.GetActiveProfile();
             foreach(string modID in profile.modIDs) {
-                addInstalledModToModList(modID);
+                AddInstalledModToModList(modID);
             }
         }
 
-        private void loadOnlineModList() {
+        private void LoadOnlineModList() {
             // ToDo: Elliot - Get modlist from api
             List<Mod> mods = new List<Mod>();
             foreach(Mod mod in mods) {
-                addOnlineModToModList(mod);
+                AddOnlineModToModList(mod);
             }
         }
 
-        private void addInstalledModToModList(string modID) {
+        private void AddInstalledModToModList(string modID) {
             modsPanel.Children.Add(new InstalledModPanel(modID));
         }
 
-        private void addOnlineModToModList(Mod mod) {
+        private void AddOnlineModToModList(Mod mod) {
             modsPanel.Children.Add(new OnlineModPanel(mod));
         }
     }

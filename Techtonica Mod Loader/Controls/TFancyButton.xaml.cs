@@ -45,11 +45,11 @@ namespace Techtonica_Mod_Loader.Controls
 
         // Events
 
-        private void mouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
+        private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
             LeftClicked?.Invoke(this, EventArgs.Empty);
         }
 
-        private void mouseRightButtonUp(object sender, MouseButtonEventArgs e) {
+        private void OnMouseRightButtonUp(object sender, MouseButtonEventArgs e) {
             RightClicked?.Invoke(this, EventArgs.Empty);
         }
     }

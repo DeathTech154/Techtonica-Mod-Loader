@@ -18,13 +18,13 @@ namespace Techtonica_Mod_Loader
 
         // Public Functions
 
-        public static void addProfile(Profile profile) {
-            profile.id = getNewProfileID();
+        public static void AddProfile(Profile profile) {
+            profile.id = GetNewProfileID();
             profiles.Add(profile.id, profile);
         }
 
-        public static Profile getProfile(int id) {
-            if (doesProfileExist(id)) {
+        public static Profile GetProfile(int id) {
+            if (DoesProfileExist(id)) {
                 return profiles[id];
             }
             else {
@@ -35,8 +35,8 @@ namespace Techtonica_Mod_Loader
             }
         }
 
-        public static Profile getActiveProfile() {
-            if (doesProfileExist(activeProfile)) {
+        public static Profile GetActiveProfile() {
+            if (DoesProfileExist(activeProfile)) {
                 return profiles[activeProfile];
             }
             else {
@@ -47,7 +47,7 @@ namespace Techtonica_Mod_Loader
             }
         }
 
-        public static Profile getProfileByName(string name) {
+        public static Profile GetProfileByName(string name) {
             foreach (Profile profile in profiles.Values) {
                 if (profile.name == name) {
                     return profile;
@@ -60,7 +60,7 @@ namespace Techtonica_Mod_Loader
             return new Profile();
         }
 
-        public static List<string> getProfileNames() {
+        public static List<string> GetProfileNames() {
             List<string> names = new List<string>();
             foreach(Profile profile in profiles.Values) {
                 names.Add(profile.name);
@@ -69,49 +69,48 @@ namespace Techtonica_Mod_Loader
             return names;
         }
 
-        public static void loadProfile(int id) {
-            if (doesProfileExist(id)) {
-                loadProfile(profiles[id]);
+        public static void LoadProfile(int id) {
+            if (DoesProfileExist(id)) {
+                LoadProfile(profiles[id]);
             }
         }
 
-        public static void loadProfile(Profile profile) {
+        public static void LoadProfile(Profile profile) {
             activeProfile = profile.id;
-
         }
 
         // Private Functions
 
-        private static bool doesProfileExist(int id) {
+        private static bool DoesProfileExist(int id) {
             return profiles.ContainsKey(id);
         }
 
-        private static int getNewProfileID() {
+        private static int GetNewProfileID() {
             if (profiles.Count == 0) return 0;
             else return profiles.Keys.Max() + 1;
         }
 
         // Data Functions
 
-        public static void save() {
+        public static void Save() {
             string json = JsonConvert.SerializeObject(profiles.Values.ToList());
             File.WriteAllText(ProgramData.Paths.profilesFile, json);
         }
 
-        public static void load() {
+        public static void Load() {
             if (File.Exists(ProgramData.Paths.profilesFile)) {
                 string json = File.ReadAllText(ProgramData.Paths.profilesFile);
                 List<Profile> profilesFromFile = JsonConvert.DeserializeObject<List<Profile>>(json);
                 foreach(Profile profile in profilesFromFile) {
-                    addProfile(profile);
+                    AddProfile(profile);
                 }
             }
             else {
-                createDefaultProfiles();
+                CreateDefaultProfiles();
             }
         }
 
-        public static void createDefaultProfiles() {
+        public static void CreateDefaultProfiles() {
             Profile modded = new Profile() { name = "Modded" };
             modded.modIDs.Add(Classes.Globals.DefaultMods.BepInEx.id);
 
@@ -119,9 +118,9 @@ namespace Techtonica_Mod_Loader
             development.modIDs.Add(Classes.Globals.DefaultMods.BepInEx.id);
             development.modIDs.Add(Classes.Globals.DefaultMods.UnityExporer.id);
 
-            addProfile(modded);
-            addProfile(development);
-            addProfile(new Profile() { name = "Vanilla" });
+            AddProfile(modded);
+            AddProfile(development);
+            AddProfile(new Profile() { name = "Vanilla" });
         }
     }
 }

@@ -69,7 +69,7 @@ namespace Techtonica_Mod_Loader.Controls
 
         // Events
 
-        private void inputBoxPreviewKeyUp(object sender, KeyEventArgs e) {
+        private void OnInputBoxPreviewKeyUp(object sender, KeyEventArgs e) {
             switch (e.Key) {
                 case Key.Enter: 
                     EnterPressed?.Invoke(this, EventArgs.Empty); 
@@ -88,7 +88,7 @@ namespace Techtonica_Mod_Loader.Controls
             }
         }
 
-        private void inputBoxLostFocus(object sender, RoutedEventArgs e) {
+        private void OnInputBoxLostFocus(object sender, RoutedEventArgs e) {
             ChangesConfirmed?.Invoke(this, EventArgs.Empty);
         }
     }

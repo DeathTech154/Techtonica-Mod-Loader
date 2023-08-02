@@ -42,7 +42,7 @@ namespace Techtonica_Mod_Loader.Controls
 
         // Events
 
-        private void mouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
+        private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
             IsChecked = !IsChecked;
             IsCheckedChanged?.Invoke(this, EventArgs.Empty);
         }

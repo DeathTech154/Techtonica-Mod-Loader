@@ -7,8 +7,8 @@
              mc:Ignorable="d" 
              MinHeight="40" MaxHeight="40"
              Height="40" d:DesignWidth="200"
-             MouseLeftButtonUp="mouseLeftButtonUp"
-             MouseRightButtonUp="mouseRightButtonUp">
+             MouseLeftButtonUp="OnMouseLeftButtonUp"
+             MouseRightButtonUp="OnMouseRightButtonUp">
     <UserControl.Style>
         <Style TargetType="UserControl">
             <Style.Triggers>

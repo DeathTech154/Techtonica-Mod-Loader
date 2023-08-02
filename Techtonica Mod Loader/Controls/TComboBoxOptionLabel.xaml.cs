@@ -27,7 +27,7 @@ namespace Techtonica_Mod_Loader.Controls
 
         public TComboBoxOptionLabel(string item) {
             InitializeComponent();
-            showItem(item);
+            ShowItem(item);
         }
 
         // Custom Events
@@ -36,15 +36,15 @@ namespace Techtonica_Mod_Loader.Controls
 
         // Public Functions
 
-        public string getItem() {
+        public string GetItem() {
             return label.Text.ToString();
         }
 
-        public void showItem(string item) {
+        public void ShowItem(string item) {
             label.Text = item;
         }
 
-        private void mouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
+        private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
             LeftClicked?.Invoke(this, EventArgs.Empty);
         }
     }

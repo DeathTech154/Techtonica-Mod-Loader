@@ -14,7 +14,7 @@
                  FontSize="{Binding ElementName=thisControl, Path=FontSize, UpdateSourceTrigger=PropertyChanged}"
                  Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center"
                  HorizontalContentAlignment="{Binding ElementName=thisControl, Path=InputAlignment, UpdateSourceTrigger=PropertyChanged}"
-                 PreviewKeyUp="inputBoxPreviewKeyUp" LostFocus="inputBoxLostFocus" Margin="5,0"/>
+                 PreviewKeyUp="OnInputBoxPreviewKeyUp" LostFocus="OnInputBoxLostFocus" Margin="5,0"/>
         <TextBlock Text="{Binding ElementName=thisControl, Path=Hint, UpdateSourceTrigger=PropertyChanged}" 
                    FontSize="{Binding ElementName=thisControl, Path=FontSize, UpdateSourceTrigger=PropertyChanged}"
                    Foreground="Gray" IsHitTestVisible="False" VerticalAlignment="Center" Margin="5,0"

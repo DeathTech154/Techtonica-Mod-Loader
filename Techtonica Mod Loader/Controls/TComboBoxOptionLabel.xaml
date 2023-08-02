@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Techtonica_Mod_Loader.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="40" d:DesignWidth="200"
-             MouseLeftButtonUp="mouseLeftButtonUp">
+             MouseLeftButtonUp="OnMouseLeftButtonUp">
     <Grid>
         <Rectangle>
             <Rectangle.Style>
