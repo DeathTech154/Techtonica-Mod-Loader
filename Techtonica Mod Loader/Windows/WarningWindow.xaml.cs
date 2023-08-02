@@ -54,23 +54,23 @@ namespace Techtonica_Mod_Loader.Windows
 
         // Return Functions
 
-        private string result;
+        private readonly string result = "";
         private string GetResult() { return result; }
 
         public static string ShowInfo(string title, string description, string closeButtonText) {
-            WarningWindow window = new WarningWindow(WarningType.info, title, description, closeButtonText);
+            WarningWindow window = new(WarningType.info, title, description, closeButtonText);
             window.ShowDialog();
             return window.GetResult();
         }
 
         public static string ShowWarning(string title, string description, string closeButtonText) {
-            WarningWindow window = new WarningWindow(WarningType.warning, title, description, closeButtonText);
+            WarningWindow window = new(WarningType.warning, title, description, closeButtonText);
             window.ShowDialog();
             return window.GetResult();
         }
 
         public static string ShowError(string title, string description, string closeButtonText) {
-            WarningWindow window = new WarningWindow(WarningType.error, title, description, closeButtonText);
+            WarningWindow window = new(WarningType.error, title, description, closeButtonText);
             window.ShowDialog();
             return window.GetResult();
         }
