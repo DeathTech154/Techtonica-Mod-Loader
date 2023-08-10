@@ -31,12 +31,12 @@ namespace Techtonica_Mod_Loader.Panels
 
         public InstalledModPanel(string modID) {
             InitializeComponent();
-            showMod(ModManager.GetMod(modID));
+            ShowMod(ModManager.GetMod(modID));
         }
 
         public InstalledModPanel(Mod mod) {
             InitializeComponent();
-            showMod(mod);
+            ShowMod(mod);
         }
 
         // Objects & Variables
@@ -78,13 +78,20 @@ namespace Techtonica_Mod_Loader.Panels
 
         // Public Functions
 
-        public void showMod(Mod mod) {
+        public void ShowMod(Mod mod) {
             modID = mod.id;
             enabledBox.IsChecked = mod.enabled;
             enabledBox.IsEditable = mod.canBeToggled;
             icon.Source = new BitmapImage(new Uri(mod.iconLink));
             modNameLabel.Text = mod.name;
             modTaglineLabel.Text = mod.tagline;
+        }
+
+        // Private Functions
+
+        private void HideConfigureColumn() {
+            mainGrid.Children.Remove(configureButton);
+            configureColumn.Width = new GridLength(0);
         }
     }
 }
