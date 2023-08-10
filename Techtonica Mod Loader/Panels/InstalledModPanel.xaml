@@ -13,6 +13,7 @@
                 <ColumnDefinition Width="{Binding ElementName=thisControl, Path=ActualHeight, UpdateSourceTrigger=PropertyChanged}"/>
                 <ColumnDefinition Width="{Binding ElementName=thisControl, Path=ActualHeight, UpdateSourceTrigger=PropertyChanged}"/>
                 <ColumnDefinition/>
+                <ColumnDefinition x:Name="configureColumn" Width="100"/>
                 <ColumnDefinition Width="100"/>
                 <ColumnDefinition Width="100"/>
 
@@ -29,9 +30,11 @@
                 <Run Text=" - "/>
                 <Run x:Name="modTaglineLabel" Text="Tagline"/>
             </TextBlock>
-            <TControls:TButton ButtonText="View Mod Page" Grid.Column="3" Margin="2" Height="30"
+            <TControls:TButton ButtonText="Configure" Grid.Column="3" Margin="2" Height="30"
+                               LeftClicked="OnConfigureClicked"/>
+            <TControls:TButton ButtonText="View Mod Page" Grid.Column="4" Margin="2" Height="30"
                                LeftClicked="ViewModPageClicked"/>
-            <TControls:TButton ButtonText="Delete" Grid.Column="4" Margin="2" Height="30"
+            <TControls:TButton ButtonText="Delete" Grid.Column="5" Margin="2" Height="30"
                                RightClicked="DeleteModClicked"/>
         </Grid>
     </Border>
