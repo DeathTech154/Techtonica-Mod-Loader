@@ -36,6 +36,17 @@ namespace Techtonica_Mod_Loader.Controls
 
         #endregion
 
+        #region IsEditable Property
+
+        public static readonly DependencyProperty IsEditableProperty = DependencyProperty.Register("IsEditable", typeof(bool), typeof(TCheckBox), new PropertyMetadata(true));
+
+        public bool IsEditable {
+            get => (bool)GetValue(IsEditableProperty);
+            set => SetValue(IsEditableProperty, value);
+        }
+
+        #endregion
+
         // Custom Events
 
         public event EventHandler IsCheckedChanged;
@@ -43,8 +54,10 @@ namespace Techtonica_Mod_Loader.Controls
         // Events
 
         private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
-            IsChecked = !IsChecked;
-            IsCheckedChanged?.Invoke(this, EventArgs.Empty);
+            if (IsEditable) {
+                IsChecked = !IsChecked;
+                IsCheckedChanged?.Invoke(this, EventArgs.Empty);
+            }
         }
     }
 }

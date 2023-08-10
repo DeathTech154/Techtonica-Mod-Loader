@@ -116,7 +116,7 @@ namespace Techtonica_Mod_Loader
 
             Profile development = new Profile() { name = "Development" };
             development.modIDs.Add(Classes.Globals.DefaultMods.BepInEx.id);
-            development.modIDs.Add(Classes.Globals.DefaultMods.UnityExporer.id);
+            development.modIDs.Add(Classes.Globals.DefaultMods.UnityExplorer.id);
 
             AddProfile(modded);
             AddProfile(development);

@@ -22,10 +22,11 @@ namespace Techtonica_Mod_Loader.Classes.Globals
             screenshot3Link = "",
             screenshot4Link = "",
             zipFileLocation = $"{ProgramData.Paths.modsFolder}\\BepInEx.zip", // set actual zip name
-            enabled = true
+            enabled = true,
+            canBeToggled = false
         };
 
-        public static Mod UnityExporer = new Mod() { // ToDo: Set Unity Explorer missing / wrong details
+        public static Mod UnityExplorer = new Mod() { // ToDo: Set Unity Explorer missing / wrong details
             id = "unityExplorer",
             name = "Unity Explorer",
             version = "",
