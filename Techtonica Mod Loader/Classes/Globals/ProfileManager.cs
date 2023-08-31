@@ -21,6 +21,7 @@ namespace Techtonica_Mod_Loader
         public static void AddProfile(Profile profile) {
             profile.id = GetNewProfileID();
             profiles.Add(profile.id, profile);
+            Save();
         }
 
         public static Profile GetProfile(int id) {

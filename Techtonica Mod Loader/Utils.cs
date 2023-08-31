@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Media3D;
 using Techtonica_Mod_Loader.Windows;
 
 namespace Techtonica_Mod_Loader
@@ -72,6 +74,63 @@ namespace Techtonica_Mod_Loader
 
         public static bool GetUserConfirmation(string title, string description) {
             return GetYesNoWindow.GetYesNo(title, description);
+        }
+    }
+
+    public static class FileStructureUtils
+    {
+        public static void CreateFolderStructure() {
+            Directory.CreateDirectory(ProgramData.Paths.dataFolder);
+            Directory.CreateDirectory(ProgramData.Paths.modsFolder);
+            Directory.CreateDirectory(ProgramData.Paths.resourcesFolder);
+            Directory.CreateDirectory(ProgramData.Paths.unzipFolder);
+        }
+
+        public static void ClearUnzipFolder() {
+            DeleteFolder(ProgramData.Paths.unzipFolder);
+            Directory.CreateDirectory(ProgramData.Paths.unzipFolder);
+        }
+
+        public static List<string> CopyFolder(string source, string destination) {
+            string[] files = Directory.GetFiles(source);
+            string[] folders = Directory.GetDirectories(source);
+
+            List<string> copiedFiles = new List<string>();
+
+            foreach(string file in files) {
+                string newPath = file.Replace(source, destination);
+                if (File.Exists(newPath)) {
+                    File.Delete(newPath);
+                }
+
+                File.Copy(file, newPath);
+                copiedFiles.Add(newPath);
+            }
+
+            foreach(string folder in folders) {
+                string newPath = folder.Replace(source, destination);
+                Directory.CreateDirectory(newPath);
+                List<string> copiedSubFiles = CopyFolder(folder, newPath);
+                copiedFiles.AddRange(copiedSubFiles);
+            }
+
+            copiedFiles = copiedFiles.Distinct().ToList();
+            return copiedFiles;
+        }
+
+        public static void DeleteFolder(string folder) {
+            string[] files = Directory.GetFiles(folder);
+            string[] subFolders = Directory.GetDirectories(folder);
+
+            foreach (string file in files) {
+                File.Delete(file);
+            }
+
+            foreach (string subFolder in subFolders) {
+                DeleteFolder(subFolder);
+            }
+
+            Directory.Delete(folder);
         }
     }
 }

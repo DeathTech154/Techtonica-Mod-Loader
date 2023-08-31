@@ -36,7 +36,7 @@ namespace Techtonica_Mod_Loader
                 #endif
             }
         }
-        public static bool skipLoadingScreenDelay = false;
+        public static bool skipLoadingScreenDelay = true;
 
         public static MainWindow current => (MainWindow)Application.Current.MainWindow;
         public static string GameLocation;
@@ -88,17 +88,13 @@ namespace Techtonica_Mod_Loader
             }
             public static string modsFolder = $"{dataFolder}\\Mods";
             public static string resourcesFolder = $"{dataFolder}\\Resources";
+            public static string unzipFolder = $"{dataFolder}\\Unzip";
+            public static string gameFolder;
 
             // Files
             public static string settingsFile = $"{dataFolder}\\Settings.json";
             public static string profilesFile = $"{dataFolder}\\Profiles.json";
             public static string modsFile = $"{dataFolder}\\Mods.json";
-
-            public static void CreateFolderStructure() {
-                Directory.CreateDirectory(dataFolder);
-                Directory.CreateDirectory(modsFolder);
-                Directory.CreateDirectory(resourcesFolder);
-            }
         }
     }
 }
