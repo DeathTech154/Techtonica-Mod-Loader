@@ -111,6 +111,16 @@ namespace Techtonica_Mod_Loader
             SaveData();
         }
 
+        private void OnInstallFromFileClicked(object sender, EventArgs e) {
+            System.Windows.Forms.OpenFileDialog reader = new System.Windows.Forms.OpenFileDialog() {
+                Filter = "Zip Files (*.zip)|*.zip"
+            };
+            if(reader.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+                string selectedZip = reader.FileName;
+                // ToDo: DeathTech - Install from local zip file.
+            }
+        }
+
         private void OnSelectedProfileChanged(object sender, EventArgs e) {
             Profile chosenProfile = ProfileManager.GetProfileByName(profilesBox.SelectedItem);
             ProfileManager.LoadProfile(chosenProfile);
