@@ -74,7 +74,7 @@ namespace Techtonica_Mod_Loader.Classes.Globals
             }
             else {
                 AddMod(DefaultMods.BepInEx);
-                AddMod(DefaultMods.UnityExporer);
+                AddMod(DefaultMods.UnityExplorer);
             }
         }
     }

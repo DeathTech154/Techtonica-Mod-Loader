@@ -77,6 +77,7 @@ namespace Techtonica_Mod_Loader.Panels
         public void showMod(Mod mod) {
             modID = mod.id;
             enabledBox.IsChecked = mod.enabled;
+            enabledBox.IsEditable = mod.canBeToggled;
             icon.Source = new BitmapImage(new Uri(mod.iconLink));
             modNameLabel.Text = mod.name;
             modTaglineLabel.Text = mod.tagline;

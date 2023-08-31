@@ -8,8 +8,19 @@
              d:DesignHeight="20" d:DesignWidth="20"
              MouseLeftButtonUp="OnMouseLeftButtonUp">
     <Grid>
-        <Border Background="{DynamicResource lightestBackgroundBrush}" BorderBrush="{DynamicResource yellowBrush}"
-                BorderThickness="1">
+        <Border BorderThickness="1">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="Background" Value="{DynamicResource lightestBackgroundBrush}"/>
+                    <Setter Property="BorderBrush" Value="{DynamicResource yellowBrush}"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=thisControl, Path=IsEditable, UpdateSourceTrigger=PropertyChanged}" Value="False">
+                            <Setter Property="Background" Value="Gray"/>
+                            <Setter Property="BorderBrush" Value="LightGray"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
             <Border Margin="3">
                 <Border.Style>
                     <Style TargetType="Border">
@@ -18,6 +29,15 @@
                             <DataTrigger Binding="{Binding ElementName=thisControl, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}" Value="True">
                                 <Setter Property="Background" Value="{DynamicResource yellowBrush}"/>
                             </DataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=thisControl, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}" Value="True"/>
+                                    <Condition Binding="{Binding ElementName=thisControl, Path=IsEditable, UpdateSourceTrigger=PropertyChanged}" Value="False"/>
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="Background" Value="LightGray"/>
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Border.Style>
