@@ -17,8 +17,8 @@ namespace Techtonica_Mod_Loader.Classes.Globals
 
         // Public Functions
 
-        public static void addMod(Mod mod) {
-            if (!doesModExist(mod.id)){
+        public static void AddMod(Mod mod) {
+            if (!DoesModExist(mod.id)){
                 mods.Add(mod.id, mod);
             }
             else {
@@ -28,8 +28,8 @@ namespace Techtonica_Mod_Loader.Classes.Globals
             }
         }
 
-        public static void updateModDetails(Mod mod) {
-            if (doesModExist(mod.id)) {
+        public static void UpdateModDetails(Mod mod) {
+            if (DoesModExist(mod.id)) {
                 mods[mod.id] = mod;
             }
             else {
@@ -39,8 +39,8 @@ namespace Techtonica_Mod_Loader.Classes.Globals
             }
         }
 
-        public static Mod getMod(string id) {
-            if (doesModExist(id)) {
+        public static Mod GetMod(string id) {
+            if (DoesModExist(id)) {
                 return mods[id];
             }
             else {
@@ -51,7 +51,7 @@ namespace Techtonica_Mod_Loader.Classes.Globals
             }
         }
 
-        public static bool doesModExist(string id) {
+        public static bool DoesModExist(string id) {
             return mods.ContainsKey(id);
         }
 
@@ -59,22 +59,22 @@ namespace Techtonica_Mod_Loader.Classes.Globals
 
         // Data Functions
 
-        public static void save() {
+        public static void Save() {
             string json = JsonConvert.SerializeObject(mods.Values.ToList());
             File.WriteAllText(ProgramData.Paths.modsFile, json);
         }
 
-        public static void load() {
+        public static void Load() {
             if (File.Exists(ProgramData.Paths.modsFile)) {
                 string json = File.ReadAllText(ProgramData.Paths.modsFile);
                 List<Mod> modsFromFile = JsonConvert.DeserializeObject<List<Mod>>(json);
                 foreach(Mod mod in modsFromFile) {
-                    addMod(mod);
+                    AddMod(mod);
                 }
             }
             else {
-                addMod(DefaultMods.BepInEx);
-                addMod(DefaultMods.UnityExporer);
+                AddMod(DefaultMods.BepInEx);
+                AddMod(DefaultMods.UnityExporer);
             }
         }
     }

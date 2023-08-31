@@ -18,7 +18,7 @@ namespace Techtonica_Mod_Loader.Windows
     {
         public WarningWindow(WarningType type, string title, string description, string closeButtonText)
         {
-            GuiUtils.showShader();
+            GuiUtils.ShowShader();
             Owner = Application.Current.MainWindow;
             InitializeComponent();
 
@@ -48,31 +48,31 @@ namespace Techtonica_Mod_Loader.Windows
         // Events
 
         private void OnCloseClicked(object sender, EventArgs e) {
-            GuiUtils.hideShader();
+            GuiUtils.HideShader();
             Close();
         }
 
         // Return Functions
 
-        private string result;
-        private string getResult() { return result; }
+        private readonly string result = "";
+        private string GetResult() { return result; }
 
-        public static string showInfo(string title, string description, string closeButtonText) {
-            WarningWindow window = new WarningWindow(WarningType.info, title, description, closeButtonText);
+        public static string ShowInfo(string title, string description, string closeButtonText) {
+            WarningWindow window = new(WarningType.info, title, description, closeButtonText);
             window.ShowDialog();
-            return window.getResult();
+            return window.GetResult();
         }
 
-        public static string showWarning(string title, string description, string closeButtonText) {
-            WarningWindow window = new WarningWindow(WarningType.warning, title, description, closeButtonText);
+        public static string ShowWarning(string title, string description, string closeButtonText) {
+            WarningWindow window = new(WarningType.warning, title, description, closeButtonText);
             window.ShowDialog();
-            return window.getResult();
+            return window.GetResult();
         }
 
-        public static string showError(string title, string description, string closeButtonText) {
-            WarningWindow window = new WarningWindow(WarningType.error, title, description, closeButtonText);
+        public static string ShowError(string title, string description, string closeButtonText) {
+            WarningWindow window = new(WarningType.error, title, description, closeButtonText);
             window.ShowDialog();
-            return window.getResult();
+            return window.GetResult();
         }
     }
 

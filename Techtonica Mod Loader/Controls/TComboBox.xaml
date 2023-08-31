@@ -6,8 +6,8 @@
              xmlns:local="clr-namespace:Techtonica_Mod_Loader.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="40" d:DesignWidth="200"
-             MouseLeftButtonUp="comboBoxMouseLeftButtonUp"
-             MouseLeave="comboBoxMouseLeave">
+             MouseLeftButtonUp="OnComboBoxMouseLeftButtonUp"
+             MouseLeave="OnComboBoxMouseLeave">
     <Grid>
         <Border Background="{DynamicResource lightestBackgroundBrush}" BorderBrush="{DynamicResource yellowBrush}"
                 BorderThickness="1"/>
@@ -34,7 +34,7 @@
             <!--Items Popup-->
             <Popup x:Name="itemsPopup" Placement="Bottom"
                    Width="{Binding ElementName=thisControl, Path=ActualWidth, UpdateSourceTrigger=PropertyChanged}"
-                   MouseLeave="comboBoxMouseLeave">
+                   MouseLeave="OnComboBoxMouseLeave">
                 <Border Background="{DynamicResource lightestBackgroundBrush}" BorderBrush="{DynamicResource yellowBrush}"
                         BorderThickness="1" MaxHeight="120">
                     <ScrollViewer>

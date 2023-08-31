@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Techtonica_Mod_Loader.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="20" d:DesignWidth="20"
-             MouseLeftButtonUp="mouseLeftButtonUp">
+             MouseLeftButtonUp="OnMouseLeftButtonUp">
     <Grid>
         <Border Background="{DynamicResource lightestBackgroundBrush}" BorderBrush="{DynamicResource yellowBrush}"
                 BorderThickness="1">

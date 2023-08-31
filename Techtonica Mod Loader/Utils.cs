@@ -50,28 +50,28 @@ namespace Techtonica_Mod_Loader
 
     public static class GuiUtils 
     {
-        public static void showShader() {
+        public static void ShowShader() {
             MainWindow.current.shader.Visibility = System.Windows.Visibility.Visible;
         }
 
-        public static void hideShader() {
+        public static void HideShader() {
             MainWindow.current.shader.Visibility = System.Windows.Visibility.Hidden;
         }
 
-        public static void showInfoMessage(string title, string description, string closeButtonText = "Close") {
-            WarningWindow.showInfo(title, description, closeButtonText);
+        public static void ShowInfoMessage(string title, string description, string closeButtonText = "Close") {
+            WarningWindow.ShowInfo(title, description, closeButtonText);
         }
 
-        public static void showWarningMessage(string title, string description, string closeButtonText = "Close") {
-            WarningWindow.showWarning(title, description, closeButtonText);
+        public static void ShowWarningMessage(string title, string description, string closeButtonText = "Close") {
+            WarningWindow.ShowWarning(title, description, closeButtonText);
         }
 
-        public static void showErrorMessage(string title, string description, string closeButtonText = "Close") {
-            WarningWindow.showError(title, description, closeButtonText);
+        public static void ShowErrorMessage(string title, string description, string closeButtonText = "Close") {
+            WarningWindow.ShowError(title, description, closeButtonText);
         }
 
-        public static bool getUserConfirmation(string title, string description) {
-            return GetYesNoWindow.getYesNo(title, description);
+        public static bool GetUserConfirmation(string title, string description) {
+            return GetYesNoWindow.GetYesNo(title, description);
         }
     }
 }

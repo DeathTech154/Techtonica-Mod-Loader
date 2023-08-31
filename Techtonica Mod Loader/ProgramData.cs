@@ -38,33 +38,6 @@ namespace Techtonica_Mod_Loader
         }
         public static bool skipLoadingScreenDelay = false;
 
-        public static class Paths 
-        {
-            // Folders
-            public static string dataFolder {
-                get {
-                    if (!isDebugBuild) {
-                        return $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\Techtonica-Mod-Loader Data";
-                    }
-                    else {
-                        return $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\Techtonica-Mod-Loader Data - Debug";
-                    }
-                }
-            }
-            public static string modsFolder = $"{dataFolder}\\Mods";
-            public static string resourcesFolder = $"{dataFolder}\\Resources";
-
-            // Files
-            public static string settingsFile = $"{dataFolder}\\Settings.json";
-            public static string profilesFile = $"{dataFolder}\\Profiles.json";
-            public static string modsFile = $"{dataFolder}\\Mods.json";
-
-            public static void createFolderStructure() {
-                Directory.CreateDirectory(dataFolder);
-                Directory.CreateDirectory(modsFolder);
-                Directory.CreateDirectory(resourcesFolder);
-            }
-        }
         public static MainWindow current => (MainWindow)Application.Current.MainWindow;
         public static string GameLocation;
         public static Brush LaunchVanillaDisabledBrush = new SolidColorBrush(Colors.DarkRed);
@@ -99,5 +72,33 @@ namespace Techtonica_Mod_Loader
             "Dependencies/BepInEx/BepInEx/core/MonoMod.Utils.dll",
             "Dependencies/BepInEx/BepInEx/core/MonoMod.Utils.xml"
         };
+
+        public static class Paths
+        {
+            // Folders
+            public static string dataFolder {
+                get {
+                    if (!isDebugBuild) {
+                        return $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\Techtonica-Mod-Loader Data";
+                    }
+                    else {
+                        return $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\Techtonica-Mod-Loader Data - Debug";
+                    }
+                }
+            }
+            public static string modsFolder = $"{dataFolder}\\Mods";
+            public static string resourcesFolder = $"{dataFolder}\\Resources";
+
+            // Files
+            public static string settingsFile = $"{dataFolder}\\Settings.json";
+            public static string profilesFile = $"{dataFolder}\\Profiles.json";
+            public static string modsFile = $"{dataFolder}\\Mods.json";
+
+            public static void CreateFolderStructure() {
+                Directory.CreateDirectory(dataFolder);
+                Directory.CreateDirectory(modsFolder);
+                Directory.CreateDirectory(resourcesFolder);
+            }
+        }
     }
 }

@@ -31,7 +31,7 @@ namespace Techtonica_Mod_Loader.Panels
 
         public InstalledModPanel(string modID) {
             InitializeComponent();
-            showMod(ModManager.getMod(modID));
+            showMod(ModManager.GetMod(modID));
         }
 
         public InstalledModPanel(Mod mod) {
@@ -46,30 +46,30 @@ namespace Techtonica_Mod_Loader.Panels
         // Events
 
         private void EnabledToggled(object sender, EventArgs e) {
-            Mod mod = ModManager.getMod(modID);
+            Mod mod = ModManager.GetMod(modID);
             mod.enabled = enabledBox.IsChecked;
-            ModManager.updateModDetails(mod);
+            ModManager.UpdateModDetails(mod);
             
             if (mod.enabled) {
-                mod.install();
+                mod.Install();
             }
             else {
-                mod.uninstall();
+                mod.Uninstall();
             }
         }
 
         private void DeleteModClicked(object sender, EventArgs e) {
             // ToDo: Elliot - Get Confirmation
-            Mod mod = ModManager.getMod(modID);
+            Mod mod = ModManager.GetMod(modID);
             if (mod.enabled) {
-                mod.uninstall();
+                mod.Uninstall();
             }
 
             File.Delete(mod.zipFileLocation);
         }
 
         private void ViewModPageClicked(object sender, EventArgs e) {
-            Process.Start(ModManager.getMod(modID).link);
+            Process.Start(ModManager.GetMod(modID).link);
         }
 
         // Public Functions
