@@ -20,6 +20,7 @@
   <ItemGroup>
     <None Remove="Background.jpg" />
     <None Remove="Controls\BepInEx.png" />
+    <None Remove="Logo.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +31,7 @@
 
   <ItemGroup>
     <Resource Include="Background.jpg" />
+    <Resource Include="Logo.png" />
   </ItemGroup>
 
 </Project>

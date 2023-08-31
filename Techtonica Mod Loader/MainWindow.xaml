@@ -5,103 +5,108 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Techtonica_Mod_Loader"
         xmlns:Controls="clr-namespace:Techtonica_Mod_Loader.Controls"
+        xmlns:Panels="clr-namespace:Techtonica_Mod_Loader.Panels"
         xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf" x:Class="Techtonica_Mod_Loader.MainWindow"
         mc:Ignorable="d"
-        Title="Techtonica Mod Loader" Height="450" Width="800" WindowStartupLocation="CenterScreen"
+        Title="Techtonica Mod Loader" Height="675" Width="1200" WindowStartupLocation="CenterScreen"
         Loaded="OnProgramLoaded" Closing="OnProgramClosing">
     <Window.Background>
         <ImageBrush ImageSource="Background.jpg"/>
     </Window.Background>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="150"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+        <Panels:LoadingScreen x:Name="loader" Visibility="Hidden"/>
+        <Grid x:Name="mainGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="150"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
 
-        <!--Top Panels-->
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            
-            <!--Buttons Panel-->
-            <Border Background="{DynamicResource darkBackgroundBrush}" CornerRadius="5" Margin="10,10,5,5">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <Controls:TFancyButton ButtonText="Launch Game" Margin="10,10,10,5"/>
-                    <Controls:TFancyButton ButtonText="Settings" Margin="10,5,10,10" Grid.Row="1" Height="40"/>
-                </Grid>
-            </Border>
+            <!--Top Panels-->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
-            <!--Mods To Show Panel-->
-            <Border Background="{DynamicResource darkBackgroundBrush}" CornerRadius="5" Margin="5,10,10,5" Grid.Column="1">
-                <Grid Margin="5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
+                <!--Buttons Panel-->
+                <Border Background="{DynamicResource darkBackgroundBrush}" CornerRadius="5" Margin="10,10,5,5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Controls:TFancyButton ButtonText="Launch Game" Margin="10,10,10,5"/>
+                        <Controls:TFancyButton ButtonText="Settings" Margin="10,5,10,10" Grid.Row="1" Height="40"/>
+                    </Grid>
+                </Border>
 
-                    <!--Profile-->
-                    <TextBlock Text="Profile: " Foreground="White" FontSize="16"
+                <!--Mods To Show Panel-->
+                <Border Background="{DynamicResource darkBackgroundBrush}" CornerRadius="5" Margin="5,10,10,5" Grid.Column="1">
+                    <Grid Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <!--Profile-->
+                        <TextBlock Text="Profile: " Foreground="White" FontSize="16"
                                HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <Controls:TComboBox x:Name="profilesBox" Width="200" Height="34" HorizontalAlignment="Right" Grid.Column="1"
+                        <Controls:TComboBox x:Name="profilesBox" Width="200" Height="34" HorizontalAlignment="Right" Grid.Column="1"
                                         SelectedItemChanged="OnSelectedProfileChanged"/>
-                    
-                    <!--Showing-->
-                    <TextBlock Text="Showing: " Foreground="White" FontSize="16"
+
+                        <!--Showing-->
+                        <TextBlock Text="Showing: " Foreground="White" FontSize="16"
                                HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1"/>
-                    <Controls:TComboBox x:Name="showingBox" Width="200" Height="34" HorizontalAlignment="Right"
+                        <Controls:TComboBox x:Name="showingBox" Width="200" Height="34" HorizontalAlignment="Right"
                                         Grid.Row="1" Grid.Column="1"
                                         SelectedItemChanged="OnModsToShowChanged"/>
-                    
-                    <!--Search-->
-                    <Controls:TTextBox Hint="Search..." Grid.Row="2" Height="34" Margin="65,0,8,0" Grid.Column="0"/>
-                    <TextBlock Text="Search: " Foreground="White" FontSize="16" Margin="5,0"
+
+                        <!--Search-->
+                        <Controls:TTextBox Hint="Search..." Grid.Row="2" Height="34" Margin="65,0,8,0" Grid.Column="0"/>
+                        <TextBlock Text="Search: " Foreground="White" FontSize="16" Margin="5,0"
                                HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2"/>
-                    <Controls:TComboBox x:Name="sortBox" 
+                        <Controls:TComboBox x:Name="sortBox" 
                                         Width="200" Height="34" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="1"
                                         SelectedItemChanged="OnSortOptionChanged"/>
 
+                    </Grid>
+                </Border>
+
+            </Grid>
+
+            <!--Mod List-->
+            <Border Background="{DynamicResource darkBackgroundBrush}" CornerRadius="5"
+                Grid.Row="1" Margin="10,5,10,10">
+                <Grid>
+                    <Label Content="Mod List" FontSize="16" Foreground="White" 
+                       BorderBrush="{DynamicResource yellowBrush}" BorderThickness="0,0,0,1" Margin="5,0"
+                       VerticalAlignment="Top"/>
+                    <ScrollViewer x:Name="modsScroller" Margin="5,38,5,5">
+                        <StackPanel x:Name="modsPanel"/>
+                    </ScrollViewer>
                 </Grid>
             </Border>
 
-        </Grid>
+            <!--Dev Grid-->
+            <Grid Visibility="Hidden">
+                <Wpf:WebView2 Grid.ColumnSpan="2" Height="100" Width="100" Visibility="Hidden"/>
+                <Canvas x:Name="Canvas_Launch_Options" HorizontalAlignment="Left" Height="150" VerticalAlignment="Top" Width="150" Grid.ColumnSpan="2" RenderTransformOrigin="0.01,0.013">
+                    <Button x:Name="Check_for_updates_" Content="Check for updates!" Width="150" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Check_For_Updates_Click"/>
 
-        <!--Mod List-->
-        <Border Background="{DynamicResource darkBackgroundBrush}" CornerRadius="5"
-                Grid.Row="1" Margin="10,5,10,10">
-            <Grid>
-                <Label Content="Mod List" FontSize="16" Foreground="White" 
-                       BorderBrush="{DynamicResource yellowBrush}" BorderThickness="0,0,0,1" Margin="5,0"
-                       VerticalAlignment="Top"/>
-                <ScrollViewer x:Name="modsScroller" Margin="5,38,5,5">
-                    <StackPanel x:Name="modsPanel"/>
-                </ScrollViewer>
+                    <Button x:Name="Button_Launch_Modded" Content="Launch with mods" Height="26" Width="150" IsDefault="True" Background="#FF18CD49" Canvas.Left="0" Canvas.Top="45" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Button x:Name="Button_Launch_Vanilla" Content="Launch without mods" Height="25" Width="150" Background="#FFFF0808" Foreground="White" Canvas.Left="0" Canvas.Top="20" Click="Button_Launch_Vanilla_Click" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                </Canvas>
             </Grid>
-        </Border>
 
-        <!--Dev Grid-->
-        <Grid Visibility="Hidden">
-            <Wpf:WebView2 Grid.ColumnSpan="2" Height="100" Width="100" Visibility="Hidden"/>
-            <Canvas x:Name="Canvas_Launch_Options" HorizontalAlignment="Left" Height="150" VerticalAlignment="Top" Width="150" Grid.ColumnSpan="2" RenderTransformOrigin="0.01,0.013">
-                <Button x:Name="Check_for_updates_" Content="Check for updates!" Width="150" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Check_For_Updates_Click"/>
+            <!--Shader-->
+            <Rectangle x:Name="shader" Fill="Black" Opacity="0.7" Grid.RowSpan="2" Visibility="Hidden"/>
 
-                <Button x:Name="Button_Launch_Modded" Content="Launch with mods" Height="26" Width="150" IsDefault="True" Background="#FF18CD49" Canvas.Left="0" Canvas.Top="45" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <Button x:Name="Button_Launch_Vanilla" Content="Launch without mods" Height="25" Width="150" Background="#FFFF0808" Foreground="White" Canvas.Left="0" Canvas.Top="20" Click="Button_Launch_Vanilla_Click" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            </Canvas>
         </Grid>
-
-        <!--Shader-->
-        <Rectangle x:Name="shader" Fill="Black" Opacity="0.7" Grid.RowSpan="2" Visibility="Hidden"/>
-
     </Grid>
+    
 </Window>

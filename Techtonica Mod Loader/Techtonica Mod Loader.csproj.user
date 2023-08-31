@@ -28,6 +28,9 @@
     <Compile Update="Panels\InstalledModPanel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Panels\LoadingScreen.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Panels\OnlineModPanel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -61,6 +64,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Panels\InstalledModPanel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Panels\LoadingScreen.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Panels\OnlineModPanel.xaml">

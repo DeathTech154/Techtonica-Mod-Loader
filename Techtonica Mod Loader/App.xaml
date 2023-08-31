@@ -19,8 +19,6 @@
         <Color x:Key="darkText">#22164F</Color>
         <Color x:Key="orangeText">#F4B819</Color>
 
-        <BitmapImage x:Key="BepInExLogo" UriSource="/BepInEx.png" />
-
         <!--Brushes-->
         <SolidColorBrush x:Key="darkBackgroundBrush" Color="{DynamicResource darkBackground}"/>
         <SolidColorBrush x:Key="lightBackgroundBrush" Color="{DynamicResource lightBackground}"/>
