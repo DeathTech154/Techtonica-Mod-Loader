@@ -35,24 +35,6 @@ namespace Techtonica_Mod_Loader
             InitializeComponent();
         }
 
-        // DeathTech: TODO: Push to seperate file.
-        // LocalPath = "C:/Filename.ext"
-        public static ProgramData.EnumDownloadStatus DownloadFile(string RemoteURL, string LocalPath)
-        {
-            try
-            {
-                WebClient webClient = new WebClient();
-                webClient.Headers.Add("Accept: text/html, application/xhtml+xml, */*");
-                webClient.Headers.Add("User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)");
-                webClient.DownloadFileAsync(new Uri(RemoteURL), LocalPath);
-                webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Dependencies.Dependency.DownloadFileCallback);
-            }
-            catch
-            {
-                return ProgramData.EnumDownloadStatus.FAIL;
-            }
-            return ProgramData.EnumDownloadStatus.DOWNLOADING;
-        }
         // Objects & Variables
 
         public static MainWindow current => (MainWindow)Application.Current.MainWindow;
@@ -71,11 +53,11 @@ namespace Techtonica_Mod_Loader
             mainGrid.Visibility = Visibility.Hidden;
 
             DebugUtils.SendDebugLine("Logtest!");
-            ProgramData.Paths.CreateFolderStructure();
+            FileStructureUtils.CreateFolderStructure();
             LoadData();
             InitialiseGUI();
 
-            if (!ProgramData.skipLoadingScreenDelay) {
+            if (!ProgramData.skipLoadingScreenDelay && ProgramData.isDebugBuild) {
                 await Task.Delay(3000); // Let users bask in the glory of the loading screen
             }
 
@@ -100,6 +82,7 @@ namespace Techtonica_Mod_Loader
                 DebugUtils.SendDebugLine(SteamPath);
                 GameLocation = SteamPath + @"/steamapps/common/Techtonica";
                 DebugUtils.SendDebugLine(GameLocation);
+                ProgramData.Paths.gameFolder = GameLocation;
             }
             else {
                 DebugUtils.SendDebugLine("Error: Failed to obtain steam path. Disabling launch.");
@@ -117,7 +100,23 @@ namespace Techtonica_Mod_Loader
             };
             if(reader.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
                 string selectedZip = reader.FileName;
-                // ToDo: DeathTech - Install from local zip file.
+                string name = System.IO.Path.GetFileName(selectedZip).Replace(".zip", "");
+
+                Mod mod = new Mod() {
+                    id = $"com.localfile.{name}",
+                    name = name,
+                    tagline = "Unknown mod installed from local file",
+                    enabled = true,
+                    iconLink = $"{ProgramData.Paths.resourcesFolder}/UnknownModIcon.png",
+                    zipFileLocation = selectedZip
+                };
+                ModManager.AddMod(mod);
+
+                Profile profile = ProfileManager.GetActiveProfile();
+                profile.AddMod(mod.id);
+                mod.Install();
+
+                LoadInstalledModList();
             }
         }
 
@@ -241,11 +240,11 @@ namespace Techtonica_Mod_Loader
         }
 
         private void AddInstalledModToModList(string modID) {
-            modsPanel.Children.Add(new InstalledModPanel(modID));
+            modsPanel.Children.Add(new InstalledModPanel(modID) { Margin = new Thickness(4, 4, 4, 0) });
         }
 
         private void AddOnlineModToModList(Mod mod) {
-            modsPanel.Children.Add(new OnlineModPanel(mod));
+            modsPanel.Children.Add(new OnlineModPanel(mod) { Margin = new Thickness(4, 4, 4, 0) });
         }
     }
 }

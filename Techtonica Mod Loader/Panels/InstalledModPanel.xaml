@@ -20,7 +20,7 @@
             </Grid.ColumnDefinitions>
 
             <TControls:TCheckBox x:Name="enabledBox" Width="30" Height="30"
-                             IsCheckedChanged="EnabledToggled"/>
+                                 IsCheckedChanged="EnabledToggled"/>
             <Image x:Name="icon" 
                    Width="36" Height="36"
                    Grid.Column="1" Margin="5"/>

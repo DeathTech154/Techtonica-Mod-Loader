@@ -12,7 +12,7 @@ namespace Techtonica_Mod_Loader.Classes.Globals
         public static Mod BepInEx = new Mod() { // ToDo: Set BepInEx missing / wrong details
             id = "bepinex",
             name = "BepInEx",
-            version = "",
+            version = Version.Parse("5.4.21"),
             tagline = "Enables use of mods in Unity games.",
             description = "",
             iconLink = "https://avatars2.githubusercontent.com/u/39589027?s=256",
@@ -29,7 +29,7 @@ namespace Techtonica_Mod_Loader.Classes.Globals
         public static Mod UnityExplorer = new Mod() { // ToDo: Set Unity Explorer missing / wrong details
             id = "unityExplorer",
             name = "Unity Explorer",
-            version = "",
+            version = Version.Parse("1.0.0"),
             tagline = "",
             description = "",
             iconLink = "",

@@ -20,6 +20,7 @@ namespace Techtonica_Mod_Loader.Classes.Globals
         public static void AddMod(Mod mod) {
             if (!DoesModExist(mod.id)){
                 mods.Add(mod.id, mod);
+                Save();
             }
             else {
                 string error = $"Cannot add mod ({mod.name}), id: ({mod.id}), already exists.";
@@ -31,6 +32,7 @@ namespace Techtonica_Mod_Loader.Classes.Globals
         public static void UpdateModDetails(Mod mod) {
             if (DoesModExist(mod.id)) {
                 mods[mod.id] = mod;
+                Save();
             }
             else {
                 string error = $"Could not update details of mod ({mod.id}: {mod.name}), does not exist";

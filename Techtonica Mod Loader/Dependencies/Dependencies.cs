@@ -45,16 +45,16 @@ namespace Techtonica_Mod_Loader.Dependencies
 
         public static int HandleDependencies(ProgramData.DependencyStatusEnum Status)
         {
-            if (Status == ProgramData.DependencyStatusEnum.MissingBepFolder)
-            {
-                GenerateBepFolders();
-                ProgramData.EnumDownloadStatus ZipDownloadStatus;
-                ZipDownloadStatus = MainWindow.DownloadFile("https://github.com/BepInEx/BepInEx/releases/download/v5.4.21/BepInEx_x64_5.4.21.0.zip", ProgramData.BepFullPath);
-                if (ZipDownloadStatus == ProgramData.EnumDownloadStatus.FAIL)
-                {
-                    DebugUtils.SendDebugLine("Downloading BepInEx failed somehow.");
-                }
-            }
+            //if (Status == ProgramData.DependencyStatusEnum.MissingBepFolder)
+            //{
+            //    GenerateBepFolders();
+            //    ProgramData.EnumDownloadStatus ZipDownloadStatus;
+            //    ZipDownloadStatus = MainWindow.DownloadFile("https://github.com/BepInEx/BepInEx/releases/download/v5.4.21/BepInEx_x64_5.4.21.0.zip", ProgramData.BepFullPath);
+            //    if (ZipDownloadStatus == ProgramData.EnumDownloadStatus.FAIL)
+            //    {
+            //        DebugUtils.SendDebugLine("Downloading BepInEx failed somehow.");
+            //    }
+            //}
             return 0;
         }
 

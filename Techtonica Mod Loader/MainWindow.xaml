@@ -37,7 +37,7 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <Controls:TFancyButton ButtonText="Launch Game" Margin="10,0"/>
-                        <Controls:TFancyButton ButtonText="Install From File" Grid.Row="1" Width="165" Height="40"/>
+                        <Controls:TFancyButton ButtonText="Install From File" Grid.Row="1" Width="165" Height="40" LeftClicked="OnInstallFromFileClicked"/>
                         <Controls:TFancyButton ButtonText="Settings" Margin="10,0" Grid.Row="2" Height="40"/>
                     </Grid>
                 </Border>
