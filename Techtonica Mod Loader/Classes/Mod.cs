@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms.VisualStyles;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using System.Windows.Shell;
 using Techtonica_Mod_Loader.Classes.Globals;
 using Techtonica_Mod_Loader.Panels;
 
@@ -22,7 +23,7 @@ namespace Techtonica_Mod_Loader.Classes
     {
         public string id;
         public string name;
-        public Version version;
+        public ModVersion version;
         public string tagline;
         public string description;
 
@@ -36,6 +37,7 @@ namespace Techtonica_Mod_Loader.Classes
 
         public string zipFileDownloadLink;
         public string zipFileLocation;
+        public string configFileLocation;
         public List<string> installedFiles = new List<string>();
         public bool enabled;
         public bool canBeToggled = true;
@@ -99,6 +101,10 @@ namespace Techtonica_Mod_Loader.Classes
             return string.IsNullOrEmpty(link);
         }
 
+        public bool HasConfigFile() {
+            return !string.IsNullOrEmpty(configFileLocation);
+        }
+
         // Private Functions
 
         private bool CheckForZipFile() {
@@ -156,6 +162,9 @@ namespace Techtonica_Mod_Loader.Classes
                     Directory.CreateDirectory(Path.GetDirectoryName(entryFilePath));
                     if (!entryFilePath.EndsWith("/")) {
                         entry.ExtractToFile(entryFilePath, true);
+                        if(entryFilePath.EndsWith(".cfg")) {
+                            configFileLocation = entryFilePath.Replace(ProgramData.Paths.unzipFolder, ProgramData.Paths.gameFolder);
+                        }
                     }
                 }
             }
@@ -167,15 +176,15 @@ namespace Techtonica_Mod_Loader.Classes
         }
     }
 
-    public struct Version {
+    public struct ModVersion {
         public int major;
         public int minor;
         public int build;
 
-        public static Version Parse(string input) {
+        public static ModVersion Parse(string input) {
             try {
                 string[] parts = input.Split('.');
-                return new Version() {
+                return new ModVersion() {
                     major = int.Parse(parts[0]),
                     minor = int.Parse(parts[1]),
                     build = int.Parse(parts[2]),
@@ -185,7 +194,7 @@ namespace Techtonica_Mod_Loader.Classes
                 string error = $"Error occurred while parsing Version '{input}': {e.Message}";
                 DebugUtils.SendDebugLine(error);
                 DebugUtils.CrashIfDebug(error);
-                return new Version() {
+                return new ModVersion() {
                     major = 0,
                     minor = 0,
                     build = 0

@@ -5,9 +5,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Newtonsoft.Json;
+using Techtonica_Mod_Loader.Classes;
 
-namespace Techtonica_Mod_Loader.Classes.Globals
+namespace Techtonica_Mod_Loader
 {
     public static class ModManager
     {
@@ -38,6 +40,15 @@ namespace Techtonica_Mod_Loader.Classes.Globals
                 string error = $"Could not update details of mod ({mod.id}: {mod.name}), does not exist";
                 DebugUtils.SendDebugLine($"Error: {error}");
                 DebugUtils.CrashIfDebug(error);
+            }
+        }
+
+        public static void AddOrUpdateMod(Mod mod) {
+            if (!DoesModExist(mod)) {
+                AddMod(mod);
+            }
+            else {
+                UpdateModDetails(mod);
             }
         }
 
@@ -79,5 +90,17 @@ namespace Techtonica_Mod_Loader.Classes.Globals
                 AddMod(DefaultMods.UnityExplorer);
             }
         }
+
+        #region Overloads
+
+        // Public Functions
+
+        public static bool DoesModExist(Mod mod) {
+            return DoesModExist(mod.id);
+        }
+
+        // Private Functions
+
+        #endregion
     }
 }

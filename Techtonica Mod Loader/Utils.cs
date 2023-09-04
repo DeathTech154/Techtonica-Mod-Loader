@@ -24,9 +24,8 @@ namespace Techtonica_Mod_Loader
         }
     }
   
-    public static class StringUtils
+    public static partial class StringUtils
     {
-        // DeathTech: TODO: Push this to a utiltiy section.
         public static string RemoveFromBack(string Original, int Entries, string Seperator)
         {
             string[] Splited = Original.Split(Seperator);

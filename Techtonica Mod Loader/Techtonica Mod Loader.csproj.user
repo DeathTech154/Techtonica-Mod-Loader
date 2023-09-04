@@ -25,10 +25,31 @@
     <Compile Update="Controls\TTextBox.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Panels\ConfigOptionPanels\BooleanOptionPanel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Panels\ConfigOptionPanels\DoubleOptionPanel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Panels\ConfigOptionPanels\FloatOptionPanel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Panels\ConfigOptionPanels\IntOptionPanel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Panels\ConfigOptionPanels\StringOptionPanel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Panels\InstalledModPanel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Panels\LoadingScreen.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Panels\ModConfigPanel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Panels\ModListPanel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Panels\OnlineModPanel.xaml.cs">
@@ -63,10 +84,31 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Panels\ConfigOptionPanels\BooleanOptionPanel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Panels\ConfigOptionPanels\DoubleOptionPanel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Panels\ConfigOptionPanels\FloatOptionPanel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Panels\ConfigOptionPanels\IntOptionPanel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Panels\ConfigOptionPanels\StringOptionPanel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Panels\InstalledModPanel.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Panels\LoadingScreen.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Panels\ModConfigPanel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Panels\ModListPanel.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Panels\OnlineModPanel.xaml">

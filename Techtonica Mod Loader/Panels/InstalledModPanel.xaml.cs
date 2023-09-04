@@ -59,7 +59,10 @@ namespace Techtonica_Mod_Loader.Panels
         }
 
         private void OnConfigureClicked(object sender, EventArgs e) {
-            // ToDo: Elliot - Configure mod
+            Mod mod = ModManager.GetMod(modID);
+            ModConfig config = ModConfig.FromFile(mod.configFileLocation);
+            ModConfig.activeConfig = config;
+            MainWindow.current.mainBorder.Child = new ModConfigPanel(config, mod.name);
         }
 
         private void ViewModPageClicked(object sender, EventArgs e) {
@@ -85,6 +88,14 @@ namespace Techtonica_Mod_Loader.Panels
             modNameLabel.Text = mod.name;
             modTaglineLabel.Text = mod.tagline;
             icon.Source = new BitmapImage(new Uri(mod.iconLink));
+
+            if (!mod.HasConfigFile()) {
+                HideConfigureColumn();
+            }
+
+            if (mod.IsLocal()) {
+                HideViewModPageColumn();
+            }
         }
 
         // Private Functions
@@ -92,6 +103,11 @@ namespace Techtonica_Mod_Loader.Panels
         private void HideConfigureColumn() {
             mainGrid.Children.Remove(configureButton);
             configureColumn.Width = new GridLength(0);
+        }
+
+        private void HideViewModPageColumn() {
+            mainGrid.Children.Remove(viewModPageButton);
+            viewModPageColumn.Width = new GridLength(0);
         }
     }
 }
