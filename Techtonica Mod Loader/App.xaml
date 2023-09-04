@@ -4,12 +4,11 @@
              xmlns:local="clr-namespace:Techtonica_Mod_Loader"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
-        <!--Colours-->
+
         <Color x:Key="darkBackground">#161626</Color>
-        <Color x:Key="lightBackground">#222238</Color>
-        <Color x:Key="lightestBackground">#282850</Color>
-        
+        <Color x:Key="lightBackground">#303040</Color>
+        <Color x:Key="lightestBackground">#3A3A58</Color>
+
         <Color x:Key="orangeDim">#442E37</Color>
         <Color x:Key="orangeMid">#5B4136</Color>
         <Color x:Key="orangeBright">#795933</Color>
@@ -32,6 +31,20 @@
 
         <SolidColorBrush x:Key="darkTextBrush" Color="{DynamicResource darkText}"/>
         <SolidColorBrush x:Key="orangeTextBrush" Color="{DynamicResource orangeText}"/>
+
+        <!--Styles-->
+        <Style x:Key="titleStyle" TargetType="Label">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource yellowBrush}"/>
+            <Setter Property="BorderThickness" Value="0,0,0,2"/>
+        </Style>
+        <Style x:Key="textStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
 
         <!--region ScrollViewer Style-->
 

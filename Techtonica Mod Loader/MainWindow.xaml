@@ -82,17 +82,7 @@
             </Grid>
 
             <!--Mod List-->
-            <Border Background="{DynamicResource darkBackgroundBrush}" CornerRadius="5"
-                Grid.Row="1" Margin="10,5,10,10">
-                <Grid>
-                    <Label Content="Mod List" FontSize="16" Foreground="White" 
-                       BorderBrush="{DynamicResource yellowBrush}" BorderThickness="0,0,0,1" Margin="5,0"
-                       VerticalAlignment="Top"/>
-                    <ScrollViewer x:Name="modsScroller" Margin="5,38,5,5">
-                        <StackPanel x:Name="modsPanel"/>
-                    </ScrollViewer>
-                </Grid>
-            </Border>
+            <Border x:Name="mainBorder" Grid.Row="1" Margin="10,5,10,10"/>
 
             <!--Dev Grid-->
             <Grid Visibility="Hidden">

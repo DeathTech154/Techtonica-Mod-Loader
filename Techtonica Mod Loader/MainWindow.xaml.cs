@@ -22,6 +22,7 @@ using System.IO;
 using Techtonica_Mod_Loader.Classes.Globals;
 using Techtonica_Mod_Loader.Classes;
 using Techtonica_Mod_Loader.Panels;
+using System.Windows.Automation;
 
 namespace Techtonica_Mod_Loader
 {
@@ -101,7 +102,6 @@ namespace Techtonica_Mod_Loader
             if(reader.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
                 string selectedZip = reader.FileName;
                 string name = System.IO.Path.GetFileName(selectedZip).Replace(".zip", "");
-
                 Mod mod = new Mod() {
                     id = $"com.localfile.{name}",
                     name = name,
@@ -110,32 +110,29 @@ namespace Techtonica_Mod_Loader
                     iconLink = $"{ProgramData.Paths.resourcesFolder}/UnknownModIcon.png",
                     zipFileLocation = selectedZip
                 };
-                ModManager.AddMod(mod);
-
+                
                 Profile profile = ProfileManager.GetActiveProfile();
-                profile.AddMod(mod.id);
+                if (profile.HasMod(mod)) {
+                    GuiUtils.ShowWarningMessage($"Already Added To Profile: {profile.name}", "You've already installed this mod and added it to this profile.");
+                    return;
+                }
+
+                ModManager.AddOrUpdateMod(mod);
+                profile.AddMod(mod);
                 mod.Install();
 
-                LoadInstalledModList();
+                RefreshModList();
             }
         }
 
         private void OnSelectedProfileChanged(object sender, EventArgs e) {
             Profile chosenProfile = ProfileManager.GetProfileByName(profilesBox.SelectedItem);
             ProfileManager.LoadProfile(chosenProfile);
-            LoadInstalledModList();
+            RefreshModList();
         }
 
         private void OnModsToShowChanged(object sender, EventArgs e) {
-            switch (showingBox.SelectedItem) {
-                case "Downloaded": LoadInstalledModList(); break;
-                case "Online": LoadOnlineModList(); break;
-                default:
-                    string error = $"Cannot show mod set '{showingBox.SelectedItem}'";
-                    DebugUtils.SendDebugLine($"Error: {error}");
-                    DebugUtils.CrashIfDebug(error);
-                    break;
-            }
+            RefreshModList();
         }
 
         private void OnSortOptionChanged(object sender, EventArgs e) {
@@ -197,6 +194,14 @@ namespace Techtonica_Mod_Loader
             return NewString;
         }
 
+        // Public Functions
+
+        public void LoadInstalledModList() {
+            ModListPanel panel = new ModListPanel();
+            panel.LoadInstalledModList();
+            mainBorder.Child = panel;
+        }
+
         // Private Functions
 
         private void CallUpdateWindow() {
@@ -219,32 +224,20 @@ namespace Techtonica_Mod_Loader
 
         private void InitialiseGUI() {
             profilesBox.SetItems(ProfileManager.GetProfileNames());
-            showingBox.SetItems(new List<string>() { "Downloaded", "Online" });
-            sortBox.SetItems(new List<string>() { "Last Updated", "Alphabetical", "Downloads", "Popularity" });
+            showingBox.SetItems(StringUtils.GetAllModListSourceNames());
+            sortBox.SetItems(StringUtils.GetAllModListSortOptionNames());
+
+            LoadInstalledModList();
         }
 
-        private void LoadInstalledModList() {
-            modsPanel.Children.Clear();
-            Profile profile = ProfileManager.GetActiveProfile();
-            foreach(string modID in profile.modIDs) {
-                AddInstalledModToModList(modID);
+        private void RefreshModList() {
+            if(mainBorder.Child is ModListPanel panel) {
+                ModListSource source = StringUtils.GetModListSourceFromName(showingBox.SelectedItem);
+                switch (source) {
+                    case ModListSource.Installed: panel.LoadInstalledModList(); break;
+                    case ModListSource.Online: panel.LoadOnlineModList(); break;
+                }
             }
-        }
-
-        private void LoadOnlineModList() {
-            // ToDo: Elliot - Get modlist from api
-            List<Mod> mods = new List<Mod>();
-            foreach(Mod mod in mods) {
-                AddOnlineModToModList(mod);
-            }
-        }
-
-        private void AddInstalledModToModList(string modID) {
-            modsPanel.Children.Add(new InstalledModPanel(modID) { Margin = new Thickness(4, 4, 4, 0) });
-        }
-
-        private void AddOnlineModToModList(Mod mod) {
-            modsPanel.Children.Add(new OnlineModPanel(mod) { Margin = new Thickness(4, 4, 4, 0) });
         }
     }
 }
