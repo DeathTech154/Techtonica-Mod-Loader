@@ -10,11 +10,13 @@ using System.Linq.Expressions;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using System.Windows.Forms.VisualStyles;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Windows.Shell;
 using Techtonica_Mod_Loader.Classes.Globals;
+using Techtonica_Mod_Loader.Classes.ThunderStoreResponses;
 using Techtonica_Mod_Loader.Panels;
 
 namespace Techtonica_Mod_Loader.Classes
@@ -23,44 +25,88 @@ namespace Techtonica_Mod_Loader.Classes
     {
         public string id;
         public string name;
+        public string author;
         public ModVersion version;
-        public string tagline;
+        public string tagLine;
         public string description;
+        public DateTime dateUpdated;
+        public int ratingScore;
+        public int downloads;
+        public bool isDeprecated;
+        public List<string> categories = new List<string>();
+        public List<string> dependencies = new List<string>();
 
         public string link;
         public string iconLink;
-        public string bannerLink;
-        public string screenshot1Link;
-        public string screenshot2Link;
-        public string screenshot3Link;
-        public string screenshot4Link;
-
+        public string donationLink;
         public string zipFileDownloadLink;
+
         public string zipFileLocation;
         public string configFileLocation;
         public List<string> installedFiles = new List<string>();
+
         public bool enabled;
         public bool canBeToggled = true;
+
+        // Constructors
+
+        public Mod(){}
+        public Mod(ThunderStoreMod thunderStoreMod) {
+            id = thunderStoreMod.uuid4;
+            name = thunderStoreMod.name;
+            author = thunderStoreMod.owner;
+            dateUpdated = DateTime.Parse(thunderStoreMod.date_updated);
+            ratingScore = thunderStoreMod.rating_score;
+            isDeprecated = thunderStoreMod.is_deprecated;
+            categories = thunderStoreMod.categories;
+
+            link = thunderStoreMod.package_url;
+            donationLink = thunderStoreMod.donation_link;
+
+            if (thunderStoreMod.versions.Count > 0) {
+                ThunderStoreVerion versionInfo = thunderStoreMod.versions[0];
+                version = ModVersion.Parse(versionInfo.version_number);
+                tagLine = versionInfo.description;
+                dependencies = versionInfo.dependencies;
+                
+                iconLink = versionInfo.icon;
+                zipFileDownloadLink = versionInfo.download_url;
+            }
+
+            downloads = 0;
+            foreach(ThunderStoreVerion versionInfo in thunderStoreMod.versions) {
+                downloads += versionInfo.downloads;
+            }
+        }
+
+        // Custom Events
+
+        public event EventHandler FinishedDownloading;
+
+        // Events
+
+        private void OnDownloadFinished(object sender, AsyncCompletedEventArgs e) {
+            Install();
+            FinishedDownloading?.Invoke(this, EventArgs.Empty);
+        }
 
         // Public Functions
 
         public void Download() {
             try {
-                string targetLocation = $"{ProgramData.Paths.modsFolder}\\{name}.zip";
+                zipFileLocation = $"{ProgramData.Paths.modsFolder}\\{name}.zip";
 
                 WebClient webClient = new WebClient();
                 webClient.Headers.Add("Accept: text/html, application/xhtml+xml, */*");
                 webClient.Headers.Add("User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)");
-                webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Dependencies.Dependency.DownloadFileCallback);
-                webClient.DownloadFileAsync(new Uri(zipFileDownloadLink), targetLocation);
+                webClient.DownloadFileCompleted += OnDownloadFinished;
+                webClient.DownloadFileAsync(new Uri(zipFileDownloadLink), zipFileLocation);
             }
             catch (Exception e){
                 string error = $"Error occurred while downloading file: {e.Message}";
                 DebugUtils.SendDebugLine(error);
                 DebugUtils.CrashIfDebug(error);
-                // return ProgramData.EnumDownloadStatus.FAIL;
             }
-            //return ProgramData.EnumDownloadStatus.DOWNLOADING;
         }
 
         public void Install() {
@@ -71,9 +117,54 @@ namespace Techtonica_Mod_Loader.Classes
             CopyLocalFileToModsFolder();
             FileStructureUtils.ClearUnzipFolder();
             UnzipToTempFolder();
-            installedFiles = FileStructureUtils.CopyFolder(ProgramData.Paths.unzipFolder, ProgramData.Paths.gameFolder);
+            
+            if(id != ProgramData.bepInExID) {
+                FileStructureUtils.SearchForConfigFile(ProgramData.Paths.unzipFolder, out configFileLocation);
+                if(configFileLocation != "Not Found") {
+                    string newPath = configFileLocation.Replace(Path.GetDirectoryName(configFileLocation), ProgramData.Paths.bepInExConfigFolder);
+                    if (File.Exists(newPath)) {
+                        File.Delete(newPath);
+                    }
+
+                    File.Copy(configFileLocation, newPath);
+                    configFileLocation = newPath;
+                    installedFiles.Add(configFileLocation);
+                }
+
+                string pluginsFolder = $"{ProgramData.Paths.unzipFolder}/plugins";
+                string patchersFolder = $"{ProgramData.Paths.unzipFolder}/patchers";
+                bool hasPluginFiles = Directory.Exists(pluginsFolder);
+                bool hasPatcherFiles = Directory.Exists(patchersFolder);
+
+
+                if (hasPluginFiles) {
+                    List<string> dllFiles = FileStructureUtils.SearchForDllFiles(pluginsFolder);
+                    InstallFiles(dllFiles, ProgramData.Paths.bepInExPluginsFolder);
+                }
+
+                if (hasPatcherFiles) {
+                    List<string> dllFiles = FileStructureUtils.SearchForDllFiles(patchersFolder);
+                    InstallFiles(dllFiles, ProgramData.Paths.bepInExPatchersFolder);
+                }
+
+                if (!hasPluginFiles && !hasPatcherFiles){
+                    List<string> dllFiles = FileStructureUtils.SearchForDllFiles(ProgramData.Paths.unzipFolder);
+                    InstallFiles(dllFiles, ProgramData.Paths.bepInExPluginsFolder);
+                }
+
+                FileStructureUtils.ClearUnzipFolder();
+            }
+            else {
+                canBeToggled = false;
+                installedFiles = FileStructureUtils.CopyFolder($"{ProgramData.Paths.unzipFolder}/BepInExPack", ProgramData.Paths.gameFolder);
+                FileStructureUtils.ClearUnzipFolder();
+            }
+
+            enabled = true;
             ModManager.UpdateModDetails(this);
-            FileStructureUtils.ClearUnzipFolder();
+            Profile profile = ProfileManager.GetActiveProfile();
+            profile.AddMod(id);
+            ProfileManager.UpdateProfile(profile);
         }
 
         public void Uninstall() {
@@ -102,7 +193,9 @@ namespace Techtonica_Mod_Loader.Classes
         }
 
         public bool HasConfigFile() {
-            return !string.IsNullOrEmpty(configFileLocation);
+            return !string.IsNullOrEmpty(configFileLocation) && 
+                    configFileLocation != "Not Found" &&
+                    name != "BepInExPack";
         }
 
         // Private Functions
@@ -172,7 +265,19 @@ namespace Techtonica_Mod_Loader.Classes
 
         private bool DoesFileHaveNamedParentFolder(string file) {
             string parentFolder = Path.GetDirectoryName(file).Split('\\').Last();
-            return parentFolder != "plugins" && parentFolder != "config";
+            return parentFolder != "plugins" && parentFolder != "config" && parentFolder != "patchers";
+        }
+
+        private void InstallFiles(List<string> files, string targetFolder) {
+            foreach (string file in files) {
+                string newPath = file.Replace("/", "\\").Replace(Path.GetDirectoryName(file), targetFolder);
+                if (File.Exists(newPath)) {
+                    File.Delete(newPath);
+                }
+
+                File.Copy(file, newPath);
+                installedFiles.Add(newPath);
+            }
         }
     }
 

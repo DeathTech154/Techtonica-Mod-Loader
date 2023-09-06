@@ -84,17 +84,6 @@
             <!--Mod List-->
             <Border x:Name="mainBorder" Grid.Row="1" Margin="10,5,10,10"/>
 
-            <!--Dev Grid-->
-            <Grid Visibility="Hidden">
-                <Wpf:WebView2 Grid.ColumnSpan="2" Height="100" Width="100" Visibility="Hidden"/>
-                <Canvas x:Name="Canvas_Launch_Options" HorizontalAlignment="Left" Height="150" VerticalAlignment="Top" Width="150" Grid.ColumnSpan="2" RenderTransformOrigin="0.01,0.013">
-                    <Button x:Name="Check_for_updates_" Content="Check for updates!" Width="150" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Click="OnCheckForUpdatesClicked"/>
-
-                    <Button x:Name="Button_Launch_Modded" Content="Launch with mods" Height="26" Width="150" IsDefault="True" Background="#FF18CD49" Canvas.Left="0" Canvas.Top="45" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <Button x:Name="Button_Launch_Vanilla" Content="Launch without mods" Height="25" Width="150" Background="#FFFF0808" Foreground="White" Canvas.Left="0" Canvas.Top="20" Click="OnButtonLaunchVanillaClicked" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                </Canvas>
-            </Grid>
-
             <!--Shader-->
             <Rectangle x:Name="shader" Fill="Black" Opacity="0.7" Grid.RowSpan="2" Visibility="Hidden"/>
 

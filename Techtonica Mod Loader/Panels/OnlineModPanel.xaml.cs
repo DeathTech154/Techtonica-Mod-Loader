@@ -26,38 +26,35 @@ namespace Techtonica_Mod_Loader.Panels
             InitializeComponent();
         }
 
-        public OnlineModPanel(string modID) {
+        public OnlineModPanel(Mod modToShow) {
             InitializeComponent();
-            showMod(modID);
-        }
-
-        public OnlineModPanel(Mod mod) {
-            InitializeComponent();
-            showMod(modID);
+            showMod(modToShow);
         }
 
         // Objects & Variables
 
-        public string modID;
-
-        // Custom Events
+        public Mod mod;
 
         // Events
 
         private void OnDownloadClicked(object sender, EventArgs e) {
-            // ToDo: Elliot - Download and install mod
+            ModManager.AddIfNew(mod);
+            mod.FinishedDownloading += ModFinishedDownloading;
+            mod.Download();
+        }
+
+        private void ModFinishedDownloading(object sender, EventArgs e) {
+            StackPanel parent = Parent as StackPanel;
+            parent.Children.Remove(this);
         }
 
         // Public Functions
 
-        public void showMod(string id) {
-            // ToDo: Elliot - Get mod from API
-        }
-
-        public void showMod(Mod mod) {
-            modID = mod.id;
-            modNameLabel.Text = mod.name;
-            modTaglineLabel.Text = mod.tagline;
+        public void showMod(Mod modToShow) {
+            mod = modToShow;
+            modNameLabel.Text = modToShow.name;
+            modTaglineLabel.Text = modToShow.tagLine;
+            icon.Source = new BitmapImage(new Uri(modToShow.iconLink));
         }
     }
 }

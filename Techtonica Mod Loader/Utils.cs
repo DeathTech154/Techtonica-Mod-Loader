@@ -1,3 +1,4 @@
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -90,6 +91,45 @@ namespace Techtonica_Mod_Loader
             Directory.CreateDirectory(ProgramData.Paths.unzipFolder);
         }
 
+        public static bool SearchForConfigFile(string folder, out string configFile) {
+            configFile = "Not Found";
+            
+            string[] files = Directory.GetFiles(folder);
+            foreach(string file in files) {
+                if (file.EndsWith(".cfg")) {
+                    configFile = file;
+                    return true;
+                }
+            }
+
+            string[] directories = Directory.GetDirectories(folder);
+            foreach(string directory in directories) {
+                if(SearchForConfigFile(directory, out configFile)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static List<string> SearchForDllFiles(string folder) {
+            List<string> dllFiles = new List<string>();
+            
+            string[] files = Directory.GetFiles(folder);
+            foreach(string file in files) {
+                if (file.EndsWith(".dll")) {
+                    dllFiles.Add(file);
+                }
+            }
+
+            string[] directories = Directory.GetDirectories(folder);
+            foreach(string directory in directories) {
+                dllFiles.AddRange(SearchForDllFiles(directory));
+            }
+
+            return dllFiles;
+        }
+
         public static List<string> CopyFolder(string source, string destination) {
             string[] files = Directory.GetFiles(source);
             string[] folders = Directory.GetDirectories(source);
@@ -130,6 +170,29 @@ namespace Techtonica_Mod_Loader
             }
 
             Directory.Delete(folder);
+        }
+
+        public static string GetProgramDirectory() {
+            return Directory.GetParent(AppContext.BaseDirectory).FullName;
+        }
+
+        public static void FindGameLocation() {
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Valve\Steam"); // Gets steam folder location from registry.
+            if (key != null) {
+                string steamPath = (string)key.GetValue("SteamPath");
+                key.Close();
+                DebugUtils.SendDebugLine(steamPath);
+                string gameLocation = steamPath + @"/steamapps/common/Techtonica";
+                DebugUtils.SendDebugLine(gameLocation);
+                
+                ProgramData.Paths.gameFolder = gameLocation;
+                ProgramData.Paths.bepInExConfigFolder = $"{gameLocation}/BepInEx/config";
+                ProgramData.Paths.bepInExPatchersFolder = $"{gameLocation}/BepInEx/patchers";
+                ProgramData.Paths.bepInExPluginsFolder = $"{gameLocation}/BepInEx/plugins";
+    }
+            else {
+                DebugUtils.SendDebugLine("Error: Failed to obtain steam path. Disabling launch.");
+            }
         }
     }
 }
