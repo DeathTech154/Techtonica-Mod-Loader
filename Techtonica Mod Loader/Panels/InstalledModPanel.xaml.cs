@@ -66,7 +66,11 @@ namespace Techtonica_Mod_Loader.Panels
         }
 
         private void ViewModPageClicked(object sender, EventArgs e) {
-            Process.Start(ModManager.GetMod(modID).link);
+            ProcessStartInfo info = new ProcessStartInfo() {
+                FileName = ModManager.GetMod(modID).link,
+                UseShellExecute = true
+            };
+            Process.Start(info);
         }
 
         private void DeleteModClicked(object sender, EventArgs e) {
@@ -86,7 +90,7 @@ namespace Techtonica_Mod_Loader.Panels
             enabledBox.IsChecked = mod.enabled;
             enabledBox.IsEditable = mod.canBeToggled;
             modNameLabel.Text = mod.name;
-            modTaglineLabel.Text = mod.tagline;
+            modTaglineLabel.Text = mod.tagLine;
             icon.Source = new BitmapImage(new Uri(mod.iconLink));
 
             if (!mod.HasConfigFile()) {

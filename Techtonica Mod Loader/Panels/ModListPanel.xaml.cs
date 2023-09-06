@@ -37,11 +37,14 @@ namespace Techtonica_Mod_Loader.Panels
             }
         }
 
-        public void LoadOnlineModList() {
-            // ToDo: Elliot - Get modlist from api
-            List<Mod> mods = new List<Mod>();
+        public async void LoadOnlineModList() {
+            modsPanel.Children.Clear();
+            Profile profile = ProfileManager.GetActiveProfile();
+            List<Mod> mods = await ThunderStore.GetAllMods();
             foreach (Mod mod in mods) {
-                AddOnlineModToModList(mod);
+                if (!profile.HasMod(mod.id)){
+                    AddOnlineModToModList(mod);
+                }
             }
         }
 

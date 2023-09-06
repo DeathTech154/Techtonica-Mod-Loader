@@ -24,6 +24,18 @@ namespace Techtonica_Mod_Loader
             Save();
         }
 
+        public static void UpdateProfile(Profile profile) {
+            if (DoesProfileExist(profile)) {
+                profiles[profile.id] = profile; 
+                Save();
+            }
+            else {
+                string error = $"Cannot update profile '{profile.id}|{profile.name}' - does not exist";
+                DebugUtils.SendDebugLine(error);
+                DebugUtils.CrashIfDebug(error);
+            }
+        }
+
         public static Profile GetProfile(int id) {
             if (DoesProfileExist(id)) {
                 return profiles[id];
@@ -70,12 +82,6 @@ namespace Techtonica_Mod_Loader
             return names;
         }
 
-        public static void LoadProfile(int id) {
-            if (DoesProfileExist(id)) {
-                LoadProfile(profiles[id]);
-            }
-        }
-
         public static void LoadProfile(Profile profile) {
             activeProfile = profile.id;
         }
@@ -98,7 +104,7 @@ namespace Techtonica_Mod_Loader
             File.WriteAllText(ProgramData.Paths.profilesFile, json);
         }
 
-        public static void Load() {
+        public static async Task<string> Load() {
             if (File.Exists(ProgramData.Paths.profilesFile)) {
                 string json = File.ReadAllText(ProgramData.Paths.profilesFile);
                 List<Profile> profilesFromFile = JsonConvert.DeserializeObject<List<Profile>>(json);
@@ -107,21 +113,49 @@ namespace Techtonica_Mod_Loader
                 }
             }
             else {
-                CreateDefaultProfiles();
+                await CreateDefaultProfiles();
             }
+
+            return "";
         }
 
-        public static void CreateDefaultProfiles() {
-            Profile modded = new Profile() { name = "Modded" };
-            modded.modIDs.Add(DefaultMods.BepInEx.id);
+        public static async Task<string> CreateDefaultProfiles() {
+            Mod bepInEx = await ThunderStore.GetMod(ProgramData.bepInExID);
+            ModManager.AddIfNew(bepInEx);
 
-            Profile development = new Profile() { name = "Development" };
-            development.modIDs.Add(DefaultMods.BepInEx.id);
-            development.modIDs.Add(DefaultMods.UnityExplorer.id);
+            Profile modded = new Profile() { name = "Modded" };
+            Profile development = new Profile() { name = "Development", modIDs = new List<string>() { ProgramData.bepInExID } };
 
             AddProfile(modded);
             AddProfile(development);
             AddProfile(new Profile() { name = "Vanilla" });
+
+            LoadProfile(modded);
+            bepInEx.Download();
+
+            while (!GetActiveProfile().HasMod(ProgramData.bepInExID)) {
+                await Task.Delay(10); // Wait for BepInEx to download before showing mod list
+            }
+
+            return "";
         }
+
+        #region Overloads
+
+        // Public Functions
+
+        public static void LoadProfile(int id) {
+            if (DoesProfileExist(id)) {
+                LoadProfile(profiles[id]);
+            }
+        }
+
+        // Private Functions
+
+        private static bool DoesProfileExist(Profile profile) {
+            return DoesProfileExist(profile.id);
+        }
+
+        #endregion
     }
 }

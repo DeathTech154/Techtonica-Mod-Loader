@@ -37,43 +37,13 @@ namespace Techtonica_Mod_Loader
             }
         }
         public static bool skipLoadingScreenDelay = true;
-
-        public static MainWindow current => (MainWindow)Application.Current.MainWindow;
         public static string GameLocation;
+
         public static Brush LaunchVanillaDisabledBrush = new SolidColorBrush(Colors.DarkRed);
         public static string version = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
-        public static string SelfLoc = Directory.GetParent(AppContext.BaseDirectory).FullName;
-        public static string BepPath = "Dependencies/BepInEx";
-        public static string BepName = "BepInEx_x64_5.4.21.0.zip";
-        public static string BepFullPath = "Dependencies/BepInEx/BepInEx_x64_5.4.21.0.zip";
-        public static DependencyStatusEnum DependancyStatus = DependencyStatusEnum.OK;
+        public const string bepInExID = "b9a5a1bd-81d8-4913-a46e-70ca7734628c";
 
-        public enum DependencyStatusEnum { OK, MissingBepFolder, MissingBepFiles }
-        public enum EnumDownloadStatus { SUCCESS, DOWNLOADING, FAIL }
-        // DeathTech: Todo: Refactory this eyesore.
-        public static string[] BepFilesList = {
-            "Dependencies/BepInEx/doorstop_config.ini",
-            "Dependencies/BepInEx/winhttp.dll",
-            "Dependencies/BepInEx/BepInEx/core/0Harmony.dll",
-            "Dependencies/BepInEx/BepInEx/core/0Harmony.xml",
-            "Dependencies/BepInEx/BepInEx/core/0Harmony20.dll",
-            "Dependencies/BepInEx/BepInEx/core/BepInEx.dll",
-            "Dependencies/BepInEx/BepInEx/core/BepInEx.xml",
-            "Dependencies/BepInEx/BepInEx/core/BepInEx.Harmony.dll",
-            "Dependencies/BepInEx/BepInEx/core/BepInEx.Harmony.xml",
-            "Dependencies/BepInEx/BepInEx/core/BepInEx.Preloader.dll",
-            "Dependencies/BepInEx/BepInEx/core/BepInEx.Preloader.xml",
-            "Dependencies/BepInEx/BepInEx/core/Mono.Cecil.dll",
-            "Dependencies/BepInEx/BepInEx/core/Mono.Cecil.Mdb.dll",
-            "Dependencies/BepInEx/BepInEx/core/Mono.Cecil.Pdb.dll",
-            "Dependencies/BepInEx/BepInEx/core/Mono.Cecil.Rocks.dll",
-            "Dependencies/BepInEx/BepInEx/core/MonoMod.RuntimeDetour.dll",
-            "Dependencies/BepInEx/BepInEx/core/MonoMod.RuntimeDetour.xml",
-            "Dependencies/BepInEx/BepInEx/core/MonoMod.Utils.dll",
-            "Dependencies/BepInEx/BepInEx/core/MonoMod.Utils.xml"
-        };
-
-        public static class Paths
+        public static class Paths 
         {
             // Folders
             public static string dataFolder {
@@ -89,7 +59,11 @@ namespace Techtonica_Mod_Loader
             public static string modsFolder = $"{dataFolder}\\Mods";
             public static string resourcesFolder = $"{dataFolder}\\Resources";
             public static string unzipFolder = $"{dataFolder}\\Unzip";
-            public static string gameFolder;
+            
+            public static string gameFolder = "";
+            public static string bepInExConfigFolder = $"{gameFolder}/BepInEx/config";
+            public static string bepInExPatchersFolder = $"{gameFolder}/BepInEx/patchers";
+            public static string bepInExPluginsFolder = $"{gameFolder}/BepInEx/plugins";
 
             // Files
             public static string settingsFile = $"{dataFolder}\\Settings.json";

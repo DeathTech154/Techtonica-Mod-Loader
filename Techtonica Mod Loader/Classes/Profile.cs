@@ -37,10 +37,10 @@ namespace Techtonica_Mod_Loader.Classes
                     break;
             }
 
-            if (HasMod(DefaultMods.BepInEx)) {
-                int bepIndex = modIDs.IndexOf(DefaultMods.BepInEx.id);
+            if (HasMod(ProgramData.bepInExID)) {
+                int bepIndex = modIDs.IndexOf(ProgramData.bepInExID);
                 modIDs.RemoveAt(bepIndex);
-                modIDs.Insert(0, DefaultMods.BepInEx.id);
+                modIDs.Insert(0, ProgramData.bepInExID);
             }
             
             // ToDo: More Mod Sort Options

@@ -43,12 +43,9 @@ namespace Techtonica_Mod_Loader
             }
         }
 
-        public static void AddOrUpdateMod(Mod mod) {
+        public static void AddIfNew(Mod mod) {
             if (!DoesModExist(mod)) {
                 AddMod(mod);
-            }
-            else {
-                UpdateModDetails(mod);
             }
         }
 
@@ -84,10 +81,6 @@ namespace Techtonica_Mod_Loader
                 foreach(Mod mod in modsFromFile) {
                     AddMod(mod);
                 }
-            }
-            else {
-                AddMod(DefaultMods.BepInEx);
-                AddMod(DefaultMods.UnityExplorer);
             }
         }
 
