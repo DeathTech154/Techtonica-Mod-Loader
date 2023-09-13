@@ -83,7 +83,22 @@ namespace Techtonica_Mod_Loader
         }
 
         public static void LoadProfile(Profile profile) {
+            Profile oldProfile = GetActiveProfile();
+            foreach(string modID in oldProfile.modIDs) {
+                if (oldProfile.IsModEnabled(modID)) {
+                    Mod mod = ModManager.GetMod(modID);
+                    mod.Uninstall();
+                }
+            }
+
             activeProfile = profile.id;
+            Profile newProfile = GetActiveProfile();
+            foreach(string modID in newProfile.modIDs) {
+                if (newProfile.IsModEnabled(modID)) {
+                    Mod mod = ModManager.GetMod(modID);
+                    mod.Install();
+                }
+            }
         }
 
         // Private Functions

@@ -65,7 +65,16 @@ namespace Techtonica_Mod_Loader
             return mods.ContainsKey(id);
         }
 
-        // Private Functions
+        public static void DeleteMod(string id) {
+            if (DoesModExist(id)) {
+                mods.Remove(id);
+            }
+            else {
+                string error = $"Cannot delete mod with id '{id}' - Does not exist";
+                DebugUtils.SendDebugLine(error);
+                DebugUtils.CrashIfDebug(error);
+            }
+        }
 
         // Data Functions
 
@@ -90,6 +99,10 @@ namespace Techtonica_Mod_Loader
 
         public static bool DoesModExist(Mod mod) {
             return DoesModExist(mod.id);
+        }
+
+        public static void DeleteMod(Mod mod) {
+            DeleteMod(mod.id);
         }
 
         // Private Functions

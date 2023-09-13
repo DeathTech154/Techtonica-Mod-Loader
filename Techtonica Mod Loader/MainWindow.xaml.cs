@@ -78,7 +78,6 @@ namespace Techtonica_Mod_Loader
                     id = $"com.localfile.{name}",
                     name = name,
                     tagLine = "Unknown mod installed from local file",
-                    enabled = true,
                     iconLink = $"{ProgramData.Paths.resourcesFolder}/UnknownModIcon.png",
                     zipFileLocation = selectedZip
                 };

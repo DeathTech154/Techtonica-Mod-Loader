@@ -61,11 +61,12 @@ namespace Techtonica_Mod_Loader.Panels
         }
 
         private void EnabledToggled(object sender, EventArgs e) {
+            Profile profile = ProfileManager.GetActiveProfile();
+            profile.SetEnabledState(modID, enabledBox.IsChecked);
+            ProfileManager.UpdateProfile(profile);
+
             Mod mod = ModManager.GetMod(modID);
-            mod.enabled = enabledBox.IsChecked;
-            ModManager.UpdateModDetails(mod);
-            
-            if (mod.enabled) {
+            if (enabledBox.IsChecked) {
                 mod.Install();
             }
             else {
@@ -89,20 +90,23 @@ namespace Techtonica_Mod_Loader.Panels
         }
 
         private void DeleteModClicked(object sender, EventArgs e) {
-            // ToDo: Elliot - Get Confirmation
-            Mod mod = ModManager.GetMod(modID);
-            if (mod.enabled) {
-                mod.Uninstall();
-            }
+            if(GuiUtils.GetUserConfirmation("Delete Mod?", "Are you sure you want to delete this mod?")) {
+                Profile profile = ProfileManager.GetActiveProfile();
+                Mod mod = ModManager.GetMod(modID);
+                if (profile.IsModEnabled(modID)) {
+                    mod.Uninstall();
+                }
 
-            File.Delete(mod.zipFileLocation);
+                File.Delete(mod.zipFileLocation);
+                ModManager.DeleteMod(mod);
+            }
         }
 
         // Public Functions
 
         public void ShowMod(Mod mod) {
             modID = mod.id;
-            enabledBox.IsChecked = mod.enabled;
+            enabledBox.IsChecked = ProfileManager.GetActiveProfile().IsModEnabled(modID);
             enabledBox.IsEditable = mod.canBeToggled;
             modNameLabel.Text = mod.name;
             modTaglineLabel.Text = mod.tagLine;
