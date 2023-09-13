@@ -7,6 +7,12 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Controls\HyperlinkImage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\MarkdownViewer.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Controls\TButton.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -63,6 +69,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Controls\HyperlinkImage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\MarkdownViewer.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Controls\TButton.xaml">
       <SubType>Designer</SubType>
     </Page>

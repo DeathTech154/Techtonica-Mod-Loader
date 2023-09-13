@@ -59,6 +59,15 @@ namespace Techtonica_Mod_Loader
             public static string modsFolder = $"{dataFolder}\\Mods";
             public static string resourcesFolder = $"{dataFolder}\\Resources";
             public static string unzipFolder = $"{dataFolder}\\Unzip";
+            public static string markdownFiles = $"{dataFolder}\\MarkdownFiles";
+
+            public static List<string> folders = new List<string>() {
+                dataFolder,
+                modsFolder,
+                resourcesFolder,
+                unzipFolder,
+                markdownFiles
+            };
             
             public static string gameFolder = "";
             public static string bepInExConfigFolder = $"{gameFolder}/BepInEx/config";
@@ -69,6 +78,8 @@ namespace Techtonica_Mod_Loader
             public static string settingsFile = $"{dataFolder}\\Settings.json";
             public static string profilesFile = $"{dataFolder}\\Profiles.json";
             public static string modsFile = $"{dataFolder}\\Mods.json";
+            public static string tempZipFile = $"{dataFolder}\\Temp.zip";
+            public static string tempMarkdownFile = $"{unzipFolder}\\README.md";
         }
     }
 }

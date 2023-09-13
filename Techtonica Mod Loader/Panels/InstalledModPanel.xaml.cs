@@ -11,6 +11,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -42,8 +43,22 @@ namespace Techtonica_Mod_Loader.Panels
         // Objects & Variables
 
         public string modID;
+        private bool isExpanded;
 
         // Events
+
+        private void OnPanelMouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
+            if (enabledBox.IsMouseOver || 
+                configureButton.IsMouseOver ||
+                viewModPageButton.IsMouseOver ||
+                deleteButton.IsMouseOver) {
+                return;
+            }
+
+            isExpanded = !isExpanded;
+            string animKey = isExpanded ? "growAnim" : "shrinkAnim";
+            BeginStoryboard((Storyboard)Resources[animKey]);
+        }
 
         private void EnabledToggled(object sender, EventArgs e) {
             Mod mod = ModManager.GetMod(modID);
@@ -92,6 +107,13 @@ namespace Techtonica_Mod_Loader.Panels
             modNameLabel.Text = mod.name;
             modTaglineLabel.Text = mod.tagLine;
             icon.Source = new BitmapImage(new Uri(mod.iconLink));
+
+            if (mod.HasMarkdownFile()) {
+                markdownViewer.ViewMarkdownFromFile(mod.markdownFileLocation);
+            }
+            else {
+                markdownViewer.ViewMarkdown("# No description available");
+            }
 
             if (!mod.HasConfigFile()) {
                 HideConfigureColumn();
