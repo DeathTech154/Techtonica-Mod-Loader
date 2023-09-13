@@ -46,7 +46,6 @@ namespace Techtonica_Mod_Loader.Classes
         public string markdownFileLocation;
         public List<string> installedFiles = new List<string>();
 
-        public bool enabled;
         public bool canBeToggled = true;
 
         // Constructors
@@ -171,10 +170,11 @@ namespace Techtonica_Mod_Loader.Classes
                 bool hasPluginFiles = Directory.Exists(pluginsFolder);
                 bool hasPatcherFiles = Directory.Exists(patchersFolder);
 
-
                 if (hasPluginFiles) {
+                    string targetFolder = $"{ProgramData.Paths.bepInExPluginsFolder}\\{name}";
+                    Directory.CreateDirectory(targetFolder);
                     List<string> dllFiles = FileStructureUtils.SearchForDllFiles(pluginsFolder);
-                    InstallFiles(dllFiles, ProgramData.Paths.bepInExPluginsFolder);
+                    InstallFiles(dllFiles, targetFolder);
                 }
 
                 if (hasPatcherFiles) {
@@ -195,17 +195,18 @@ namespace Techtonica_Mod_Loader.Classes
                 FileStructureUtils.ClearUnzipFolder();
             }
 
-            enabled = true;
             ModManager.UpdateModDetails(this);
             Profile profile = ProfileManager.GetActiveProfile();
-            profile.AddMod(id);
+            if (!profile.HasMod(id)) profile.AddMod(id);
             ProfileManager.UpdateProfile(profile);
         }
 
         public void Uninstall() {
+            if (name == "BepInExPack") return; 
             List<string> foldersToDelete = new List<string>();
 
             foreach(string file in installedFiles) {
+                if (file.EndsWith(".md")) continue;
                 if (File.Exists(file)) {
                     if (DoesFileHaveNamedParentFolder(file)) {
                         foldersToDelete.Add(Path.GetDirectoryName(file));
