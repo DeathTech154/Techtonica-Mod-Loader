@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -34,8 +36,35 @@ namespace Techtonica_Mod_Loader.Panels
         // Objects & Variables
 
         public Mod mod;
+        private bool isExpanded;
+        private bool hasMarkdownLoaded;
 
         // Events
+
+        private async void OnPanelMouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
+            if (downloadButton.IsMouseOver) return;
+
+            isExpanded = !isExpanded;
+            string animKey = isExpanded ? "growAnim" : "shrinkAnim";
+            BeginStoryboard((Storyboard)Resources[animKey]);
+
+            // Don't use 'mod' to avoid multiple callbacks attached to FinishedDownloading
+            if (!hasMarkdownLoaded) {
+                Mod temp = await ThunderStore.GetMod(mod.id);
+                temp.FinishedDownloading += TempModFinishedDownloading;
+                temp.DownloadAsTemp();
+            }
+        }
+
+        private void TempModFinishedDownloading(object sender, EventArgs e) {
+            hasMarkdownLoaded = true;
+            if (File.Exists(ProgramData.Paths.tempMarkdownFile)) {
+                markdownViewer.ViewMarkdownFromFile(ProgramData.Paths.tempMarkdownFile);
+            }
+            else {
+                markdownViewer.ViewMarkdown("# No description available");
+            }
+        }
 
         private void OnDownloadClicked(object sender, EventArgs e) {
             ModManager.AddIfNew(mod);
@@ -55,6 +84,7 @@ namespace Techtonica_Mod_Loader.Panels
             modNameLabel.Text = modToShow.name;
             modTaglineLabel.Text = modToShow.tagLine;
             icon.Source = new BitmapImage(new Uri(modToShow.iconLink));
+            markdownViewer.ViewMarkdown("Loading, please wait...");
         }
     }
 }

@@ -1,12 +1,15 @@
 using Microsoft.Win32;
+using SharpVectors.Converters;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Media.Media3D;
+using System.Windows.Media.Imaging;
 using Techtonica_Mod_Loader.Windows;
 
 namespace Techtonica_Mod_Loader
@@ -75,15 +78,79 @@ namespace Techtonica_Mod_Loader
         public static bool GetUserConfirmation(string title, string description) {
             return GetYesNoWindow.GetYesNo(title, description);
         }
+
+        public static void OpenURL(string url) {
+            ProcessStartInfo info = new ProcessStartInfo() {
+                FileName = url,
+                UseShellExecute = true
+            };
+            Process.Start(info);
+        }
+
+        public static async Task<System.Windows.Controls.Image> GetImageFromURL(string url) {
+            try {
+                using (WebClient webClient = new WebClient()) {
+                    byte[] imageData = await webClient.DownloadDataTaskAsync(new Uri(url));
+
+                    BitmapImage bitmapImage = new BitmapImage();
+                    bitmapImage.BeginInit();
+                    bitmapImage.StreamSource = new MemoryStream(imageData);
+                    bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmapImage.EndInit();
+
+                    System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+                    image.Source = bitmapImage;
+                    image.Width = bitmapImage.PixelWidth;
+                    image.Height = bitmapImage.PixelHeight;
+                    image.Stretch = System.Windows.Media.Stretch.UniformToFill;
+                    return image;
+                }
+            }
+            catch (Exception ex) {
+                string error = $"Error loading image: {ex.Message}";
+                DebugUtils.SendDebugLine(error);
+                DebugUtils.CrashIfDebug(error);
+                return null;
+            }
+        }
+
+        public static async Task<SvgViewbox> GetSVGViewboxFromURL(string url) {
+            try {
+                using (WebClient webClient = new WebClient()) {
+                    byte[] imageData = await webClient.DownloadDataTaskAsync(new Uri(url));
+                    string svgText = Encoding.UTF8.GetString(imageData);
+
+                    int widthStart = svgText.IndexOf("width=\"") + 7;
+                    int widthEnd = svgText.IndexOf("\"", widthStart + 1);
+                    double width = double.Parse(svgText.Substring(widthStart, widthEnd - widthStart));
+
+                    int heightStart = svgText.IndexOf("height=\"") + 8;
+                    int heightEnd = svgText.IndexOf("\"", heightStart + 1);
+                    double height = double.Parse(svgText.Substring(heightStart, heightEnd - heightStart));
+
+                    SvgViewbox svg = new SvgViewbox();
+                    svg.Source = new Uri(url);
+                    svg.Width = width;
+                    svg.Height = height;
+
+                    return svg;
+                }
+            }
+            catch (Exception ex) {
+                string error = $"Error loading svg: {ex.Message}";
+                DebugUtils.SendDebugLine(error);
+                DebugUtils.CrashIfDebug(error);
+                return null;
+            }
+        }
     }
 
     public static class FileStructureUtils
     {
         public static void CreateFolderStructure() {
-            Directory.CreateDirectory(ProgramData.Paths.dataFolder);
-            Directory.CreateDirectory(ProgramData.Paths.modsFolder);
-            Directory.CreateDirectory(ProgramData.Paths.resourcesFolder);
-            Directory.CreateDirectory(ProgramData.Paths.unzipFolder);
+            foreach(string folder in ProgramData.Paths.folders) {
+                Directory.CreateDirectory(folder);
+            }
         }
 
         public static void ClearUnzipFolder() {
@@ -105,6 +172,27 @@ namespace Techtonica_Mod_Loader
             string[] directories = Directory.GetDirectories(folder);
             foreach(string directory in directories) {
                 if(SearchForConfigFile(directory, out configFile)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool SearchForMarkdownFile(string folder, out string markdownFile) {
+            markdownFile = "Not Found";
+
+            string[] files = Directory.GetFiles(folder);
+            foreach(string file in files) {
+                if (file.EndsWith(".md")) {
+                    markdownFile = file;
+                    return true;
+                }
+            }
+
+            string[] directories = Directory.GetDirectories(folder);
+            foreach(string directory in directories) {
+                if(SearchForConfigFile(directory, out markdownFile)) {
                     return true;
                 }
             }

@@ -17,7 +17,14 @@ namespace Techtonica_Mod_Loader.Classes
         // Public Functions
 
         public void AddMod(string id) {
-            modIDs.Add(id);
+            if (!modIDs.Contains(id)) {
+                modIDs.Add(id);
+            }
+            else {
+                string error = $"Cannot add mod '{id}' - Already included in profile";
+                DebugUtils.SendDebugLine(error);
+                DebugUtils.CrashIfDebug(error);
+            }
         }
 
         public bool HasMod(string id) {

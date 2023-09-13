@@ -43,6 +43,7 @@ namespace Techtonica_Mod_Loader.Classes
 
         public string zipFileLocation;
         public string configFileLocation;
+        public string markdownFileLocation;
         public List<string> installedFiles = new List<string>();
 
         public bool enabled;
@@ -90,6 +91,14 @@ namespace Techtonica_Mod_Loader.Classes
             FinishedDownloading?.Invoke(this, EventArgs.Empty);
         }
 
+        private void OnTempDownloadFinished(object sender, AsyncCompletedEventArgs e) {
+            FileStructureUtils.ClearUnzipFolder();
+            zipFileLocation = ProgramData.Paths.tempZipFile;
+            UnzipToTempFolder();
+            
+            FinishedDownloading?.Invoke(this, EventArgs.Empty);
+        }
+
         // Public Functions
 
         public void Download() {
@@ -109,6 +118,21 @@ namespace Techtonica_Mod_Loader.Classes
             }
         }
 
+        public void DownloadAsTemp() {
+            try {
+                WebClient webClient = new WebClient();
+                webClient.Headers.Add("Accept: text/html, application/xhtml+xml, */*");
+                webClient.Headers.Add("User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)");
+                webClient.DownloadFileCompleted += OnTempDownloadFinished;
+                webClient.DownloadFileAsync(new Uri(zipFileDownloadLink), ProgramData.Paths.tempZipFile);
+            }
+            catch (Exception e) {
+                string error = $"Error occurred while downloading file: {e.Message}";
+                DebugUtils.SendDebugLine(error);
+                DebugUtils.CrashIfDebug(error);
+            }
+        }
+
         public void Install() {
             if (!CheckForZipFile() || !CheckGameFolder()) {
                 return;
@@ -119,8 +143,7 @@ namespace Techtonica_Mod_Loader.Classes
             UnzipToTempFolder();
             
             if(id != ProgramData.bepInExID) {
-                FileStructureUtils.SearchForConfigFile(ProgramData.Paths.unzipFolder, out configFileLocation);
-                if(configFileLocation != "Not Found") {
+                if(FileStructureUtils.SearchForConfigFile(ProgramData.Paths.unzipFolder, out configFileLocation)) {
                     string newPath = configFileLocation.Replace(Path.GetDirectoryName(configFileLocation), ProgramData.Paths.bepInExConfigFolder);
                     if (File.Exists(newPath)) {
                         File.Delete(newPath);
@@ -129,6 +152,18 @@ namespace Techtonica_Mod_Loader.Classes
                     File.Copy(configFileLocation, newPath);
                     configFileLocation = newPath;
                     installedFiles.Add(configFileLocation);
+                }
+
+                if (FileStructureUtils.SearchForMarkdownFile(ProgramData.Paths.unzipFolder, out markdownFileLocation)) {
+                    string newPath = markdownFileLocation.Replace(Path.GetDirectoryName(markdownFileLocation), ProgramData.Paths.markdownFiles);
+                    newPath = newPath.Replace("README", name);
+                    if (File.Exists(newPath)) {
+                        File.Delete(newPath);
+                    }
+
+                    File.Copy(markdownFileLocation, newPath);
+                    markdownFileLocation = newPath;
+                    installedFiles.Add(markdownFileLocation);
                 }
 
                 string pluginsFolder = $"{ProgramData.Paths.unzipFolder}/plugins";
@@ -198,6 +233,11 @@ namespace Techtonica_Mod_Loader.Classes
                     name != "BepInExPack";
         }
 
+        public bool HasMarkdownFile() {
+            return !string.IsNullOrEmpty(markdownFileLocation) &&
+                    markdownFileLocation != "Not Found";
+        }
+
         // Private Functions
 
         private bool CheckForZipFile() {
@@ -265,7 +305,13 @@ namespace Techtonica_Mod_Loader.Classes
 
         private bool DoesFileHaveNamedParentFolder(string file) {
             string parentFolder = Path.GetDirectoryName(file).Split('\\').Last();
-            return parentFolder != "plugins" && parentFolder != "config" && parentFolder != "patchers";
+            List<string> validParents = new List<string>() {
+                "patchers",
+                "plugins",
+                "config",
+                "MarkdownFiles"
+            };
+            return !validParents.Contains(parentFolder);
         }
 
         private void InstallFiles(List<string> files, string targetFolder) {
