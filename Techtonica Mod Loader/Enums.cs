@@ -11,6 +11,7 @@ namespace Techtonica_Mod_Loader
     public enum ModListSource
     {
         Installed,
+        NewMods,
         Online,
         Null
     }
@@ -20,6 +21,7 @@ namespace Techtonica_Mod_Loader
         public static ModListSource GetModListSourceFromName(string name) {
             switch (name) {
                 case "Installed": return ModListSource.Installed;
+                case "New Mods": return ModListSource.NewMods;
                 case "Online": return ModListSource.Online;
                 case "Null": return ModListSource.Null;
                 default: return ModListSource.Null;
@@ -29,6 +31,7 @@ namespace Techtonica_Mod_Loader
         public static string GetModListSourceName(ModListSource modListSource) {
             switch (modListSource) {
                 case ModListSource.Installed: return "Installed";
+                case ModListSource.NewMods: return "New Mods";
                 case ModListSource.Online: return "Online";
                 case ModListSource.Null: return "Null";
                 default: return Enum.GetName(typeof(ModListSource), modListSource);

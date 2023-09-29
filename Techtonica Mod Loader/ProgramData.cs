@@ -19,7 +19,6 @@ using Microsoft.Win32;
 using System.ComponentModel;
 using System.Reflection;
 using System.Net;
-using Techtonica_Mod_Loader.Classes.Globals;
 using Techtonica_Mod_Loader.Classes;
 using Techtonica_Mod_Loader.Panels;
 
@@ -37,7 +36,6 @@ namespace Techtonica_Mod_Loader
             }
         }
         public static bool skipLoadingScreenDelay = true;
-        public static string GameLocation;
 
         public static Brush LaunchVanillaDisabledBrush = new SolidColorBrush(Colors.DarkRed);
         public static string version = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
@@ -69,7 +67,7 @@ namespace Techtonica_Mod_Loader
                 markdownFiles
             };
             
-            public static string gameFolder = "";
+            public static string gameFolder => Settings.userSettings.gameFolder;
             public static string bepInExConfigFolder = $"{gameFolder}/BepInEx/config";
             public static string bepInExPatchersFolder = $"{gameFolder}/BepInEx/patchers";
             public static string bepInExPluginsFolder = $"{gameFolder}/BepInEx/plugins";

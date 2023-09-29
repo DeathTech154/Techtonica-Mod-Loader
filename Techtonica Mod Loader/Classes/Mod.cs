@@ -15,7 +15,6 @@ using System.Windows.Forms.VisualStyles;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Windows.Shell;
-using Techtonica_Mod_Loader.Classes.Globals;
 using Techtonica_Mod_Loader.Classes.ThunderStoreResponses;
 using Techtonica_Mod_Loader.Panels;
 

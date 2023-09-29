@@ -109,7 +109,6 @@ namespace Techtonica_Mod_Loader
             catch (Exception ex) {
                 string error = $"Error loading image: {ex.Message}";
                 DebugUtils.SendDebugLine(error);
-                DebugUtils.CrashIfDebug(error);
                 return null;
             }
         }
@@ -264,7 +263,7 @@ namespace Techtonica_Mod_Loader
             return Directory.GetParent(AppContext.BaseDirectory).FullName;
         }
 
-        public static void FindGameLocation() {
+        public static bool FindSteamGameFolder() {
             RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Valve\Steam"); // Gets steam folder location from registry.
             if (key != null) {
                 string steamPath = (string)key.GetValue("SteamPath");
@@ -273,14 +272,36 @@ namespace Techtonica_Mod_Loader
                 string gameLocation = steamPath + @"/steamapps/common/Techtonica";
                 DebugUtils.SendDebugLine(gameLocation);
                 
-                ProgramData.Paths.gameFolder = gameLocation;
+                Settings.userSettings.gameFolder = gameLocation;
                 ProgramData.Paths.bepInExConfigFolder = $"{gameLocation}/BepInEx/config";
                 ProgramData.Paths.bepInExPatchersFolder = $"{gameLocation}/BepInEx/patchers";
                 ProgramData.Paths.bepInExPluginsFolder = $"{gameLocation}/BepInEx/plugins";
+                Settings.Save();
+                return true;
     }
             else {
-                DebugUtils.SendDebugLine("Error: Failed to obtain steam path. Disabling launch.");
+                string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                foreach (char letter in letters) {
+                    string steamPath = $"{letter}:/steam/steamapps/common/Techtonica/Techtonica.exe";
+                    string xboxPath = $"{letter}:/XBoxGames/Techtonica/Content/Techtonica.exe";
+            
+                    if (File.Exists(xboxPath)) {
+                        string newPath = $"{letter}:/XBoxGames/Techtonica/Content";
+                        Settings.userSettings.gameFolder = newPath;
+                        Settings.Save();
+                        return true;
+                    }
+                    else if(File.Exists(steamPath)) {
+                        string newPath = $"{letter}:/steam/steamapps/common/Techtonica";
+                        Settings.userSettings.gameFolder = newPath;
+                        Settings.Save();
+                        return true;
+                    }
+                }
             }
+
+            DebugUtils.SendDebugLine("Error: Failed to obtain game path.");
+            return false;
         }
     }
 }

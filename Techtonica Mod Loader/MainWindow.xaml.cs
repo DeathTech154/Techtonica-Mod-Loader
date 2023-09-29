@@ -19,7 +19,6 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Net;
 using System.IO;
-using Techtonica_Mod_Loader.Classes.Globals;
 using Techtonica_Mod_Loader.Classes;
 using Techtonica_Mod_Loader.Panels;
 using System.Windows.Automation;
@@ -29,10 +28,8 @@ namespace Techtonica_Mod_Loader
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
-    {
-        public MainWindow()
-        {
+    public partial class MainWindow : Window {
+        public MainWindow() {
             InitializeComponent();
         }
 
@@ -49,11 +46,16 @@ namespace Techtonica_Mod_Loader
             loader.Visibility = Visibility.Visible;
             mainGrid.Visibility = Visibility.Hidden;
 
-            FileStructureUtils.FindGameLocation();
             FileStructureUtils.CreateFolderStructure();
             await LoadData();
             InitialiseGUI();
             CheckForUpdates();
+
+            if (string.IsNullOrEmpty(ProgramData.Paths.gameFolder)) {
+                if (!FileStructureUtils.FindSteamGameFolder()) {
+                    GuiUtils.ShowWarningMessage("Couldn't Find Game Folder", "Please go to the settings and set your game foler before installing mods or launching the game.");
+                }
+            }
 
             if (!ProgramData.skipLoadingScreenDelay && ProgramData.isDebugBuild) {
                 await Task.Delay(3000); // Let users bask in the glory of the loading screen
@@ -65,6 +67,10 @@ namespace Techtonica_Mod_Loader
 
         private void OnProgramClosing(object sender, CancelEventArgs e) {
             SaveData();
+        }
+
+        private void OnLaunchGameClicked(object sender, EventArgs e) {
+
         }
 
         private void OnInstallFromFileClicked(object sender, EventArgs e) {
@@ -95,6 +101,10 @@ namespace Techtonica_Mod_Loader
             }
         }
 
+        private void OnSettingsClicked(object sender, EventArgs e) {
+            mainBorder.Child = new SettingsPanel();
+        }
+
         private void OnSelectedProfileChanged(object sender, EventArgs e) {
             Profile chosenProfile = ProfileManager.GetProfileByName(profilesBox.SelectedItem);
             ProfileManager.LoadProfile(chosenProfile);
@@ -115,10 +125,11 @@ namespace Techtonica_Mod_Loader
 
         // Public Functions
 
-        public void LoadInstalledModList() {
+        public void LoadDefaultModList() {
             ModListPanel panel = new ModListPanel();
-            panel.LoadInstalledModList();
             mainBorder.Child = panel;
+            showingBox.SetSelectedItem(StringUtils.GetModListSourceName(Settings.userSettings.defaultModList));
+            RefreshModList();
         }
 
         // Private Functions
@@ -144,9 +155,11 @@ namespace Techtonica_Mod_Loader
         private void SaveData() {
             ModManager.Save();
             ProfileManager.Save();
+            Settings.Save();
         }
 
         private async Task<string> LoadData() {
+            Settings.Load();
             ModManager.Load();
             await ProfileManager.Load();
             return "";
@@ -154,16 +167,21 @@ namespace Techtonica_Mod_Loader
 
         private void InitialiseGUI() {
             profilesBox.SetItems(ProfileManager.GetProfileNames());
+            
             showingBox.SetItems(StringUtils.GetAllModListSourceNames());
+            showingBox.SetSelectedItem(StringUtils.GetModListSourceName(Settings.userSettings.defaultModList));
+            
             sortBox.SetItems(StringUtils.GetAllModListSortOptionNames());
+            sortBox.SetSelectedItem(StringUtils.GetModListSortOptionName(Settings.userSettings.defaultSort));
 
-            LoadInstalledModList();
+            LoadDefaultModList();
         }
 
         private void RefreshModList() {
             if(mainBorder.Child is ModListPanel panel) {
                 ModListSource source = StringUtils.GetModListSourceFromName(showingBox.SelectedItem);
                 switch (source) {
+                    // ToDo: New Mods
                     case ModListSource.Installed: panel.LoadInstalledModList(); break;
                     case ModListSource.Online: panel.LoadOnlineModList(); break;
                 }

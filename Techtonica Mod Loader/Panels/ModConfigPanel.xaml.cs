@@ -41,7 +41,7 @@ namespace Techtonica_Mod_Loader.Panels
         // Events
 
         private void OnBackToModsListClicked(object sender, EventArgs e) {
-            MainWindow.current.LoadInstalledModList();
+            MainWindow.current.LoadDefaultModList();
         }
 
         private void OnCategoryLabelClicked(object sender, EventArgs e) {

@@ -44,15 +44,33 @@ namespace Techtonica_Mod_Loader.Panels.ConfigOptionPanels
 
         #endregion
 
+        #region IsTMLSetting Property
+
+        public static readonly DependencyProperty IsTMLSettingProperty = DependencyProperty.Register("IsTMLSetting", typeof(bool), typeof(BooleanOptionPanel), new PropertyMetadata(false));
+
+        public bool IsTMLSetting {
+            get => (bool)GetValue(IsTMLSettingProperty);
+            set => SetValue(IsTMLSettingProperty, value);
+        }
+
+        #endregion
+
+        // Custom Events
+        public event EventHandler ValueChanged;
+
         // Events
 
         private void OnCheckBoxIsCheckedChanged(object sender, EventArgs e) {
-            ModConfig.activeConfig.UpdateSetting(nameLabel.Content.ToString(), Value);
+            if (!IsTMLSetting) {
+                ModConfig.activeConfig.UpdateSetting(nameLabel.Content.ToString(), Value);
+            }
+
+            ValueChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        // Private Functions
+        // Public Functions
 
-        private void ShowConfigOption(BooleanConfigOption option) {
+        public void ShowConfigOption(BooleanConfigOption option) {
             nameLabel.Content = option.name;
             Value = option.value;
 
@@ -60,6 +78,8 @@ namespace Techtonica_Mod_Loader.Panels.ConfigOptionPanels
                 AddInfoLabel(option.description);
             }
         }
+
+        // Private Functions
 
         private void AddInfoLabel(string info) {
             mainPanel.Children.Insert(1, new TextBlock() {

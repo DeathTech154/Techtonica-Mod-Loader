@@ -16,7 +16,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Techtonica_Mod_Loader.Classes;
-using Techtonica_Mod_Loader.Classes.Globals;
 
 namespace Techtonica_Mod_Loader.Panels
 {

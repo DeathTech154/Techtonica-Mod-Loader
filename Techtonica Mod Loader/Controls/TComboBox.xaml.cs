@@ -75,6 +75,7 @@ namespace Techtonica_Mod_Loader.Controls
         private void OnOptionLabelClicked(object sender, EventArgs e) {
             TComboBoxOptionLabel clickedLabel = sender as TComboBoxOptionLabel;
             SetSelectedItem(clickedLabel.GetItem());
+            SelectedItemChanged?.Invoke(this, EventArgs.Empty);
             CloseOptions();
         }
 
@@ -82,7 +83,6 @@ namespace Techtonica_Mod_Loader.Controls
 
         public void SetSelectedItem(string item) {
             SelectedItem = item;
-            SelectedItemChanged?.Invoke(this, EventArgs.Empty);
             if (!Items.Contains(item)) {
                 DebugUtils.CrashIfDebug($"{item} is not a member of Items: {string.Join(" ,", Items)}");
             }
@@ -96,8 +96,6 @@ namespace Techtonica_Mod_Loader.Controls
                 SelectedItem = Items.Last();
                 DebugUtils.CrashIfDebug($"Index {index} is out of range ({Items.Count})");
             }
-
-            SelectedItemChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public void SetItems(List<string> items) {
