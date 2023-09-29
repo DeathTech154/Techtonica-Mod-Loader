@@ -120,7 +120,6 @@ namespace Techtonica_Mod_Loader.Controls
             else if (line.StartsWith("[!")) return MarkdownEntryType.LinkedImaged;
             else if (IsLinePartOfTable(line)) return MarkdownEntryType.Table;
             else if (IsLineHorizontalRule(line)) return MarkdownEntryType.HorizontalRule;
-            // ToDo: More Types, Nested Lists, Nested Quotes
             else return MarkdownEntryType.Paragraph;
         }
 

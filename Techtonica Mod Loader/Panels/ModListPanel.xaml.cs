@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Printing;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -37,13 +38,31 @@ namespace Techtonica_Mod_Loader.Panels
             }
         }
 
+        public async void LoadNewModsList() {
+            modsPanel.Children.Clear();
+            Profile profile = ProfileManager.GetActiveProfile();    
+            List<Mod> mods = await ThunderStore.GetAllMods();
+            // ToDo: Sort Mods
+            foreach (Mod mod in mods) {
+                if (!Settings.userSettings.seenMods.Contains(mod.id) && !profile.HasMod(mod)) {
+                    AddOnlineModToModList(mod);
+                }
+            }
+        }
+
         public async void LoadOnlineModList() {
             modsPanel.Children.Clear();
             Profile profile = ProfileManager.GetActiveProfile();
             List<Mod> mods = await ThunderStore.GetAllMods();
+            // ToDo: Sort Mods
             foreach (Mod mod in mods) {
                 if (!profile.HasMod(mod.id)){
                     AddOnlineModToModList(mod);
+
+                    if (!Settings.userSettings.seenMods.Contains(mod.id)) {
+                        Settings.userSettings.seenMods.Add(mod.id);
+                        Settings.Save();
+                    }
                 }
             }
         }
