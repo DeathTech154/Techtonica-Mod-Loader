@@ -156,12 +156,14 @@ namespace Techtonica_Mod_Loader
             ModManager.Save();
             ProfileManager.Save();
             Settings.Save();
+            ImageCache.Save();
         }
 
         private async Task<string> LoadData() {
             Settings.Load();
             ModManager.Load();
             await ProfileManager.Load();
+            ImageCache.Load();
             return "";
         }
 

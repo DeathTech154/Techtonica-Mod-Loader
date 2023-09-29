@@ -44,7 +44,7 @@ namespace Techtonica_Mod_Loader.Controls
         // Public Functions
 
         public async void ViewMarkdown(string markdown) {
-            markdown = markdown.Replace("&nbsp", " ");
+            markdown = markdown.Replace("&nbsp;", " ");
 
             mainPanel.Children.Clear();
             string[] lines = markdown.Replace("\r", "").Split('\n');
@@ -213,7 +213,7 @@ namespace Techtonica_Mod_Loader.Controls
 
             int currentIndex = 0;
 
-            foreach (System.Text.RegularExpressions.Match match in System.Text.RegularExpressions.Regex.Matches(markdownText, allPatterns, System.Text.RegularExpressions.RegexOptions.Singleline)) {
+            foreach (Match match in Regex.Matches(markdownText, allPatterns, RegexOptions.Singleline)) {
                 int matchIndex = match.Index;
                 int matchLength = match.Length;
 

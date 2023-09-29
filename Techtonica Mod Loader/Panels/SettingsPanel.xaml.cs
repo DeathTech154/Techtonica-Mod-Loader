@@ -140,11 +140,13 @@ namespace Techtonica_Mod_Loader.Panels
         }
 
         private void OnClearImageCacheClicked(object sender, EventArgs e) {
-            // ToDo: Clear Image Cache
+            ImageCache.ClearCache();
+            GuiUtils.ShowInfoMessage("Cache Cleared", "Image cache has been cleared");
         }
 
         private void OnLogDebugMessagesValueChanged(object sender, EventArgs e) {
-            // ToDo: Change logDebugMessages
+            Settings.userSettings.logDebugMessages = logDebugMessagesOption.Value;
+            Settings.Save();
         }
     }
 }
