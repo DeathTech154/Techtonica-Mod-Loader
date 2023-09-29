@@ -20,21 +20,21 @@
                     </Style.Triggers>
                 </Style>
             </Border.Style>
+            <TextBlock Text="{Binding ElementName=thisControl, Path=ButtonText, UpdateSourceTrigger=PropertyChanged}" 
+                       FontSize="{Binding ElementName=thisControl, Path=FontSize, UpdateSourceTrigger=PropertyChanged}"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       IsHitTestVisible="False" Padding="5,0">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Foreground" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=thisControl, Path=IsMouseOver, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <Setter Property="Foreground" Value="{DynamicResource darkTextBrush}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
         </Border>
-        <TextBlock Text="{Binding ElementName=thisControl, Path=ButtonText, UpdateSourceTrigger=PropertyChanged}" 
-                   FontSize="{Binding ElementName=thisControl, Path=FontSize, UpdateSourceTrigger=PropertyChanged}"
-                   HorizontalAlignment="Center" VerticalAlignment="Center"
-                   IsHitTestVisible="False">
-            <TextBlock.Style>
-                <Style TargetType="TextBlock">
-                    <Setter Property="Foreground" Value="White"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding ElementName=thisControl, Path=IsMouseOver, UpdateSourceTrigger=PropertyChanged}" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource darkTextBrush}"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </TextBlock.Style>
-        </TextBlock>
     </Grid>
 </UserControl>

@@ -38,6 +38,7 @@ namespace Techtonica_Mod_Loader.Classes
             List<ThunderStoreMod> thunderStoreMods = JsonConvert.DeserializeObject<List<ThunderStoreMod>>(json);
             List<Mod> mods = new List<Mod>();
             foreach (ThunderStoreMod thunderStoreMod in thunderStoreMods) {
+                if(Settings.userSettings.hideTools && thunderStoreMod.categories.Contains("Tools")) continue;
                 mods.Add(new Mod(thunderStoreMod));
             }
 

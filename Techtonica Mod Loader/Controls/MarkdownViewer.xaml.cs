@@ -7,6 +7,7 @@ using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
+using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -43,6 +44,8 @@ namespace Techtonica_Mod_Loader.Controls
         // Public Functions
 
         public async void ViewMarkdown(string markdown) {
+            markdown = markdown.Replace("&nbsp", " ");
+
             mainPanel.Children.Clear();
             string[] lines = markdown.Replace("\r", "").Split('\n');
             
@@ -209,7 +212,6 @@ namespace Techtonica_Mod_Loader.Controls
             string allPatterns = string.Join("|", patterns);
 
             int currentIndex = 0;
-            bool inCodeBlock = false; // Track if we are inside a code block
 
             foreach (System.Text.RegularExpressions.Match match in System.Text.RegularExpressions.Regex.Matches(markdownText, allPatterns, System.Text.RegularExpressions.RegexOptions.Singleline)) {
                 int matchIndex = match.Index;
@@ -421,6 +423,12 @@ namespace Techtonica_Mod_Loader.Controls
             int start = line.IndexOf("(") + 1;
             int end = line.IndexOf(")");
             string url = line.Substring(start, end - start);
+
+            if (!Settings.userSettings.renderImages) {
+                mainPanel.Children.Add(FormatMarkdownToTextBlock($"[Image Link]({url})"));
+                return "";
+            }
+
             Image image = await GuiUtils.GetImageFromURL(url);
             if(image != null) {
                 image.MaxWidth = mainPanel.ActualWidth;
@@ -428,6 +436,9 @@ namespace Techtonica_Mod_Loader.Controls
                 image.VerticalAlignment = VerticalAlignment.Top;
                 image.Margin = new Thickness(0, 5, 0, 5);
                 mainPanel.Children.Add(image);
+            }
+            else {
+                mainPanel.Children.Add(FormatMarkdownToTextBlock($"[Image Link]({url})"));
             }
 
             return "";
@@ -455,6 +466,12 @@ namespace Techtonica_Mod_Loader.Controls
             int startIndex = line.IndexOf(")](");
             if (startIndex != -1) {
                 hyperlinkUrl = line.Substring(startIndex + 2).Replace("(", "").Replace(")", "");
+            }
+
+            if (!Settings.userSettings.renderImages) {
+                mainPanel.Children.Add(FormatMarkdownToTextBlock($"[Image Link]({imageLink})"));
+                mainPanel.Children.Add(FormatMarkdownToTextBlock($"[Hyperlink]({hyperlinkUrl})"));
+                return "";
             }
 
             HyperlinkImage image = new HyperlinkImage(hyperlinkUrl);
@@ -586,7 +603,7 @@ namespace Techtonica_Mod_Loader.Controls
         CodeBlock,
         Image,
         LinkedImaged,
-        HorizontalRule, // ToDo: Horizontal Rule
+        HorizontalRule,
         Table,
 
         // Embedded Types:

@@ -175,6 +175,7 @@ namespace Techtonica_Mod_Loader.Classes
         public string value;
         public string defaultValue;
 
+        public StringConfigOption() { optionType = "String"; }
         public StringConfigOption(List<string> fileLines) {
             optionType = "String";
             foreach(string line in fileLines) {
@@ -385,6 +386,7 @@ namespace Techtonica_Mod_Loader.Classes
         public bool value;
         public bool defaultValue;
 
+        public BooleanConfigOption(){}
         public BooleanConfigOption(List<string> fileLines) {
             optionType = "Boolean";
             foreach (string line in fileLines) {
