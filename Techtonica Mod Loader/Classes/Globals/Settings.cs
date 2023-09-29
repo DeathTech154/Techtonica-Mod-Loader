@@ -5,11 +5,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Techtonica_Mod_Loader
 {
     public class Settings
     {
+        // Objects & Variables
         public static Settings userSettings = new Settings();
 
         public string gameFolder = "";
@@ -19,6 +21,9 @@ namespace Techtonica_Mod_Loader
         public bool renderImages = true;
         public bool cacheImages = true;
         public bool logDebugMessages = false;
+
+        // Hidden Settings - No Gui
+        public List<string> seenMods = new List<string>();
 
         // Data Functions
 

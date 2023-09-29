@@ -70,7 +70,7 @@ namespace Techtonica_Mod_Loader
         }
 
         private void OnLaunchGameClicked(object sender, EventArgs e) {
-
+            Process.Start($"{ProgramData.Paths.gameFolder}/Techtonica.exe");
         }
 
         private void OnInstallFromFileClicked(object sender, EventArgs e) {
@@ -183,8 +183,8 @@ namespace Techtonica_Mod_Loader
             if(mainBorder.Child is ModListPanel panel) {
                 ModListSource source = StringUtils.GetModListSourceFromName(showingBox.SelectedItem);
                 switch (source) {
-                    // ToDo: New Mods
                     case ModListSource.Installed: panel.LoadInstalledModList(); break;
+                    case ModListSource.NewMods: panel.LoadNewModsList(); break;
                     case ModListSource.Online: panel.LoadOnlineModList(); break;
                 }
             }
