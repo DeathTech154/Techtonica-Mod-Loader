@@ -1,3 +1,4 @@
+using AutoUpdaterDotNET;
 using Microsoft.Win32;
 using SharpVectors.Converters;
 using System;
@@ -88,29 +89,39 @@ namespace Techtonica_Mod_Loader
         }
 
         public static async Task<System.Windows.Controls.Image> GetImageFromURL(string url) {
-            try {
-                using (WebClient webClient = new WebClient()) {
-                    byte[] imageData = await webClient.DownloadDataTaskAsync(new Uri(url));
+            BitmapImage bitmapImage = new BitmapImage();
+            if (ImageCache.IsImageCached(url)) {
+                bitmapImage = new BitmapImage(new Uri(ImageCache.GetImagePath(url)));
+            }
+            else {
+                try {
+                    using (WebClient webClient = new WebClient()) {
+                        byte[] imageData = await webClient.DownloadDataTaskAsync(new Uri(url));
 
-                    BitmapImage bitmapImage = new BitmapImage();
-                    bitmapImage.BeginInit();
-                    bitmapImage.StreamSource = new MemoryStream(imageData);
-                    bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                    bitmapImage.EndInit();
+                        bitmapImage.BeginInit();
+                        bitmapImage.StreamSource = new MemoryStream(imageData);
+                        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmapImage.EndInit();
 
-                    System.Windows.Controls.Image image = new System.Windows.Controls.Image();
-                    image.Source = bitmapImage;
-                    image.Width = bitmapImage.PixelWidth;
-                    image.Height = bitmapImage.PixelHeight;
-                    image.Stretch = System.Windows.Media.Stretch.UniformToFill;
-                    return image;
+                        if (Settings.userSettings.cacheImages) {
+                            ImageCache.CacheImage(url);
+                        }
+                    }
                 }
+                catch (Exception e) {
+                    string error = $"Error loading image: {e.Message}";
+                    DebugUtils.SendDebugLine(error);
+                    return null;
+                }
+                
             }
-            catch (Exception ex) {
-                string error = $"Error loading image: {ex.Message}";
-                DebugUtils.SendDebugLine(error);
-                return null;
-            }
+
+            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+            image.Source = bitmapImage;
+            image.Width = bitmapImage.PixelWidth;
+            image.Height = bitmapImage.PixelHeight;
+            image.Stretch = System.Windows.Media.Stretch.UniformToFill;
+            return image;
         }
 
         public static async Task<SvgViewbox> GetSVGViewboxFromURL(string url) {

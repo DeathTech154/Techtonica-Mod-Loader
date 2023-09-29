@@ -58,13 +58,15 @@ namespace Techtonica_Mod_Loader
             public static string resourcesFolder = $"{dataFolder}\\Resources";
             public static string unzipFolder = $"{dataFolder}\\Unzip";
             public static string markdownFiles = $"{dataFolder}\\MarkdownFiles";
+            public static string imageCache = $"{dataFolder}\\ImageCache";
 
             public static List<string> folders = new List<string>() {
                 dataFolder,
                 modsFolder,
                 resourcesFolder,
                 unzipFolder,
-                markdownFiles
+                markdownFiles,
+                imageCache
             };
             
             public static string gameFolder => Settings.userSettings.gameFolder;
@@ -78,6 +80,7 @@ namespace Techtonica_Mod_Loader
             public static string modsFile = $"{dataFolder}\\Mods.json";
             public static string tempZipFile = $"{dataFolder}\\Temp.zip";
             public static string tempMarkdownFile = $"{unzipFolder}\\README.md";
+            public static string imageCacheMapFile = $"{dataFolder}\\ImageCacheMap.json";
         }
     }
 }
