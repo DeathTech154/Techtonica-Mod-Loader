@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualBasic.Logging;
+﻿using MyLogger;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -111,7 +111,7 @@ namespace Techtonica_Mod_Loader.Classes
             }
             catch (Exception e){
                 string error = $"Error occurred while downloading file: {e.Message}";
-                DebugUtils.SendDebugLine(error);
+                Log.Error(error);
                 DebugUtils.CrashIfDebug(error);
             }
         }
@@ -126,7 +126,7 @@ namespace Techtonica_Mod_Loader.Classes
             }
             catch (Exception e) {
                 string error = $"Error occurred while downloading file: {e.Message}";
-                DebugUtils.SendDebugLine(error);
+                Log.Error(error);
                 DebugUtils.CrashIfDebug(error);
             }
         }
@@ -246,7 +246,7 @@ namespace Techtonica_Mod_Loader.Classes
             }
 
             string error = $"Could not install mod '{name}' - Cannot find zip file";
-            DebugUtils.SendDebugLine(error);
+            Log.Error(error);
             DebugUtils.CrashIfDebug(error);
 
             GuiUtils.ShowErrorMessage("Couldn't Install Mod", $"Sorry, TML couldn't install this mod as it cannot find it at '{zipFileLocation}'.\n");
@@ -267,7 +267,7 @@ namespace Techtonica_Mod_Loader.Classes
             if (!string.IsNullOrEmpty(ProgramData.Paths.gameFolder)) return true;
 
             string error = $"Couldn't install mod - ProgramData.Paths.gameFolder is null or empty";
-            DebugUtils.SendDebugLine(error);
+            Log.Error(error);
             DebugUtils.CrashIfDebug(error);
 
             GuiUtils.ShowErrorMessage("Couldn't Install Mod", "You need to set your game folder location in the settings.");
@@ -343,7 +343,7 @@ namespace Techtonica_Mod_Loader.Classes
             }
             catch (Exception e) {
                 string error = $"Error occurred while parsing Version '{input}': {e.Message}";
-                DebugUtils.SendDebugLine(error);
+                Log.Error(error);
                 DebugUtils.CrashIfDebug(error);
                 return new ModVersion() {
                     major = 0,

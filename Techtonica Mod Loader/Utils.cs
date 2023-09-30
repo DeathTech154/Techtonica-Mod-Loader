@@ -1,5 +1,6 @@
 using AutoUpdaterDotNET;
 using Microsoft.Win32;
+using MyLogger;
 using SharpVectors.Converters;
 using System;
 using System.Collections.Generic;
@@ -21,11 +22,6 @@ namespace Techtonica_Mod_Loader
             if (ProgramData.isDebugBuild) {
                 throw new Exception(errorMessage);
             }
-        }
-
-        public static void SendDebugLine(string Str) {
-            Console.WriteLine(Str);
-            Debug.WriteLine(Str);
         }
     }
   
@@ -110,7 +106,7 @@ namespace Techtonica_Mod_Loader
                 }
                 catch (Exception e) {
                     string error = $"Error loading image: {e.Message}";
-                    DebugUtils.SendDebugLine(error);
+                    Log.Error(error);
                     return null;
                 }
                 
@@ -148,7 +144,7 @@ namespace Techtonica_Mod_Loader
             }
             catch (Exception ex) {
                 string error = $"Error loading svg: {ex.Message}";
-                DebugUtils.SendDebugLine(error);
+                Log.Error(error);
                 DebugUtils.CrashIfDebug(error);
                 return null;
             }
@@ -279,9 +275,9 @@ namespace Techtonica_Mod_Loader
             if (key != null) {
                 string steamPath = (string)key.GetValue("SteamPath");
                 key.Close();
-                DebugUtils.SendDebugLine(steamPath);
+                Log.Debug($"Steam Path: {steamPath}");
                 string gameLocation = steamPath + @"/steamapps/common/Techtonica";
-                DebugUtils.SendDebugLine(gameLocation);
+                Log.Debug($"Game Folder: {gameLocation}");
                 
                 Settings.userSettings.gameFolder = gameLocation;
                 ProgramData.Paths.bepInExConfigFolder = $"{gameLocation}/BepInEx/config";
@@ -311,7 +307,7 @@ namespace Techtonica_Mod_Loader
                 }
             }
 
-            DebugUtils.SendDebugLine("Error: Failed to obtain game path.");
+            Log.Warning("Failed to obtain game path");
             return false;
         }
     }

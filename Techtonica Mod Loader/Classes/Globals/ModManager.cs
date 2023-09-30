@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MyLogger;
 using Newtonsoft.Json;
 using Techtonica_Mod_Loader.Classes;
 
@@ -26,7 +27,7 @@ namespace Techtonica_Mod_Loader
             }
             else {
                 string error = $"Cannot add mod ({mod.name}), id: ({mod.id}), already exists.";
-                DebugUtils.SendDebugLine($"Error: {error}");
+                Log.Error(error);
                 DebugUtils.CrashIfDebug(error);
             }
         }
@@ -38,7 +39,7 @@ namespace Techtonica_Mod_Loader
             }
             else {
                 string error = $"Could not update details of mod ({mod.id}: {mod.name}), does not exist";
-                DebugUtils.SendDebugLine($"Error: {error}");
+                Log.Error(error);
                 DebugUtils.CrashIfDebug(error);
             }
         }
@@ -55,7 +56,7 @@ namespace Techtonica_Mod_Loader
             }
             else {
                 string error = $"Cannot get mod with id ({id}), does not exist.";
-                DebugUtils.SendDebugLine($"Error: {error}");
+                Log.Error(error);
                 DebugUtils.CrashIfDebug(error);
                 return new Mod();
             }
@@ -71,7 +72,7 @@ namespace Techtonica_Mod_Loader
             }
             else {
                 string error = $"Cannot delete mod with id '{id}' - Does not exist";
-                DebugUtils.SendDebugLine(error);
+                Log.Error(error);
                 DebugUtils.CrashIfDebug(error);
             }
         }

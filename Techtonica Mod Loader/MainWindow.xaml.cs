@@ -22,6 +22,7 @@ using System.IO;
 using Techtonica_Mod_Loader.Classes;
 using Techtonica_Mod_Loader.Panels;
 using System.Windows.Automation;
+using MyLogger;
 
 namespace Techtonica_Mod_Loader
 {
@@ -40,6 +41,8 @@ namespace Techtonica_Mod_Loader
         // Events
 
         private async void OnProgramLoaded(object sender, RoutedEventArgs e) {
+            InitialiseLogger();
+
             string version = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
             Title = "Techtonica Mod Loader v" + version;
 
@@ -134,12 +137,19 @@ namespace Techtonica_Mod_Loader
 
         // Private Functions
 
+        private void InitialiseLogger() {
+            Log.logPath = ProgramData.Paths.logFile;
+            Log.logDebugToFile = Settings.userSettings.logDebugMessages || ProgramData.isDebugBuild;
+        }
+
         private void CheckForUpdates() {
             string programDirectory = FileStructureUtils.GetProgramDirectory();
-            DebugUtils.SendDebugLine(programDirectory);
+            Log.Debug($"Program Directory: {programDirectory}");
+
             string installPath = StringUtils.RemoveFromBack(programDirectory, 1, "\\");
             AutoUpdater.InstallationPath = installPath;
-            DebugUtils.SendDebugLine(AutoUpdater.InstallationPath);
+            Log.Debug($"Installation Path: '{installPath}'");
+            
             AutoUpdater.Start("https://www.DeeTeeNetwork.com/TechtonicaML_AutoUpdate.xml");
             AutoUpdater.UpdateFormSize = new System.Drawing.Size(800, 600);
         }

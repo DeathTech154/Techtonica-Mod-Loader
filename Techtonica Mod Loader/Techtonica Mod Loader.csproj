@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <RootNamespace>Techtonica_Mod_Loader</RootNamespace>
     <UseWPF>true</UseWPF>
@@ -27,6 +27,12 @@
     <PackageReference Include="Autoupdater.NET.Official" Version="1.8.3" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="SharpVectors" Version="1.8.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="MyLogger">
+      <HintPath>..\..\..\Users\pc\source\repos\MyLogger\MyLogger\bin\Release\MyLogger.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

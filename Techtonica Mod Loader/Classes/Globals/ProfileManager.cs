@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MyLogger;
 using Newtonsoft.Json;
 using Techtonica_Mod_Loader.Classes;
 
@@ -31,7 +32,7 @@ namespace Techtonica_Mod_Loader
             }
             else {
                 string error = $"Cannot update profile '{profile.id}|{profile.name}' - does not exist";
-                DebugUtils.SendDebugLine(error);
+                Log.Error(error);
                 DebugUtils.CrashIfDebug(error);
             }
         }
@@ -42,7 +43,7 @@ namespace Techtonica_Mod_Loader
             }
             else {
                 string error = $"Cannot retrieve profile with id ({id}), does not exist.";
-                DebugUtils.SendDebugLine(error);
+                Log.Error(error);
                 DebugUtils.CrashIfDebug(error);
                 return new Profile();
             }
@@ -54,7 +55,7 @@ namespace Techtonica_Mod_Loader
             }
             else {
                 string error = $"Cannot retrieve active profile (id: {activeProfile}), does not exist.";
-                DebugUtils.SendDebugLine(error);
+                Log.Error(error);
                 DebugUtils.CrashIfDebug(error);
                 return new Profile();
             }
@@ -68,7 +69,7 @@ namespace Techtonica_Mod_Loader
             }
 
             string error = $"Couldn't find profile with name ({name}).";
-            DebugUtils.SendDebugLine(error);
+            Log.Error(error);
             DebugUtils.CrashIfDebug(error);
             return new Profile();
         }
