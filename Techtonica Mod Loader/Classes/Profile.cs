@@ -65,20 +65,15 @@ namespace Techtonica_Mod_Loader.Classes
                 tempEnabledStates.Add(modIDs[i], enabledStates[i]);
             }
 
-            switch (sortOption) {
-                case ModListSortOption.Alphabetical:
-                    List<Mod> mods = GetMods();
-                    mods = mods.OrderBy(mod => mod.name).ToList();
-                    
-                    modIDs.Clear();
-                    enabledStates.Clear();
-                    
-                    foreach(Mod mod in mods) {
-                        modIDs.Add(mod.id);
-                        enabledStates.Add(tempEnabledStates[mod.id]);
-                    }
+            List<Mod> mods = GetMods();
+            mods = ModManager.SortModList(mods, sortOption);
 
-                    break;
+            modIDs.Clear();
+            enabledStates.Clear();
+
+            foreach (Mod mod in mods) {
+                modIDs.Add(mod.id);
+                enabledStates.Add(tempEnabledStates[mod.id]);
             }
 
             if (HasMod(ProgramData.bepInExID)) {
@@ -86,8 +81,6 @@ namespace Techtonica_Mod_Loader.Classes
                 modIDs.RemoveAt(bepIndex);
                 modIDs.Insert(0, ProgramData.bepInExID);
             }
-            
-            // ToDo: More Mod Sort Options
         }
 
         public List<Mod> GetMods() {

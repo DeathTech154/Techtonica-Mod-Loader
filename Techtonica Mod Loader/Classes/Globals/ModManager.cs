@@ -77,6 +77,20 @@ namespace Techtonica_Mod_Loader
             }
         }
 
+        public static List<Mod> SortModList(List<Mod> modsToSort, ModListSortOption sortOption) {
+            switch(sortOption) {
+                case ModListSortOption.Alphabetical: return modsToSort.OrderBy(mod => mod.name).ToList();
+                case ModListSortOption.LastUpdated: return modsToSort.OrderByDescending(mod => mod.dateUpdated).ToList();
+                case ModListSortOption.Downloads: return modsToSort.OrderByDescending(mod => mod.downloads).ToList();
+                case ModListSortOption.Popularity: return modsToSort.OrderByDescending(mod => mod.ratingScore).ToList();
+            }
+
+            string error = $"Could not sort mods with unknown sort option: '{StringUtils.GetModListSortOptionName(sortOption)}'";
+            Log.Error(error);
+            DebugUtils.CrashIfDebug(error);
+            return modsToSort;
+        }
+
         // Data Functions
 
         public static void Save() {
