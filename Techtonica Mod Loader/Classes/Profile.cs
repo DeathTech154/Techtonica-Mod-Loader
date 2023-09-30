@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyLogger;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,7 +25,7 @@ namespace Techtonica_Mod_Loader.Classes
             }
             else {
                 string error = $"Cannot add mod '{modID}' - Already included in profile";
-                DebugUtils.SendDebugLine(error);
+                Log.Error(error);
                 DebugUtils.CrashIfDebug(error);
             }
         }
@@ -40,7 +41,7 @@ namespace Techtonica_Mod_Loader.Classes
             }
             else {
                 string error = $"Tried to get enabled state of mod that is not in profile ({modID}|{name}) - {modID}";
-                DebugUtils.SendDebugLine(error);
+                Log.Error(error);
                 DebugUtils.CrashIfDebug(error);
                 return false;
             }
@@ -53,7 +54,7 @@ namespace Techtonica_Mod_Loader.Classes
             }
             else {
                 string error = $"Tried to set enabled state of mod that is not in profile ({modID}|{name}) - {modID}";
-                DebugUtils.SendDebugLine(error);
+                Log.Error(error);
                 DebugUtils.CrashIfDebug(error);
             }
         }

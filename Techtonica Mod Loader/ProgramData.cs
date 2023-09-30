@@ -81,6 +81,7 @@ namespace Techtonica_Mod_Loader
             public static string tempZipFile = $"{dataFolder}\\Temp.zip";
             public static string tempMarkdownFile = $"{unzipFolder}\\README.md";
             public static string imageCacheMapFile = $"{dataFolder}\\ImageCacheMap.json";
+            public static string logFile = $"{dataFolder}\\TML.log";
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyLogger;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -93,7 +94,7 @@ namespace Techtonica_Mod_Loader.Panels
                 }
                 else {
                     string error = $"Cannot load OptionPanel for unknown option type";
-                    DebugUtils.SendDebugLine(error);
+                    Log.Error(error);
                     DebugUtils.CrashIfDebug(error);
                 }
             }

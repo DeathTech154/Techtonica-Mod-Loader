@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MyLogger;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,7 +57,7 @@ namespace Techtonica_Mod_Loader.Classes
                 }
                 else {
                     string error = $"HTTP request failed with status code {response.StatusCode}";
-                    DebugUtils.SendDebugLine(error);
+                    Log.Error(error);
                     DebugUtils.CrashIfDebug(error);
                     return "";
                 }

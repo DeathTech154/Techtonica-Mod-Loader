@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyLogger;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -164,7 +165,7 @@ namespace Techtonica_Mod_Loader.Classes
 
         public virtual List<string> ToLines(){
             string error = "ConfigOption.ToLine() has not been overridden";
-            DebugUtils.SendDebugLine(error);
+            Log.Error(error);
             DebugUtils.CrashIfDebug(error);
             return new List<string>();
         }

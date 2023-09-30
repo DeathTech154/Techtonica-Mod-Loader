@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
+using MyLogger;
+using Newtonsoft.Json;
 
 namespace Techtonica_Mod_Loader
 {
@@ -51,7 +52,7 @@ namespace Techtonica_Mod_Loader
             }
             catch (Exception ex) {
                 string error = $"Error downloading image: {ex.Message}";
-                DebugUtils.SendDebugLine(error);
+                Log.Error(error);
                 DebugUtils.CrashIfDebug(error);
             }
         }
@@ -70,7 +71,7 @@ namespace Techtonica_Mod_Loader
             }
             else {
                 string error = $"Tried to get image path for image that is not cached '{id}'";
-                DebugUtils.SendDebugLine(error);
+                Log.Error(error);
                 DebugUtils.CrashIfDebug(error);
                 return null;
             }
