@@ -32,8 +32,8 @@ namespace Techtonica_Mod_Loader.Panels
         public void LoadInstalledModList() {
             modsPanel.Children.Clear();
             Profile profile = ProfileManager.GetActiveProfile();
-            profile.SortMods(ModListSortOption.Alphabetical);
-            foreach (string modID in profile.modIDs) { // ToDo: Sort from MainWindow setting
+            profile.SortMods(ProgramData.currentSortOption);
+            foreach (string modID in profile.modIDs) {
                 AddInstalledModToModList(modID);
             }
         }
@@ -42,7 +42,7 @@ namespace Techtonica_Mod_Loader.Panels
             modsPanel.Children.Clear();
             Profile profile = ProfileManager.GetActiveProfile();    
             List<Mod> mods = await ThunderStore.GetAllMods();
-            // ToDo: Sort Mods
+            mods = ModManager.SortModList(mods, ProgramData.currentSortOption);
             foreach (Mod mod in mods) {
                 if (!Settings.userSettings.seenMods.Contains(mod.id) && !profile.HasMod(mod)) {
                     AddOnlineModToModList(mod);
@@ -54,7 +54,7 @@ namespace Techtonica_Mod_Loader.Panels
             modsPanel.Children.Clear();
             Profile profile = ProfileManager.GetActiveProfile();
             List<Mod> mods = await ThunderStore.GetAllMods();
-            // ToDo: Sort Mods
+            mods = ModManager.SortModList(mods, ProgramData.currentSortOption);
             foreach (Mod mod in mods) {
                 if (!profile.HasMod(mod.id)){
                     AddOnlineModToModList(mod);

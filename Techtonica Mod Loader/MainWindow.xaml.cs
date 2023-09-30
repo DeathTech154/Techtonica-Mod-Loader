@@ -119,7 +119,8 @@ namespace Techtonica_Mod_Loader
         }
 
         private void OnSortOptionChanged(object sender, EventArgs e) {
-            // ToDo: Elliot - Sort Mods List
+            ProgramData.currentSortOption = StringUtils.GetModListSortOptionFromName(sortBox.SelectedItem);
+            RefreshModList();
         }
 
         private void OnCheckForUpdatesClicked(object sender, RoutedEventArgs e) {
