@@ -73,6 +73,14 @@ namespace Techtonica_Mod_Loader.Panels
             }
         }
 
+        private void OnDonateClicked(object sender, EventArgs e) {
+            Mod mod = ModManager.GetMod(modID);
+            GuiUtils.OpenURL(mod.donationLink);
+
+            mod.hasDonated = GuiUtils.GetUserConfirmation("Hide Donation Button", "Would you like to hide the donation button for this mod?");
+            ModManager.UpdateModDetails(mod);
+        }
+
         private void OnConfigureClicked(object sender, EventArgs e) {
             Mod mod = ModManager.GetMod(modID);
             ModConfig config = ModConfig.FromFile(mod.configFileLocation);
@@ -81,11 +89,7 @@ namespace Techtonica_Mod_Loader.Panels
         }
 
         private void ViewModPageClicked(object sender, EventArgs e) {
-            ProcessStartInfo info = new ProcessStartInfo() {
-                FileName = ModManager.GetMod(modID).link,
-                UseShellExecute = true
-            };
-            Process.Start(info);
+            GuiUtils.OpenURL(ModManager.GetMod(modID).link);
         }
 
         private void DeleteModClicked(object sender, EventArgs e) {
@@ -118,6 +122,10 @@ namespace Techtonica_Mod_Loader.Panels
                 markdownViewer.ViewMarkdown("# No description available");
             }
 
+            if(string.IsNullOrEmpty(mod.donationLink) || mod.hasDonated) {
+                HideDonateColumn();
+            }
+
             if (!mod.HasConfigFile()) {
                 HideConfigureColumn();
             }
@@ -128,6 +136,11 @@ namespace Techtonica_Mod_Loader.Panels
         }
 
         // Private Functions
+
+        private void HideDonateColumn() {
+            donateColumn.Width = new GridLength(0);
+            mainGrid.Children.Remove(dontateButton);
+        }
 
         private void HideConfigureColumn() {
             mainGrid.Children.Remove(configureButton);

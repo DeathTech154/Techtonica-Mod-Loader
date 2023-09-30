@@ -32,6 +32,7 @@ namespace Techtonica_Mod_Loader.Classes
         public int ratingScore;
         public int downloads;
         public bool isDeprecated;
+        public bool hasDonated;
         public List<string> categories = new List<string>();
         public List<string> dependencies = new List<string>();
 
