@@ -113,7 +113,9 @@ namespace Techtonica_Mod_Loader.Panels
             enabledBox.IsEditable = mod.canBeToggled;
             modNameLabel.Text = mod.name;
             modTaglineLabel.Text = mod.tagLine;
-            icon.Source = new BitmapImage(new Uri(mod.iconLink));
+
+            string iconPath = string.IsNullOrEmpty(mod.iconLink) ? "pack://application:,,,/UnknownModIcon.png" : mod.iconLink;
+            icon.Source = new BitmapImage(new Uri(iconPath));
 
             if (mod.HasMarkdownFile()) {
                 markdownViewer.ViewMarkdownFromFile(mod.markdownFileLocation);

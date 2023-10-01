@@ -22,6 +22,7 @@
     <None Remove="Background.jpg" />
     <None Remove="Controls\BepInEx.png" />
     <None Remove="Logo.png" />
+    <None Remove="UnknownModIcon.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,6 +44,7 @@
   <ItemGroup>
     <Resource Include="Background.jpg" />
     <Resource Include="Logo.png" />
+    <Resource Include="UnknownModIcon.png" />
   </ItemGroup>
 
 </Project>
