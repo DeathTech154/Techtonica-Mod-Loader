@@ -89,6 +89,9 @@
             <!--Shader-->
             <Rectangle x:Name="shader" Fill="Black" Opacity="0.7" Grid.RowSpan="2" Visibility="Hidden"/>
 
+            <!--Downloading Blocker-->
+            <Controls:DownloadingBlocker x:Name="downloadingGUI" Visibility="Hidden" Grid.RowSpan="2"/>
+
         </Grid>
     </Grid>
     

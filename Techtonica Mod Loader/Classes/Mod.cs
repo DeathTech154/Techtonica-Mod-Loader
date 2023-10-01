@@ -137,6 +137,10 @@ namespace Techtonica_Mod_Loader.Classes
                 return;
             }
 
+            if (id != ProgramData.bepInExID) {
+                GuiUtils.ShowInstallingGui();
+            }
+
             CopyLocalFileToModsFolder();
             FileStructureUtils.ClearUnzipFolder();
             UnzipToTempFolder();
@@ -199,6 +203,7 @@ namespace Techtonica_Mod_Loader.Classes
             Profile profile = ProfileManager.GetActiveProfile();
             if (!profile.HasMod(id)) profile.AddMod(id);
             ProfileManager.UpdateProfile(profile);
+            GuiUtils.HideInstallingGui();
         }
 
         public void Uninstall() {
