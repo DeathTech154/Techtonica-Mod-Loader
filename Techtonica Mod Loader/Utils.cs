@@ -12,6 +12,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using Techtonica_Mod_Loader.Classes;
 using Techtonica_Mod_Loader.Windows;
 
 namespace Techtonica_Mod_Loader
@@ -148,6 +149,19 @@ namespace Techtonica_Mod_Loader
                 DebugUtils.CrashIfDebug(error);
                 return null;
             }
+        }
+
+        public static void ShowDownloadingGui(Mod mod) {
+            MainWindow.current.downloadingGUI.ShowForMod(mod);
+            MainWindow.current.downloadingGUI.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        public static void ShowInstallingGui() {
+            MainWindow.current.downloadingGUI.SetToInstalling();
+        }
+
+        public static void HideInstallingGui() {
+            MainWindow.current.downloadingGUI.Visibility = System.Windows.Visibility.Hidden;
         }
     }
 
