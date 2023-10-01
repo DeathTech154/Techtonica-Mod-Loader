@@ -42,23 +42,24 @@ namespace Techtonica_Mod_Loader
 
         private async void OnProgramLoaded(object sender, RoutedEventArgs e) {
             InitialiseLogger();
-
-            string version = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
-            Title = "Techtonica Mod Loader v" + version;
-
-            loader.Visibility = Visibility.Visible;
-            mainGrid.Visibility = Visibility.Hidden;
-
             FileStructureUtils.CreateFolderStructure();
-            await LoadData();
-            InitialiseGUI();
-            CheckForUpdates();
+            FileStructureUtils.GenerateSVGFiles();
 
             if (string.IsNullOrEmpty(ProgramData.Paths.gameFolder)) {
                 if (!FileStructureUtils.FindSteamGameFolder()) {
                     GuiUtils.ShowWarningMessage("Couldn't Find Game Folder", "Please go to the settings and set your game foler before installing mods or launching the game.");
                 }
             }
+
+            string version = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
+            Title = "Techtonica Mod Loader v" + version;
+
+            loader.Visibility = Visibility.Visible;
+            mainGrid.Visibility = Visibility.Hidden;
+            
+            await LoadData();
+            InitialiseGUI();
+            CheckForUpdates();
 
             if (!ProgramData.skipLoadingScreenDelay && ProgramData.isDebugBuild) {
                 await Task.Delay(3000); // Let users bask in the glory of the loading screen
@@ -87,7 +88,7 @@ namespace Techtonica_Mod_Loader
                     id = $"com.localfile.{name}",
                     name = name,
                     tagLine = "Unknown mod installed from local file",
-                    iconLink = $"{ProgramData.Paths.resourcesFolder}/UnknownModIcon.png",
+                    iconLink = "",
                     zipFileLocation = selectedZip
                 };
                 

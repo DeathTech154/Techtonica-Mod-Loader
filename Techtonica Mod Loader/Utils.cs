@@ -159,6 +159,12 @@ namespace Techtonica_Mod_Loader
             }
         }
 
+        public static void GenerateSVGFiles() {
+            GenerateInfoSVG();
+            GenerateWarningSVG();
+            GenerateErrorSVG();
+        }
+
         public static void ClearUnzipFolder() {
             DeleteFolder(ProgramData.Paths.unzipFolder);
             Directory.CreateDirectory(ProgramData.Paths.unzipFolder);
@@ -309,6 +315,348 @@ namespace Techtonica_Mod_Loader
 
             Log.Warning("Failed to obtain game path");
             return false;
+        }
+
+        // Private Functions
+
+        private static void GenerateInfoSVG() {
+            string path = $"{ProgramData.Paths.resourcesFolder}/Info.svg";
+            if (File.Exists(path)) return;
+
+            string svg = @"<?xml version=""1.0"" encoding=""UTF-8"" standalone=""no""?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width=""512""
+   height=""512""
+   viewBox=""0 0 512 512""
+   version=""1.1""
+   id=""svg5""
+   inkscape:version=""1.1.1 (3bf5ae0d25, 2021-09-20)""
+   sodipodi:docname=""Info.svg""
+   xmlns:inkscape=""http://www.inkscape.org/namespaces/inkscape""
+   xmlns:sodipodi=""http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd""
+   xmlns=""http://www.w3.org/2000/svg""
+   xmlns:svg=""http://www.w3.org/2000/svg"">
+  <sodipodi:namedview
+     id=""namedview7""
+     pagecolor=""#505050""
+     bordercolor=""#eeeeee""
+     borderopacity=""1""
+     inkscape:pageshadow=""0""
+     inkscape:pageopacity=""0""
+     inkscape:pagecheckerboard=""0""
+     inkscape:document-units=""px""
+     showgrid=""false""
+     units=""px""
+     showguides=""true""
+     inkscape:guide-bbox=""true""
+     inkscape:zoom=""1.138""
+     inkscape:cx=""482.86467""
+     inkscape:cy=""235.94025""
+     inkscape:window-width=""2560""
+     inkscape:window-height=""1009""
+     inkscape:window-x=""-8""
+     inkscape:window-y=""-8""
+     inkscape:window-maximized=""1""
+     inkscape:current-layer=""layer1"">
+    <sodipodi:guide
+       position=""0,45.980582""
+       orientation=""-1,0""
+       id=""guide989""
+       inkscape:label=""""
+       inkscape:locked=""false""
+       inkscape:color=""rgb(0,0,255)"" />
+    <sodipodi:guide
+       position=""-18.640777,0""
+       orientation=""0,1""
+       id=""guide991""
+       inkscape:label=""""
+       inkscape:locked=""false""
+       inkscape:color=""rgb(0,0,255)"" />
+    <sodipodi:guide
+       position=""512,0""
+       orientation=""-1,0""
+       id=""guide1069""
+       inkscape:label=""""
+       inkscape:locked=""false""
+       inkscape:color=""rgb(0,0,255)"" />
+    <sodipodi:guide
+       position=""256,535.72584""
+       orientation=""-1,0""
+       id=""guide1109""
+       inkscape:label=""""
+       inkscape:locked=""false""
+       inkscape:color=""rgb(0,0,255)"" />
+    <sodipodi:guide
+       position=""231.10721,443.405""
+       orientation=""0,1""
+       id=""guide1111""
+       inkscape:label=""""
+       inkscape:locked=""false""
+       inkscape:color=""rgb(0,0,255)"" />
+  </sodipodi:namedview>
+  <defs
+     id=""defs2"" />
+  <g
+     inkscape:label=""Layer 1""
+     inkscape:groupmode=""layer""
+     id=""layer1"">
+    <path
+       style=""fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:7.91742;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1""
+       d=""M 6.8566886,473.74379 256,42.214922 505.14331,473.74379 Z""
+       id=""path854""
+       sodipodi:nodetypes=""cccc"" />
+    <text
+       xml:space=""preserve""
+       style=""font-style:normal;font-weight:normal;font-size:421.78px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:10.5445;stroke-opacity:1""
+       x=""198.12881""
+       y=""442.35748""
+       id=""text2077""><tspan
+         sodipodi:role=""line""
+         id=""tspan2075""
+         x=""198.12881""
+         y=""442.35748""
+         style=""fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:10.5445;stroke-opacity:1"">i</tspan></text>
+  </g>
+</svg>
+";
+            File.WriteAllText(path, svg);
+        }
+
+        private static void GenerateWarningSVG() {
+            string path = $"{ProgramData.Paths.resourcesFolder}/Warning.svg";
+            if(File.Exists(path)) return;
+
+            string svg = @"<?xml version=""1.0"" encoding=""UTF-8"" standalone=""no""?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width=""512""
+   height=""512""
+   viewBox=""0 0 512 512""
+   version=""1.1""
+   id=""svg5""
+   inkscape:version=""1.1.1 (3bf5ae0d25, 2021-09-20)""
+   sodipodi:docname=""Warning.svg""
+   xmlns:inkscape=""http://www.inkscape.org/namespaces/inkscape""
+   xmlns:sodipodi=""http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd""
+   xmlns=""http://www.w3.org/2000/svg""
+   xmlns:svg=""http://www.w3.org/2000/svg"">
+  <sodipodi:namedview
+     id=""namedview7""
+     pagecolor=""#505050""
+     bordercolor=""#eeeeee""
+     borderopacity=""1""
+     inkscape:pageshadow=""0""
+     inkscape:pageopacity=""0""
+     inkscape:pagecheckerboard=""0""
+     inkscape:document-units=""px""
+     showgrid=""false""
+     units=""px""
+     showguides=""true""
+     inkscape:guide-bbox=""true""
+     inkscape:zoom=""1.138""
+     inkscape:cx=""482.86467""
+     inkscape:cy=""235.94025""
+     inkscape:window-width=""2560""
+     inkscape:window-height=""1009""
+     inkscape:window-x=""-8""
+     inkscape:window-y=""-8""
+     inkscape:window-maximized=""1""
+     inkscape:current-layer=""layer1"">
+    <sodipodi:guide
+       position=""0,45.980582""
+       orientation=""-1,0""
+       id=""guide989""
+       inkscape:label=""""
+       inkscape:locked=""false""
+       inkscape:color=""rgb(0,0,255)"" />
+    <sodipodi:guide
+       position=""-18.640777,0""
+       orientation=""0,1""
+       id=""guide991""
+       inkscape:label=""""
+       inkscape:locked=""false""
+       inkscape:color=""rgb(0,0,255)"" />
+    <sodipodi:guide
+       position=""512,0""
+       orientation=""-1,0""
+       id=""guide1069""
+       inkscape:label=""""
+       inkscape:locked=""false""
+       inkscape:color=""rgb(0,0,255)"" />
+    <sodipodi:guide
+       position=""256,535.72584""
+       orientation=""-1,0""
+       id=""guide1109""
+       inkscape:label=""""
+       inkscape:locked=""false""
+       inkscape:color=""rgb(0,0,255)"" />
+    <sodipodi:guide
+       position=""231.10721,443.405""
+       orientation=""0,1""
+       id=""guide1111""
+       inkscape:label=""""
+       inkscape:locked=""false""
+       inkscape:color=""rgb(0,0,255)"" />
+  </sodipodi:namedview>
+  <defs
+     id=""defs2"" />
+  <g
+     inkscape:label=""Layer 1""
+     inkscape:groupmode=""layer""
+     id=""layer1"">
+    <path
+       style=""fill:none;fill-opacity:1;stroke:#fff00f;stroke-width:7.91742;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1""
+       d=""M 6.8566878,473.74379 256,42.214924 505.14331,473.74379 Z""
+       id=""path854""
+       sodipodi:nodetypes=""cccc"" />
+    <text
+       xml:space=""preserve""
+       style=""font-style:normal;font-weight:normal;font-size:421.78px;line-height:1.25;font-family:sans-serif;fill:#fff00f;fill-opacity:1;stroke:#fff00f;stroke-width:10.5445;stroke-opacity:1""
+       x=""-313.87119""
+       y=""-133.64253""
+       id=""text2077""
+       transform=""scale(-1)""><tspan
+         sodipodi:role=""line""
+         id=""tspan2075""
+         x=""-313.87119""
+         y=""-133.64253""
+         style=""fill:#fff00f;fill-opacity:1;stroke:#fff00f;stroke-width:10.5445;stroke-opacity:1"">i</tspan></text>
+  </g>
+</svg>
+";
+            File.WriteAllText(path, svg);
+        }
+
+        private static void GenerateErrorSVG() {
+            string path = $"{ProgramData.Paths.resourcesFolder}/Error.svg";
+            if(File.Exists(path)) return;
+
+            string svg = @"<?xml version=""1.0"" encoding=""UTF-8"" standalone=""no""?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width=""512""
+   height=""512""
+   viewBox=""0 0 512 512""
+   version=""1.1""
+   id=""svg5""
+   inkscape:version=""1.1.1 (3bf5ae0d25, 2021-09-20)""
+   sodipodi:docname=""Error.svg""
+   xmlns:inkscape=""http://www.inkscape.org/namespaces/inkscape""
+   xmlns:sodipodi=""http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd""
+   xmlns:xlink=""http://www.w3.org/1999/xlink""
+   xmlns=""http://www.w3.org/2000/svg""
+   xmlns:svg=""http://www.w3.org/2000/svg"">
+  <sodipodi:namedview
+     id=""namedview7""
+     pagecolor=""#505050""
+     bordercolor=""#eeeeee""
+     borderopacity=""1""
+     inkscape:pageshadow=""0""
+     inkscape:pageopacity=""0""
+     inkscape:pagecheckerboard=""0""
+     inkscape:document-units=""px""
+     showgrid=""false""
+     units=""px""
+     showguides=""true""
+     inkscape:guide-bbox=""true""
+     inkscape:zoom=""1.138""
+     inkscape:cx=""481.98595""
+     inkscape:cy=""235.94025""
+     inkscape:window-width=""2560""
+     inkscape:window-height=""1009""
+     inkscape:window-x=""-8""
+     inkscape:window-y=""-8""
+     inkscape:window-maximized=""1""
+     inkscape:current-layer=""layer1"">
+    <sodipodi:guide
+       position=""0,45.980582""
+       orientation=""-1,0""
+       id=""guide989""
+       inkscape:label=""""
+       inkscape:locked=""false""
+       inkscape:color=""rgb(0,0,255)"" />
+    <sodipodi:guide
+       position=""-18.640777,0""
+       orientation=""0,1""
+       id=""guide991""
+       inkscape:label=""""
+       inkscape:locked=""false""
+       inkscape:color=""rgb(0,0,255)"" />
+    <sodipodi:guide
+       position=""512,0""
+       orientation=""-1,0""
+       id=""guide1069""
+       inkscape:label=""""
+       inkscape:locked=""false""
+       inkscape:color=""rgb(0,0,255)"" />
+    <sodipodi:guide
+       position=""256,535.72584""
+       orientation=""-1,0""
+       id=""guide1109""
+       inkscape:label=""""
+       inkscape:locked=""false""
+       inkscape:color=""rgb(0,0,255)"" />
+    <sodipodi:guide
+       position=""231.10721,443.405""
+       orientation=""0,1""
+       id=""guide1111""
+       inkscape:label=""""
+       inkscape:locked=""false""
+       inkscape:color=""rgb(0,0,255)"" />
+  </sodipodi:namedview>
+  <defs
+     id=""defs2"">
+    <linearGradient
+       inkscape:collect=""always""
+       id=""linearGradient7077"">
+      <stop
+         style=""stop-color:#ff0000;stop-opacity:1;""
+         offset=""0""
+         id=""stop7073"" />
+      <stop
+         style=""stop-color:#ff0000;stop-opacity:0;""
+         offset=""1""
+         id=""stop7075"" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect=""always""
+       xlink:href=""#linearGradient7077""
+       id=""linearGradient7079""
+       x1=""-283.10266""
+       y1=""-288.00001""
+       x2=""-228.89734""
+       y2=""-288.00001""
+       gradientUnits=""userSpaceOnUse"" />
+  </defs>
+  <g
+     inkscape:label=""Layer 1""
+     inkscape:groupmode=""layer""
+     id=""layer1"">
+    <path
+       style=""fill:none;fill-opacity:1;stroke:#ff0000;stroke-width:7.91742;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1""
+       d=""M 6.8566886,473.74379 256,42.214922 505.14331,473.74379 Z""
+       id=""path854""
+       sodipodi:nodetypes=""cccc"" />
+    <text
+       xml:space=""preserve""
+       style=""font-style:normal;font-weight:normal;font-size:421.78px;line-height:1.25;font-family:sans-serif;fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-width:10.5445;stroke-opacity:1""
+       x=""-313.87119""
+       y=""-133.64253""
+       id=""text2077""
+       transform=""scale(-1)""><tspan
+         sodipodi:role=""line""
+         id=""tspan2075""
+         x=""-313.87119""
+         y=""-133.64253""
+         style=""fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-width:10.5445;stroke-opacity:1"">i</tspan></text>
+  </g>
+</svg>
+";
+            File.WriteAllText(path, svg);
         }
     }
 }
