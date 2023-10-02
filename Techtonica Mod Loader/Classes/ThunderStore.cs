@@ -18,15 +18,18 @@ namespace Techtonica_Mod_Loader.Classes
 
         // Public Functions
 
-        public static async Task<Mod> GetMod(string id) {
+        public static async Task<ThunderStoreMod> GetThunderStoreMod(string id) {
             string endPoint = $"{baseURL}/package/{id}/";
             string json = await GetApiData(endPoint);
             if (string.IsNullOrEmpty(json)) {
                 return null;
             }
 
-            ThunderStoreMod thunderStoreMod = JsonConvert.DeserializeObject<ThunderStoreMod>(json);
-            return new Mod(thunderStoreMod);
+            return JsonConvert.DeserializeObject<ThunderStoreMod>(json);
+        }
+
+        public static async Task<Mod> GetMod(string id) {
+            return new Mod(await GetThunderStoreMod(id));
         }
 
         public static async Task<List<Mod>> GetAllMods() {

@@ -33,6 +33,7 @@ namespace Techtonica_Mod_Loader.Classes
         public int downloads;
         public bool isDeprecated;
         public bool hasDonated;
+        public bool updateAvailable;
         public List<string> categories = new List<string>();
         public List<string> dependencies = new List<string>();
 
@@ -361,6 +362,26 @@ namespace Techtonica_Mod_Loader.Classes
 
         public override string ToString() {
             return $"{major}.{minor}.{build}";
+        }
+
+        public static bool operator >(ModVersion v1, ModVersion v2) {
+            if (v1.major > v2.major) return true;
+            if (v1.major < v2.major) return false;
+
+            if (v1.minor > v2.minor) return true;
+            if (v1.minor < v2.minor) return false;
+
+            return v1.build > v2.build;
+        }
+
+        public static bool operator <(ModVersion v1, ModVersion v2) {
+            if (v1.major < v2.major) return true;
+            if (v1.major > v2.major) return false;
+
+            if (v1.minor < v2.minor) return true;
+            if (v1.minor > v2.minor) return false;
+
+            return v1.build < v2.build;
         }
     }
 }

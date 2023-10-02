@@ -73,6 +73,16 @@ namespace Techtonica_Mod_Loader.Panels
             }
         }
 
+        private async void OnUpdateClicked(object sender, EventArgs e) {
+            Mod mod = ModManager.GetMod(modID);
+            mod.Uninstall();
+            ModManager.DeleteMod(mod);
+
+            GuiUtils.ShowDownloadingGui(mod);
+            mod = await ThunderStore.GetMod(modID);
+            mod.Download();
+        }
+
         private void OnDonateClicked(object sender, EventArgs e) {
             Mod mod = ModManager.GetMod(modID);
             GuiUtils.OpenURL(mod.donationLink);
@@ -124,6 +134,10 @@ namespace Techtonica_Mod_Loader.Panels
                 markdownViewer.ViewMarkdown("# No description available");
             }
 
+            if (!mod.updateAvailable) {
+                HideUpdateColumn();
+            }
+
             if(string.IsNullOrEmpty(mod.donationLink) || mod.hasDonated) {
                 HideDonateColumn();
             }
@@ -138,6 +152,11 @@ namespace Techtonica_Mod_Loader.Panels
         }
 
         // Private Functions
+
+        private void HideUpdateColumn() {
+            updateColumn.Width = new GridLength(0);
+            mainGrid.Children.Remove(updateButton);
+        }
 
         private void HideDonateColumn() {
             donateColumn.Width = new GridLength(0);
