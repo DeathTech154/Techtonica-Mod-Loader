@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using MyLogger;
 using Newtonsoft.Json;
 using Techtonica_Mod_Loader.Classes;
+using Techtonica_Mod_Loader.Classes.ThunderStoreResponses;
 
 namespace Techtonica_Mod_Loader
 {
@@ -89,6 +90,19 @@ namespace Techtonica_Mod_Loader
             Log.Error(error);
             DebugUtils.CrashIfDebug(error);
             return modsToSort;
+        }
+
+        public static async void CheckForUpdates() {
+            foreach(Mod mod in mods.Values) {
+                if (mod.IsLocal() || mod.id == ProgramData.bepInExID) continue;
+
+                ThunderStoreMod thunderStoreMod = await ThunderStore.GetThunderStoreMod(mod.id);
+                if (thunderStoreMod == null) continue;
+                if (thunderStoreMod.versions.Count < 2) continue;
+
+                ModVersion latestVersion = ModVersion.Parse(thunderStoreMod.versions[0].version_number);
+                mod.updateAvailable = latestVersion > mod.version;
+            }
         }
 
         // Data Functions

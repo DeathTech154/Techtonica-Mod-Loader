@@ -57,6 +57,7 @@ namespace Techtonica_Mod_Loader
             loader.Visibility = Visibility.Visible;
             mainGrid.Visibility = Visibility.Hidden;
             
+            ModManager.CheckForUpdates();
             await LoadData();
             InitialiseGUI();
             CheckForUpdates();
