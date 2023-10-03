@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoUpdaterDotNET;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -54,6 +55,12 @@ namespace Techtonica_Mod_Loader.Panels
                 updateButton.IsMouseOver ||
                 donateButton.IsMouseOver) {
                 return;
+            }
+
+            if (!isExpanded) {
+                Mod mod = ModManager.GetMod(modID);
+                string markdown = mod.HasMarkdownFile() ? File.ReadAllText(mod.markdownFileLocation) : "# No description available.";
+                markdownViewer.ViewMarkdown(markdown);
             }
 
             isExpanded = !isExpanded;
@@ -129,13 +136,6 @@ namespace Techtonica_Mod_Loader.Panels
 
             string iconPath = string.IsNullOrEmpty(mod.iconLink) ? "pack://application:,,,/UnknownModIcon.png" : mod.iconLink;
             icon.Source = new BitmapImage(new Uri(iconPath));
-
-            if (mod.HasMarkdownFile()) {
-                markdownViewer.ViewMarkdownFromFile(mod.markdownFileLocation);
-            }
-            else {
-                markdownViewer.ViewMarkdown("# No description available");
-            }
 
             if (!mod.updateAvailable) {
                 HideUpdateColumn();
