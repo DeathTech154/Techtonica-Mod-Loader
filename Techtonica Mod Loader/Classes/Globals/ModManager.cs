@@ -1,13 +1,11 @@
-﻿using System;
+﻿using MyLogger;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-using MyLogger;
-using Newtonsoft.Json;
+using System.Xml.Linq;
 using Techtonica_Mod_Loader.Classes;
 using Techtonica_Mod_Loader.Classes.ThunderStoreResponses;
 
@@ -92,17 +90,45 @@ namespace Techtonica_Mod_Loader
             return modsToSort;
         }
 
-        public static async void CheckForUpdates() {
+        public static async Task<string> CheckForUpdates() {
             foreach(Mod mod in mods.Values) {
                 if (mod.IsLocal() || mod.id == ProgramData.bepInExID) continue;
 
                 ThunderStoreMod thunderStoreMod = await ThunderStore.GetThunderStoreMod(mod.id);
                 if (thunderStoreMod == null) continue;
-                if (thunderStoreMod.versions.Count < 2) continue;
-
+                
                 ModVersion latestVersion = ModVersion.Parse(thunderStoreMod.versions[0].version_number);
                 mod.updateAvailable = latestVersion > mod.version;
+
+                mod.DownloadAsTemp();
+                while (ProgramData.isDownloading) {
+                    await Task.Delay(10);
+                }
+
+                if(FileStructureUtils.SearchForMarkdownFile(ProgramData.Paths.unzipFolder, out mod.markdownFileLocation)) {
+                    string newPath = mod.markdownFileLocation.Replace(Path.GetDirectoryName(mod.markdownFileLocation), ProgramData.Paths.markdownFiles);
+                    newPath = newPath.Replace("README", mod.name);
+                    if (File.Exists(newPath)) {
+                        File.Delete(newPath);
+                    }
+
+                    File.Copy(mod.markdownFileLocation, newPath);
+                    mod.markdownFileLocation = newPath;
+                }
+                
+                mod.name = thunderStoreMod.name;
+                mod.author = thunderStoreMod.owner;
+                mod.dateUpdated = DateTime.Parse(thunderStoreMod.date_updated);
+                mod.ratingScore = thunderStoreMod.rating_score;
+                mod.isDeprecated = thunderStoreMod.is_deprecated;
+                mod.categories = thunderStoreMod.categories;
+                mod.link = thunderStoreMod.package_url;
+                mod.donationLink = thunderStoreMod.donation_link;
+
+                UpdateModDetails(mod);
             }
+
+            return "";
         }
 
         // Data Functions

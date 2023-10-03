@@ -57,8 +57,8 @@ namespace Techtonica_Mod_Loader
             loader.Visibility = Visibility.Visible;
             mainGrid.Visibility = Visibility.Hidden;
             
-            ModManager.CheckForUpdates();
             await LoadData();
+            await ModManager.CheckForUpdates();
             InitialiseGUI();
             CheckForUpdates();
 
@@ -138,6 +138,17 @@ namespace Techtonica_Mod_Loader
             RefreshModList();
         }
 
+        public void RefreshModList() {
+            if (mainBorder.Child is ModListPanel panel) {
+                ModListSource source = StringUtils.GetModListSourceFromName(showingBox.SelectedItem);
+                switch (source) {
+                    case ModListSource.Installed: panel.LoadInstalledModList(); break;
+                    case ModListSource.NewMods: panel.LoadNewModsList(); break;
+                    case ModListSource.Online: panel.LoadOnlineModList(); break;
+                }
+            }
+        }
+
         // Private Functions
 
         private void InitialiseLogger() {
@@ -190,17 +201,6 @@ namespace Techtonica_Mod_Loader
             sortBox.SetSelectedItem(StringUtils.GetModListSortOptionName(Settings.userSettings.defaultSort));
 
             LoadDefaultModList();
-        }
-
-        private void RefreshModList() {
-            if(mainBorder.Child is ModListPanel panel) {
-                ModListSource source = StringUtils.GetModListSourceFromName(showingBox.SelectedItem);
-                switch (source) {
-                    case ModListSource.Installed: panel.LoadInstalledModList(); break;
-                    case ModListSource.NewMods: panel.LoadNewModsList(); break;
-                    case ModListSource.Online: panel.LoadOnlineModList(); break;
-                }
-            }
         }
     }
 }

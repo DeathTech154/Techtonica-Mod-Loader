@@ -50,7 +50,9 @@ namespace Techtonica_Mod_Loader.Panels
             if (enabledBox.IsMouseOver || 
                 configureButton.IsMouseOver ||
                 viewModPageButton.IsMouseOver ||
-                deleteButton.IsMouseOver) {
+                deleteButton.IsMouseOver || 
+                updateButton.IsMouseOver ||
+                donateButton.IsMouseOver) {
                 return;
             }
 
@@ -80,6 +82,7 @@ namespace Techtonica_Mod_Loader.Panels
 
             GuiUtils.ShowDownloadingGui(mod);
             mod = await ThunderStore.GetMod(modID);
+            ModManager.AddIfNew(mod);
             mod.Download();
         }
 
@@ -160,7 +163,7 @@ namespace Techtonica_Mod_Loader.Panels
 
         private void HideDonateColumn() {
             donateColumn.Width = new GridLength(0);
-            mainGrid.Children.Remove(dontateButton);
+            mainGrid.Children.Remove(donateButton);
         }
 
         private void HideConfigureColumn() {
