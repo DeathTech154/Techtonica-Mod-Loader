@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net.Http;
@@ -28,18 +29,25 @@ namespace Techtonica_Mod_Loader.Classes
             return JsonConvert.DeserializeObject<ThunderStoreMod>(json);
         }
 
+        public static async Task<Mod> SearchForMod(string fullName) {
+            List<ThunderStoreMod> mods = await GetAllThunderStoreMods();
+            mods = mods.Where(mod => mod.full_name == fullName).ToList();
+            if (mods.Count == 1) {
+                return new Mod(mods[0]);
+            }
+
+            string error = $"Could not find a mod with full_name= '{fullName}'";
+            Log.Error(error);
+            DebugUtils.CrashIfDebug(error);
+            return null;
+        }
+
         public static async Task<Mod> GetMod(string id) {
             return new Mod(await GetThunderStoreMod(id));
         }
 
         public static async Task<List<Mod>> GetAllMods() {
-            string endPoint = $"{baseURL}/package/";
-            string json = await GetApiData(endPoint);
-            if (string.IsNullOrEmpty(json)) {
-                return new List<Mod>();
-            }
-
-            List<ThunderStoreMod> thunderStoreMods = JsonConvert.DeserializeObject<List<ThunderStoreMod>>(json);
+            List<ThunderStoreMod> thunderStoreMods = await GetAllThunderStoreMods();
             List<Mod> mods = new List<Mod>();
             foreach (ThunderStoreMod thunderStoreMod in thunderStoreMods) {
                 if(Settings.userSettings.hideTools && thunderStoreMod.categories.Contains("Tools")) continue;
@@ -65,6 +73,19 @@ namespace Techtonica_Mod_Loader.Classes
                     return "";
                 }
             }
+        }
+
+        private static async Task<List<ThunderStoreMod>> GetAllThunderStoreMods() {
+            string endPoint = $"{baseURL}/package/";
+            string json = await GetApiData(endPoint);
+            if (string.IsNullOrEmpty(json)) {
+                string error = $"API returned empty JSON";
+                Log.Error(error);
+                DebugUtils.CrashIfDebug(error);
+                return new List<ThunderStoreMod>();
+            }
+
+            return JsonConvert.DeserializeObject<List<ThunderStoreMod>>(json);
         }
     }
 }

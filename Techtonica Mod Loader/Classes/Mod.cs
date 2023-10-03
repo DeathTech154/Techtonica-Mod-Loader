@@ -104,6 +104,18 @@ namespace Techtonica_Mod_Loader.Classes
         // Public Functions
 
         public async void Download() {
+            if(dependencies.Count != 0) {
+                foreach(string dependency in dependencies) {
+                    Mod mod = await ThunderStore.SearchForMod(dependency);
+                    if(mod == null) {
+                        GuiUtils.ShowErrorMessage("Couldn't Download", "Failed to find a dependency for this mod. Aborting install.");
+                        return;
+                    }
+
+                    mod.Download();
+                }
+            }
+
             try {
                 zipFileLocation = $"{ProgramData.Paths.modsFolder}\\{name}.zip";
 
