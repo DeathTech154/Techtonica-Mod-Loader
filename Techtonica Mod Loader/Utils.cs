@@ -78,11 +78,13 @@ namespace Techtonica_Mod_Loader
         }
 
         public static void OpenURL(string url) {
-            ProcessStartInfo info = new ProcessStartInfo() {
-                FileName = url,
-                UseShellExecute = true
-            };
-            Process.Start(info);
+            if(GetUserConfirmation("Open Link?", $"Do you want to open this link?\n{url}")) {
+                ProcessStartInfo info = new ProcessStartInfo() {
+                    FileName = url,
+                    UseShellExecute = true
+                };
+                Process.Start(info);
+            }
         }
 
         public static async Task<System.Windows.Controls.Image> GetImageFromURL(string url) {
