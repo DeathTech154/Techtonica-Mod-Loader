@@ -88,6 +88,7 @@ namespace Techtonica_Mod_Loader.Classes
 
         private void OnDownloadFinished(object sender, AsyncCompletedEventArgs e) {
             Install();
+            ProgramData.isDownloading = false;
             FinishedDownloading?.Invoke(this, EventArgs.Empty);
         }
 
@@ -95,13 +96,14 @@ namespace Techtonica_Mod_Loader.Classes
             FileStructureUtils.ClearUnzipFolder();
             zipFileLocation = ProgramData.Paths.tempZipFile;
             UnzipToTempFolder();
-            
+
+            ProgramData.isDownloading = false;
             FinishedDownloading?.Invoke(this, EventArgs.Empty);
         }
 
         // Public Functions
 
-        public void Download() {
+        public async void Download() {
             try {
                 zipFileLocation = $"{ProgramData.Paths.modsFolder}\\{name}.zip";
 
@@ -110,6 +112,10 @@ namespace Techtonica_Mod_Loader.Classes
                 webClient.Headers.Add("User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)");
                 webClient.DownloadFileCompleted += OnDownloadFinished;
                 webClient.DownloadFileAsync(new Uri(zipFileDownloadLink), zipFileLocation);
+
+                while (ProgramData.isDownloading) {
+                    await Task.Delay(10);
+                }
             }
             catch (Exception e){
                 string error = $"Error occurred while downloading file: {e.Message}";
@@ -118,18 +124,24 @@ namespace Techtonica_Mod_Loader.Classes
             }
         }
 
-        public void DownloadAsTemp() {
+        public async void DownloadAsTemp() {
             try {
+                ProgramData.isDownloading = true;
                 WebClient webClient = new WebClient();
                 webClient.Headers.Add("Accept: text/html, application/xhtml+xml, */*");
                 webClient.Headers.Add("User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)");
                 webClient.DownloadFileCompleted += OnTempDownloadFinished;
                 webClient.DownloadFileAsync(new Uri(zipFileDownloadLink), ProgramData.Paths.tempZipFile);
+
+                while (ProgramData.isDownloading) {
+                    await Task.Delay(10);
+                }
             }
             catch (Exception e) {
                 string error = $"Error occurred while downloading file: {e.Message}";
                 Log.Error(error);
                 DebugUtils.CrashIfDebug(error);
+                ProgramData.isDownloading = false;
             }
         }
 
@@ -204,6 +216,7 @@ namespace Techtonica_Mod_Loader.Classes
             Profile profile = ProfileManager.GetActiveProfile();
             if (!profile.HasMod(id)) profile.AddMod(id);
             ProfileManager.UpdateProfile(profile);
+            MainWindow.current.RefreshModList();
             GuiUtils.HideInstallingGui();
         }
 

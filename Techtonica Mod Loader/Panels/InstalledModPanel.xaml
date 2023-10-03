@@ -46,7 +46,7 @@
             </TextBlock>
             <TControls:TButton x:Name="updateButton" ButtonText="Update" Grid.Column="3" Margin="2" Height="30"
                                LeftClicked="OnUpdateClicked"/>
-            <TControls:TButton x:Name="dontateButton" ButtonText="Donate" Grid.Column="4" Margin="2" Height="30"
+            <TControls:TButton x:Name="donateButton" ButtonText="Donate" Grid.Column="4" Margin="2" Height="30"
                                LeftClicked="OnDonateClicked"/>
             <TControls:TButton x:Name="configureButton" ButtonText="Configure" Grid.Column="5" Margin="2" Height="30"
                                LeftClicked="OnConfigureClicked"/>

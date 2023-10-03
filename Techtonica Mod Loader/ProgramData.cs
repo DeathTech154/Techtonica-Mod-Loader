@@ -36,6 +36,7 @@ namespace Techtonica_Mod_Loader
             }
         }
         public static bool skipLoadingScreenDelay = true;
+        public static bool isDownloading = false;
         public static string version = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
         public const string bepInExID = "b9a5a1bd-81d8-4913-a46e-70ca7734628c";
         public static ModListSortOption currentSortOption = ModListSortOption.Alphabetical;
