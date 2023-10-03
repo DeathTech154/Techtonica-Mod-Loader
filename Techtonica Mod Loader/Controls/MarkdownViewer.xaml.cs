@@ -47,6 +47,11 @@ namespace Techtonica_Mod_Loader.Controls
             markdown = markdown.Replace("&nbsp;", " ");
 
             mainPanel.Children.Clear();
+            lastIndentCount = 0;
+            isNumberedListOngoing = false;
+            numberedListsProgressesForIndentCount = new List<int>() { 0 };
+            headerTextBlocks.Clear();
+
             string[] lines = markdown.Replace("\r", "").Split('\n');
             
             for(int i = 0; i < lines.Length; i++) {
