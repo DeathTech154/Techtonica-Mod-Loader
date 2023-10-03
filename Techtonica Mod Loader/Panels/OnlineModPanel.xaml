@@ -38,7 +38,7 @@
             <TControls:TButton x:Name="downloadButton" ButtonText="Download" Grid.Column="3" Margin="2" Height="30"
                                LeftClicked="OnDownloadClicked"/>
 
-            <TControls:MarkdownViewer x:Name="markdownViewer" Grid.Row="1" Grid.ColumnSpan="6" Margin="2,0" Height="Auto" MaxHeight="0"/>
+            <TControls:MarkdownViewer x:Name="markdownViewer" Grid.Row="1" Grid.ColumnSpan="100" Margin="2,0" Height="Auto" MaxHeight="0"/>
         </Grid>
     </Border>
 </UserControl>
