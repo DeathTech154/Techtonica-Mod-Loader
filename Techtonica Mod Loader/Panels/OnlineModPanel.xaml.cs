@@ -69,13 +69,7 @@ namespace Techtonica_Mod_Loader.Panels
         private void OnDownloadClicked(object sender, EventArgs e) {
             GuiUtils.ShowDownloadingGui(mod);
             ModManager.AddIfNew(mod);
-            mod.FinishedDownloading += ModFinishedDownloading;
             mod.Download();
-        }
-
-        private void ModFinishedDownloading(object sender, EventArgs e) {
-            StackPanel parent = Parent as StackPanel;
-            parent.Children.Remove(this);
         }
 
         // Public Functions
