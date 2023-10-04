@@ -297,6 +297,7 @@ namespace Techtonica_Mod_Loader.Classes
 
         private bool CheckGameFolder() {
             if (!string.IsNullOrEmpty(ProgramData.Paths.gameFolder)) return true;
+            if (FileStructureUtils.FindGameFolder()) return true;
 
             string error = $"Couldn't install mod - ProgramData.Paths.gameFolder is null or empty";
             Log.Error(error);

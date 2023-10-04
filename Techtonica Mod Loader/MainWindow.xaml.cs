@@ -45,8 +45,9 @@ namespace Techtonica_Mod_Loader
             FileStructureUtils.CreateFolderStructure();
             FileStructureUtils.GenerateSVGFiles();
 
+            await LoadData();
             if (string.IsNullOrEmpty(ProgramData.Paths.gameFolder)) {
-                if (!FileStructureUtils.FindSteamGameFolder()) {
+                if (!FileStructureUtils.FindGameFolder()) {
                     GuiUtils.ShowWarningMessage("Couldn't Find Game Folder", "Please go to the settings and set your game foler before installing mods or launching the game.");
                 }
             }
@@ -56,8 +57,16 @@ namespace Techtonica_Mod_Loader
 
             loader.Visibility = Visibility.Visible;
             mainGrid.Visibility = Visibility.Hidden;
+
+            double widthDiff = Settings.userSettings.lastWidth - Width;
+            Left -= widthDiff / 2.0;
+
+            double topDiff = Settings.userSettings.lastHeight - Height;
+            Height -= topDiff / 2.0;
             
-            await LoadData();
+            Width = Settings.userSettings.lastWidth;
+            Height = Settings.userSettings.lastHeight;
+            
             await ModManager.CheckForUpdates();
             InitialiseGUI();
             CheckForUpdates();
@@ -177,6 +186,10 @@ namespace Techtonica_Mod_Loader
         }
 
         private void SaveData() {
+            Settings.userSettings.lastWidth = ActualWidth;
+            Settings.userSettings.lastHeight = ActualHeight;
+            Settings.Save();
+
             ModManager.Save();
             ProfileManager.Save();
             Settings.Save();

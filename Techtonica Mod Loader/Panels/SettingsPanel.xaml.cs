@@ -71,7 +71,7 @@ namespace Techtonica_Mod_Loader.Panels
         }
 
         private void OnFindGameFolderClicked(object sender, EventArgs e) {
-            if (FileStructureUtils.FindSteamGameFolder()) {
+            if (FileStructureUtils.FindGameFolder()) {
                 gameFolderOption.Value = ProgramData.Paths.gameFolder;
                 return;
             }
