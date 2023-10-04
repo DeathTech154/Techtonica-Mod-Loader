@@ -24,6 +24,8 @@ namespace Techtonica_Mod_Loader
 
         // Hidden Settings - No Gui
         public List<string> seenMods = new List<string>();
+        public double lastWidth = 1200;
+        public double lastHeight = 675;
 
         // Data Functions
 

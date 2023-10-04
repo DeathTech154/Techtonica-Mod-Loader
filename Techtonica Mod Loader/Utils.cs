@@ -292,7 +292,7 @@ namespace Techtonica_Mod_Loader
             return Directory.GetParent(AppContext.BaseDirectory).FullName;
         }
 
-        public static bool FindSteamGameFolder() {
+        public static bool FindGameFolder() {
             RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Valve\Steam"); // Gets steam folder location from registry.
             if (key != null) {
                 string steamPath = (string)key.GetValue("SteamPath");
