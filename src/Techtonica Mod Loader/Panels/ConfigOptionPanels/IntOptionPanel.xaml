@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="Techtonica_Mod_Loader.Panels.ConfigOptionPanels.IntOptionPanel" x:Name="thisControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Techtonica_Mod_Loader.Panels.ConfigOptionPanels"
+             xmlns:Controls="clr-namespace:Techtonica_Mod_Loader.Controls"
+             mc:Ignorable="d" 
+             Height="Auto" d:DesignWidth="800">
+    <Grid>
+        <Border Background="{DynamicResource lightBackgroundBrush}" CornerRadius="5">
+            <StackPanel x:Name="mainPanel" Margin="5">
+                <Label x:Name="nameLabel" Content="Name" Style="{DynamicResource titleStyle}" 
+                       HorizontalAlignment="Left"/>
+                <Controls:TTextBox x:Name="inputBox" Hint="Enter a whole number here..." FontSize="14"
+                                   Input="{Binding ElementName=thisControl, Path=Value, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                   Grid.Row="1" Height="30" Margin="5,5,5,0"
+                                   ChangesConfirmed="OnValueBoxChangesConfirmed"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

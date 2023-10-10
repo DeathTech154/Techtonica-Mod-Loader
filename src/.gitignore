@@ -1,0 +1,7 @@
+
+Techtonica Mod Loader.runtimeconfig.dev.json
+Techtonica Mod Loader/bin/*
+Techtonica Mod Loader/obj/*
+Techtonica Mod Loader/properties/*
+.vs
+TechtonicaML_AutoUpdate.xml
