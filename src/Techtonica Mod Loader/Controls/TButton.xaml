@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="Techtonica_Mod_Loader.Controls.TButton" x:Name="thisControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Techtonica_Mod_Loader.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="40" d:DesignWidth="200">
+    <Grid>
+        <Border BorderBrush="{DynamicResource yellowBrush}" BorderThickness="1"
+                MouseLeftButtonUp="OnMouseLeftButtonUp"
+                MouseRightButtonUp="OnMouseRightButtonUp">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="Background" Value="{DynamicResource lightestBackgroundBrush}"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=thisControl, Path=IsMouseOver, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource yellowBrush}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <TextBlock Text="{Binding ElementName=thisControl, Path=ButtonText, UpdateSourceTrigger=PropertyChanged}" 
+                       FontSize="{Binding ElementName=thisControl, Path=FontSize, UpdateSourceTrigger=PropertyChanged}"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       IsHitTestVisible="False" Padding="5,0">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Foreground" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=thisControl, Path=IsMouseOver, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <Setter Property="Foreground" Value="{DynamicResource darkTextBrush}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </Border>
+    </Grid>
+</UserControl>

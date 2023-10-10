@@ -7,7 +7,147 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Controls\DownloadingBlocker.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\HyperlinkImage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\MarkdownViewer.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\TButton.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\TCheckBox.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\TComboBox.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\TComboBoxOptionLabel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\TFancyButton.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\TTextBox.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Panels\ConfigOptionPanels\BooleanOptionPanel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Panels\ConfigOptionPanels\ComboOptionPanel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Panels\ConfigOptionPanels\DoubleOptionPanel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Panels\ConfigOptionPanels\FloatOptionPanel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Panels\ConfigOptionPanels\IntOptionPanel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Panels\ConfigOptionPanels\StringOptionPanel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Panels\InstalledModPanel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Panels\LoadingScreen.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Panels\ModConfigPanel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Panels\ModListPanel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Panels\OnlineModPanel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Panels\SettingsPanel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Windows\GetYesNoWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Windows\WarningWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\DownloadingBlocker.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\HyperlinkImage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\MarkdownViewer.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\TButton.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\TCheckBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\TComboBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\TComboBoxOptionLabel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\TFancyButton.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\TTextBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Panels\ConfigOptionPanels\BooleanOptionPanel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Panels\ConfigOptionPanels\ComboOptionPanel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Panels\ConfigOptionPanels\DoubleOptionPanel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Panels\ConfigOptionPanels\FloatOptionPanel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Panels\ConfigOptionPanels\IntOptionPanel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Panels\ConfigOptionPanels\StringOptionPanel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Panels\InstalledModPanel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Panels\LoadingScreen.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Panels\ModConfigPanel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Panels\ModListPanel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Panels\OnlineModPanel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Panels\SettingsPanel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\GetYesNoWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\WarningWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mod>
+  <version>1.0.0</version>
+  <dependencies>
+    <WalrusLib>1.0.0</WalrusLib>
+  </dependencies>
+  <incompatibilities>
+    <ExampleMod>1.0.0</ExampleMod>
+  </incompatibilities>
+</mod>

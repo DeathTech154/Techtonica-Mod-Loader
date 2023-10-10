@@ -5,7 +5,7 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <RootNamespace>Techtonica_Mod_Loader</RootNamespace>
     <UseWPF>true</UseWPF>
-    <Version>0.0.1.0</Version>
+    <Version>0.0.1.20</Version>
     <Company>DeeTeeNetwork</Company>
     <Authors>DeathTech</Authors>
     <Description>A mod loader for the game Techtonica made by DeathTech and the modding team.</Description>
@@ -13,9 +13,21 @@
     <PackageProjectUrl>https://github.com/DeathTech154/Techtonica-Mod-Loader</PackageProjectUrl>
     <RepositoryUrl>https://github.com/DeathTech154/Techtonica-Mod-Loader</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
-    <AssemblyVersion>0.0.1.0</AssemblyVersion>
-    <FileVersion>0.0.1.0</FileVersion>
+    <AssemblyVersion>0.0.1.20</AssemblyVersion>
+    <FileVersion>0.0.1.20</FileVersion>
+    <ApplicationIcon>TML Logo.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Background.jpg" />
+    <None Remove="Controls\BepInEx.png" />
+    <None Remove="Logo.png" />
+    <None Remove="UnknownModIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="TML Logo.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Autoupdater.NET.Official" Version="1.8.3" />
@@ -24,7 +36,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controls\" />
+    <Reference Include="MyLogger">
+      <HintPath>..\..\..\Users\pc\source\repos\MyLogger\MyLogger\bin\Release\MyLogger.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Background.jpg" />
+    <Resource Include="Logo.png" />
+    <Resource Include="UnknownModIcon.png" />
   </ItemGroup>
 
 </Project>
