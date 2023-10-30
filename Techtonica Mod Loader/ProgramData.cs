@@ -70,9 +70,9 @@ namespace Techtonica_Mod_Loader
             };
             
             public static string gameFolder => Settings.userSettings.gameFolder;
-            public static string bepInExConfigFolder = $"{gameFolder}/BepInEx/config";
-            public static string bepInExPatchersFolder = $"{gameFolder}/BepInEx/patchers";
-            public static string bepInExPluginsFolder = $"{gameFolder}/BepInEx/plugins";
+            public static string bepInExConfigFolder => $"{gameFolder}/BepInEx/config";
+            public static string bepInExPatchersFolder => $"{gameFolder}/BepInEx/patchers";
+            public static string bepInExPluginsFolder => $"{gameFolder}/BepInEx/plugins";
 
             // Files
             public static string settingsFile = $"{dataFolder}\\Settings.json";
