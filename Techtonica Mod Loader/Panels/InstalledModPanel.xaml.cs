@@ -53,10 +53,11 @@ namespace Techtonica_Mod_Loader.Panels
                 viewModPageButton.IsMouseOver ||
                 deleteButton.IsMouseOver || 
                 updateButton.IsMouseOver ||
-                donateButton.IsMouseOver) {
+                donateButton.IsMouseOver ||
+                !ModManager.DoesModExist(modID)) {
                 return;
             }
-
+            
             if (!isExpanded) {
                 Mod mod = ModManager.GetMod(modID);
                 string markdown = mod.HasMarkdownFile() ? File.ReadAllText(mod.markdownFileLocation) : "# No description available.";
@@ -120,8 +121,12 @@ namespace Techtonica_Mod_Loader.Panels
                     mod.Uninstall();
                 }
 
+                profile.modIDs.Remove(modID);
                 File.Delete(mod.zipFileLocation);
                 ModManager.DeleteMod(mod);
+
+                StackPanel parent = (StackPanel)Parent;
+                parent.Children.Remove(this);
             }
         }
 
