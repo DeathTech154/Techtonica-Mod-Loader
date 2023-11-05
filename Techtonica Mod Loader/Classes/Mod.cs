@@ -104,7 +104,12 @@ namespace Techtonica_Mod_Loader.Classes
         // Public Functions
 
         public async void Download() {
-            if(dependencies.Count != 0) {
+            while (ProgramData.isDownloading) {
+                await Task.Delay(10);
+            }
+
+            ProgramData.isDownloading = true;
+            if (dependencies.Count != 0) {
                 foreach(string dependency in dependencies) {
                     Mod mod = await ThunderStore.SearchForMod(dependency);
                     if(mod == null) {
@@ -137,6 +142,10 @@ namespace Techtonica_Mod_Loader.Classes
         }
 
         public async void DownloadAsTemp() {
+            while (ProgramData.isDownloading) {
+                await Task.Delay(10);
+            }
+
             try {
                 ProgramData.isDownloading = true;
                 WebClient webClient = new WebClient();
