@@ -1,7 +1,16 @@
+- v1.0.2.0 - 05/11/2023
+  Added:
+  - Warning message when manually importing mods.
+  Fixed:
+  - Crash that occurred when opening two mod descriptions at the same time.
+  - Crash that occurred when configuring mods.
+  - Crash that occurred when changing profile to the already selected one.
+  - TML not downloading dependencies properly.
+
 - v1.0.1.0 - 03/11/2023
   Fixed:
   - Crash that occurred when installing a local file.
-  - Crash taht occurred when deleting a mod.
+  - Crash that occurred when deleting a mod.
   - Delete button being triggered by right click instead of left.
 
 - v1.0.0.0 - 10/10/2023
