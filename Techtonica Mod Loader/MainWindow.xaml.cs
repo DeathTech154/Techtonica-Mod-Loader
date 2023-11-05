@@ -48,7 +48,7 @@ namespace Techtonica_Mod_Loader
             await LoadData();
             if (string.IsNullOrEmpty(ProgramData.Paths.gameFolder)) {
                 if (!FileStructureUtils.FindGameFolder()) {
-                    GuiUtils.ShowWarningMessage("Couldn't Find Game Folder", "Please go to the settings and set your game foler before installing mods or launching the game.");
+                    GuiUtils.ShowWarningMessage("Couldn't Find Game Folder", "Please go to the settings and set your game folder before installing mods or launching the game.");
                 }
             }
 
