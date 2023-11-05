@@ -31,7 +31,7 @@ namespace Techtonica_Mod_Loader.Classes
 
         public static async Task<Mod> SearchForMod(string fullName) {
             List<ThunderStoreMod> mods = await GetAllThunderStoreMods();
-            mods = mods.Where(mod => mod.full_name == fullName).ToList();
+            mods = mods.Where(mod => mod.versions[0].full_name == fullName).ToList();
             if (mods.Count == 1) {
                 return new Mod(mods[0]);
             }

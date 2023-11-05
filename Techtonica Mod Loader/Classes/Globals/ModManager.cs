@@ -143,7 +143,7 @@ namespace Techtonica_Mod_Loader
                 string json = File.ReadAllText(ProgramData.Paths.modsFile);
                 List<Mod> modsFromFile = JsonConvert.DeserializeObject<List<Mod>>(json);
                 foreach(Mod mod in modsFromFile) {
-                    if (mod.configFileLocation.Contains("Techtonica\\config")) {
+                    if (mod.HasConfigFile() && mod.configFileLocation.Contains("Techtonica\\config")) {
                         mod.configFileLocation = mod.configFileLocation.Replace("Techtonica\\config", "Techtonica\\BepInEx\\config");
                     }
 
