@@ -111,6 +111,8 @@ namespace Techtonica_Mod_Loader
                 ModManager.AddIfNew(mod);
                 mod.Install();
 
+                GuiUtils.ShowWarningMessage("Check Mod Description", "Be sure to read the mod description when importing mods manually, as some contain dependencies or BepInEx settings changes in order to work properly, and may need to be manually configured");
+
                 RefreshModList();
             }
         }
