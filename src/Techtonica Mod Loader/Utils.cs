@@ -302,9 +302,6 @@ namespace Techtonica_Mod_Loader
                 Log.Debug($"Game Folder: {gameLocation}");
                 
                 Settings.userSettings.gameFolder = gameLocation;
-                ProgramData.Paths.bepInExConfigFolder = $"{gameLocation}/BepInEx/config";
-                ProgramData.Paths.bepInExPatchersFolder = $"{gameLocation}/BepInEx/patchers";
-                ProgramData.Paths.bepInExPluginsFolder = $"{gameLocation}/BepInEx/plugins";
                 Settings.Save();
                 return true;
     }

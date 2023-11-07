@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v5.0": {
-      "Techtonica Mod Loader/1.0.1.0": {
+      "Techtonica Mod Loader/1.0.2.0": {
         "dependencies": {
           "Autoupdater.NET.Official": "1.8.3",
           "Newtonsoft.Json": "13.0.3",
@@ -181,7 +181,7 @@
     }
   },
   "libraries": {
-    "Techtonica Mod Loader/1.0.1.0": {
+    "Techtonica Mod Loader/1.0.2.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

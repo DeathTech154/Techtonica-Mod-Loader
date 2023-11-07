@@ -48,7 +48,7 @@ namespace Techtonica_Mod_Loader
             await LoadData();
             if (string.IsNullOrEmpty(ProgramData.Paths.gameFolder)) {
                 if (!FileStructureUtils.FindGameFolder()) {
-                    GuiUtils.ShowWarningMessage("Couldn't Find Game Folder", "Please go to the settings and set your game foler before installing mods or launching the game.");
+                    GuiUtils.ShowWarningMessage("Couldn't Find Game Folder", "Please go to the settings and set your game folder before installing mods or launching the game.");
                 }
             }
 
@@ -110,6 +110,8 @@ namespace Techtonica_Mod_Loader
 
                 ModManager.AddIfNew(mod);
                 mod.Install();
+
+                GuiUtils.ShowWarningMessage("Check Mod Description", "Be sure to read the mod description when importing mods manually, as some contain dependencies or BepInEx settings changes in order to work properly, and may need to be manually configured");
 
                 RefreshModList();
             }
