@@ -74,9 +74,15 @@ namespace Techtonica_Mod_Loader.Controls
 
         private void OnOptionLabelClicked(object sender, EventArgs e) {
             TComboBoxOptionLabel clickedLabel = sender as TComboBoxOptionLabel;
-            SetSelectedItem(clickedLabel.GetItem());
-            SelectedItemChanged?.Invoke(this, EventArgs.Empty);
             CloseOptions();
+
+            string lastOption = SelectedItem;
+            string newOption = clickedLabel.GetItem();
+            
+            if(lastOption != newOption) {
+                SetSelectedItem(newOption);
+                SelectedItemChanged?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         // Public Functions
