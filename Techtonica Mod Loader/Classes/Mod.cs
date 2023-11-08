@@ -117,6 +117,7 @@ namespace Techtonica_Mod_Loader.Classes
                         return;
                     }
 
+                    ModManager.AddIfNew(mod);
                     mod.Download();
                 }
             }
