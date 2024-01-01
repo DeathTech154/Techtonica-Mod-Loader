@@ -66,10 +66,10 @@ namespace Techtonica_Mod_Loader.Panels
             }
         }
 
-        private void OnDownloadClicked(object sender, EventArgs e) {
+        private async void OnDownloadClicked(object sender, EventArgs e) {
             GuiUtils.ShowDownloadingGui(mod);
             ModManager.AddIfNew(mod);
-            mod.Download();
+            await mod.Download();
         }
 
         // Public Functions
