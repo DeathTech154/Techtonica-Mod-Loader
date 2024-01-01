@@ -103,22 +103,19 @@ namespace Techtonica_Mod_Loader.Classes
 
         // Public Functions
 
-        public async void Download() {
-            while (ProgramData.isDownloading) {
-                await Task.Delay(10);
-            }
-
+        public async Task<string> Download() {
             ProgramData.isDownloading = true;
             if (dependencies.Count != 0) {
                 foreach(string dependency in dependencies) {
                     Mod mod = await ThunderStore.SearchForMod(dependency);
                     if(mod == null) {
                         GuiUtils.ShowErrorMessage("Couldn't Download", "Failed to find a dependency for this mod. Aborting install.");
-                        return;
+                        return "";
                     }
 
                     ModManager.AddIfNew(mod);
-                    mod.Download();
+                    ModManager.Save();
+                    await mod.Download();
                 }
             }
 
@@ -140,6 +137,8 @@ namespace Techtonica_Mod_Loader.Classes
                 Log.Error(error);
                 DebugUtils.CrashIfDebug(error);
             }
+
+            return "";
         }
 
         public async void DownloadAsTemp() {
@@ -168,7 +167,15 @@ namespace Techtonica_Mod_Loader.Classes
         }
 
         public void Install() {
-            if (!CheckForZipFile() || !CheckGameFolder()) {
+            if (!CheckForZipFile()) {
+                GuiUtils.ShowErrorMessage("ZIP Fle Not Found", "Could not locate the .zip file for this mod.");
+                GuiUtils.HideInstallingGui();
+                return;
+            }
+
+            if (!CheckGameFolder()) {
+                GuiUtils.ShowErrorMessage("Game Folder Incorrect", "Could not locate Techtonica.exe inside your game folder. Please check it is correct in the settings.");
+                GuiUtils.HideInstallingGui();
                 return;
             }
 
