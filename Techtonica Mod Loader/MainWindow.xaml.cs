@@ -41,22 +41,29 @@ namespace Techtonica_Mod_Loader
         // Events
 
         private async void OnProgramLoaded(object sender, RoutedEventArgs e) {
+            loader.Visibility = Visibility.Visible;
+            mainGrid.Visibility = Visibility.Hidden;
+
             InitialiseLogger();
             FileStructureUtils.CreateFolderStructure();
             FileStructureUtils.GenerateSVGFiles();
 
+            bool foundGameFolder = true;
             await LoadData();
             if (string.IsNullOrEmpty(ProgramData.Paths.gameFolder)) {
                 if (!FileStructureUtils.FindGameFolder()) {
                     GuiUtils.ShowWarningMessage("Couldn't Find Game Folder", "Please go to the settings and set your game folder before installing mods or launching the game.");
                 }
+                else {
+                    foundGameFolder = true;
+                }
+            }
+            else {
+                foundGameFolder = true;
             }
 
             string version = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
             Title = "Techtonica Mod Loader v" + version;
-
-            loader.Visibility = Visibility.Visible;
-            mainGrid.Visibility = Visibility.Hidden;
 
             double widthDiff = Settings.userSettings.lastWidth - Width;
             Left -= widthDiff / 2.0;
@@ -66,9 +73,14 @@ namespace Techtonica_Mod_Loader
             
             Width = Settings.userSettings.lastWidth;
             Height = Settings.userSettings.lastHeight;
-            
+
             await ModManager.CheckForUpdates();
             InitialiseGUI();
+
+            if (!foundGameFolder) {
+                OpenSettingsWindow(); 
+            }
+            
             CheckForUpdates();
 
             if (!ProgramData.skipLoadingScreenDelay && ProgramData.isDebugBuild) {
@@ -118,7 +130,7 @@ namespace Techtonica_Mod_Loader
         }
 
         private void OnSettingsClicked(object sender, EventArgs e) {
-            mainBorder.Child = new SettingsPanel();
+            OpenSettingsWindow();
         }
 
         private void OnSelectedProfileChanged(object sender, EventArgs e) {
@@ -216,6 +228,12 @@ namespace Techtonica_Mod_Loader
             sortBox.SetSelectedItem(StringUtils.GetModListSortOptionName(Settings.userSettings.defaultSort));
 
             LoadDefaultModList();
+        }
+
+        private void OpenSettingsWindow() {
+            mainBorder.Child = new SettingsPanel();
+            mainBorder.SetValue(Grid.RowProperty, 0);
+            mainBorder.SetValue(Grid.RowSpanProperty, 2);
         }
     }
 }

@@ -67,6 +67,13 @@ namespace Techtonica_Mod_Loader.Panels
         }
 
         private void OnBackToModsClicked(object sender, EventArgs e) {
+            if (!FileStructureUtils.VerifyGameFolder()) {
+                GuiUtils.ShowErrorMessage("Invalid Game Folder", $"You cannot use the mod loader until your game folder has been set correctly.");
+                return;
+            }
+
+            MainWindow.current.mainBorder.SetValue(Grid.RowProperty, 1);
+            MainWindow.current.mainBorder.SetValue(Grid.RowSpanProperty, 1);
             MainWindow.current.LoadDefaultModList();
         }
 

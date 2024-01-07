@@ -330,6 +330,11 @@ namespace Techtonica_Mod_Loader
             return false;
         }
 
+        public static bool VerifyGameFolder() {
+            if (string.IsNullOrEmpty(Settings.userSettings.gameFolder)) return false;
+            else return File.Exists($"{Settings.userSettings.gameFolder}/Techtonica.exe");
+        }
+
         // Private Functions
 
         private static void GenerateInfoSVG() {

@@ -84,14 +84,14 @@
             </Grid>
 
             <!--Mod List-->
-            <Border x:Name="mainBorder" Grid.Row="1" Margin="10,5,10,10"/>
+            <Border x:Name="mainBorder" Grid.Row="1"  Margin="10,5,10,10"/>
 
             <!--Shader-->
             <Rectangle x:Name="shader" Fill="Black" Opacity="0.7" Grid.RowSpan="2" Visibility="Hidden"/>
 
             <!--Downloading Blocker-->
             <Controls:DownloadingBlocker x:Name="downloadingGUI" Visibility="Hidden" Grid.RowSpan="2"/>
-
+            
         </Grid>
     </Grid>
     
