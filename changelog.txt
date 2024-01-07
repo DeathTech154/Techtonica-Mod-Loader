@@ -1,3 +1,7 @@
+- v1.0.3.0 - 01/01/2024
+  Fixed:
+  - Crash that occurred after installing a dependant mod.
+
 - v1.0.2.0 - 05/11/2023
   Added:
   - Warning message when manually importing mods.
