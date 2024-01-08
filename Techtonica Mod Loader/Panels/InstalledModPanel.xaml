@@ -22,18 +22,18 @@
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition/>
-                <ColumnDefinition x:Name="updateColumn" Width="100"/>
-                <ColumnDefinition x:Name="donateColumn" Width="100"/>
-                <ColumnDefinition x:Name="configureColumn" Width="100"/>
-                <ColumnDefinition x:Name="viewModPageColumn" Width="100"/>
-                <ColumnDefinition Width="100"/>
+                <ColumnDefinition x:Name="updateColumn" Width="Auto"/>
+                <ColumnDefinition x:Name="donateColumn" Width="Auto"/>
+                <ColumnDefinition x:Name="configureColumn" Width="Auto"/>
+                <ColumnDefinition x:Name="viewModPageColumn" Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition x:Name="detailsRow" Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <TControls:TCheckBox x:Name="enabledBox" Width="30" Height="30"
+            <TControls:TCheckBox x:Name="enabledBox" Width="36" Height="36"
                                  IsCheckedChanged="EnabledToggled"/>
             <Image x:Name="icon" 
                    Width="36" Height="36"
@@ -44,16 +44,21 @@
                 <Run Text=" - "/>
                 <Run x:Name="modTaglineLabel" Text="Tagline"/>
             </TextBlock>
-            <TControls:TButton x:Name="updateButton" ButtonText="Update" Grid.Column="3" Margin="2" Height="30"
-                               LeftClicked="OnUpdateClicked"/>
-            <TControls:TButton x:Name="donateButton" ButtonText="Donate" Grid.Column="4" Margin="2" Height="30"
-                               LeftClicked="OnDonateClicked"/>
-            <TControls:TButton x:Name="configureButton" ButtonText="Configure" Grid.Column="5" Margin="2" Height="30"
-                               LeftClicked="OnConfigureClicked"/>
-            <TControls:TButton x:Name="viewModPageButton" ButtonText="View Mod Page" Grid.Column="6" Margin="2" Height="30"
-                               LeftClicked="ViewModPageClicked"/>
-            <TControls:TButton x:Name="deleteButton" ButtonText="Delete" Grid.Column="7" Margin="2" Height="30"
-                               LeftClicked="DeleteModClicked"/>
+            <TControls:SVGButton x:Name="updateButton" Source="Update" Tip="Updaet"
+                                 SVGMargin="3" Grid.Column="3" Margin="2" Width="36" Height="36"
+                                 LeftClicked="OnUpdateClicked"/>
+            <TControls:SVGButton x:Name="donateButton" Source="Donate" Tip="Donate"
+                                 SVGMargin="3" Grid.Column="4" Margin="2" Width="36" Height="36"
+                                 LeftClicked="OnDonateClicked"/>
+            <TControls:SVGButton x:Name="configureButton" Source="Configure" Tip="Configure"
+                                 SVGMargin="3" Grid.Column="5" Margin="2" Width="36" Height="36"
+                                 LeftClicked="OnConfigureClicked"/>
+            <TControls:SVGButton x:Name="viewModPageButton" Source="ViewModPage" Tip="View Mod Page"
+                                 SVGMargin="3" Grid.Column="6" Margin="2" Width="36" Height="36"
+                                 LeftClicked="OnViewModPageClicked"/>
+            <TControls:SVGButton x:Name="deleteButton" Source="Delete" Tip="Delete"
+                                 SVGMargin="3" Grid.Column="7" Margin="2" Width="36" Height="36"
+                                 LeftClicked="OnDeleteModClicked"/>
 
             <TControls:MarkdownViewer x:Name="markdownViewer" Grid.Row="1" Grid.ColumnSpan="100" Margin="2,0" Height="Auto" MaxHeight="0"/>
         </Grid>

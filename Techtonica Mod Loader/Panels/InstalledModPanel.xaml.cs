@@ -109,11 +109,11 @@ namespace Techtonica_Mod_Loader.Panels
             MainWindow.current.mainBorder.Child = new ModConfigPanel(config, mod.name);
         }
 
-        private void ViewModPageClicked(object sender, EventArgs e) {
+        private void OnViewModPageClicked(object sender, EventArgs e) {
             GuiUtils.OpenURL(ModManager.GetMod(modID).link);
         }
 
-        private void DeleteModClicked(object sender, EventArgs e) {
+        private void OnDeleteModClicked(object sender, EventArgs e) {
             if(GuiUtils.GetUserConfirmation("Delete Mod?", "Are you sure you want to delete this mod?")) {
                 Profile profile = ProfileManager.GetActiveProfile();
                 Mod mod = ModManager.GetMod(modID);
