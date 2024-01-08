@@ -287,6 +287,11 @@ namespace Techtonica_Mod_Loader.Classes
                     markdownFileLocation != "Not Found";
         }
 
+        public bool AppearsInSearch(string searchTerm) {
+            string searchableParts = $"{name}|{author}|{tagLine}|{description}";
+            return searchableParts.ToLower().Contains(searchTerm.ToLower());
+        }
+
         // Private Functions
 
         private bool CheckForZipFile() {

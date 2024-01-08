@@ -5,16 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Techtonica_Mod_Loader.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="40" d:DesignWidth="200">
+             d:DesignHeight="40" d:DesignWidth="200"
+             Loaded="OnThisControlLoaded">
     <Grid>
         <Border Background="{DynamicResource lightestBackgroundBrush}" BorderBrush="{DynamicResource yellowBrush}"
                 BorderThickness="1"/>
         <TextBox x:Name="inputBox" Foreground="White" CaretBrush="White"
                  Text="{Binding ElementName=thisControl, Path=Input, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                  FontSize="{Binding ElementName=thisControl, Path=FontSize, UpdateSourceTrigger=PropertyChanged}"
-                 Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center"
+                 Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Margin="5,0"
                  HorizontalContentAlignment="{Binding ElementName=thisControl, Path=InputAlignment, UpdateSourceTrigger=PropertyChanged}"
-                 PreviewKeyUp="OnInputBoxPreviewKeyUp" LostFocus="OnInputBoxLostFocus" Margin="5,0"/>
+                 PreviewKeyUp="OnInputBoxPreviewKeyUp" LostFocus="OnInputBoxLostFocus"
+                 TextChanged="OnInputBoxTextChanged"/>
         <TextBlock Text="{Binding ElementName=thisControl, Path=Hint, UpdateSourceTrigger=PropertyChanged}" 
                    FontSize="{Binding ElementName=thisControl, Path=FontSize, UpdateSourceTrigger=PropertyChanged}"
                    Foreground="Gray" IsHitTestVisible="False" VerticalAlignment="Center" Margin="5,0"
