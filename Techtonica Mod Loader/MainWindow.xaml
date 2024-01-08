@@ -71,7 +71,8 @@
                                         SelectedItemChanged="OnModsToShowChanged"/>
 
                         <!--Search-->
-                        <Controls:TTextBox Hint="Search..." Grid.Row="2" Height="34" Margin="65,0,8,0" Grid.Column="0"/>
+                        <Controls:TTextBox x:Name="searchBar" Hint="Search..." FontSize="14" Grid.Row="2" Height="34" Margin="65,0,8,0" Grid.Column="0"
+                                           InputChanged="OnSearchBarKeyPressed"/>
                         <TextBlock Text="Search: " Foreground="White" FontSize="16" Margin="5,0"
                                HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2"/>
                         <Controls:TComboBox x:Name="sortBox" 

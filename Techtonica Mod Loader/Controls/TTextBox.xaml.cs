@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Techtonica_Mod_Loader.Controls
 {
@@ -60,14 +62,28 @@ namespace Techtonica_Mod_Loader.Controls
 
         #endregion
 
+        // Objects & Variables
+
+        private DispatcherTimer textChangeTimer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(200) };
+
         // Custom Events
 
         public event EventHandler EnterPressed;
         public event EventHandler EscapePressed;
         public event EventHandler KeyPressed;
         public event EventHandler ChangesConfirmed;
+        public event EventHandler InputChanged;
 
         // Events
+
+        private void OnThisControlLoaded(object sender, RoutedEventArgs e) {
+            textChangeTimer.Tick += OnTextChangeTimerTick;
+        }
+
+        private void OnTextChangeTimerTick(object sender, EventArgs e) {
+            textChangeTimer.Stop();
+            InputChanged?.Invoke(this, EventArgs.Empty);
+        }
 
         private void OnInputBoxPreviewKeyUp(object sender, KeyEventArgs e) {
             switch (e.Key) {
@@ -90,6 +106,11 @@ namespace Techtonica_Mod_Loader.Controls
 
         private void OnInputBoxLostFocus(object sender, RoutedEventArgs e) {
             ChangesConfirmed?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void OnInputBoxTextChanged(object sender, TextChangedEventArgs e) {
+            textChangeTimer.Stop();
+            textChangeTimer.Start();
         }
     }
 }

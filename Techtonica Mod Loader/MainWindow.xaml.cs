@@ -169,6 +169,12 @@ namespace Techtonica_Mod_Loader
             CallUpdateWindow();
         }
 
+        private void OnSearchBarKeyPressed(object sender, EventArgs e) {
+            if(mainBorder.Child is ModListPanel panel) {
+                panel.SearchModsList(searchBar.Input);
+            }
+        }
+
         // Public Functions
 
         public void LoadDefaultModList() {
