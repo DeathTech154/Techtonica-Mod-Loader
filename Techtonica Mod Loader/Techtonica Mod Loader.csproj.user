@@ -16,6 +16,9 @@
     <Compile Update="Controls\MarkdownViewer.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Controls\SVGButton.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Controls\TButton.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -85,6 +88,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\MarkdownViewer.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\SVGButton.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\TButton.xaml">
