@@ -23,6 +23,7 @@ using Techtonica_Mod_Loader.Classes;
 using Techtonica_Mod_Loader.Panels;
 using System.Windows.Automation;
 using MyLogger;
+using System.Windows.Threading;
 
 namespace Techtonica_Mod_Loader
 {
@@ -37,6 +38,7 @@ namespace Techtonica_Mod_Loader
         // Objects & Variables
 
         public static MainWindow current => (MainWindow)Application.Current.MainWindow;
+        private DispatcherTimer processCheckTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(1) };
 
         // Events
 
@@ -83,6 +85,9 @@ namespace Techtonica_Mod_Loader
             
             CheckForUpdates();
 
+            processCheckTimer.Tick += OnProcessCheckTimerTick;
+            processCheckTimer.Start();
+
             if (!ProgramData.skipLoadingScreenDelay && ProgramData.isDebugBuild) {
                 await Task.Delay(3000); // Let users bask in the glory of the loading screen
             }
@@ -93,6 +98,18 @@ namespace Techtonica_Mod_Loader
 
         private void OnProgramClosing(object sender, CancelEventArgs e) {
             SaveData();
+        }
+
+        private void OnProcessCheckTimerTick(object sender, EventArgs e) {
+            Process[] techtonicaProcess = Process.GetProcessesByName("Techtonica");
+            if (techtonicaProcess.Length != 0) {
+                launchGameButton.IsEnabled = false;
+                launchGameButton.ButtonText = "Game Running";
+            }
+            else {
+                launchGameButton.IsEnabled = true;
+                launchGameButton.ButtonText = "Launch Game";
+            }
         }
 
         private void OnLaunchGameClicked(object sender, EventArgs e) {
