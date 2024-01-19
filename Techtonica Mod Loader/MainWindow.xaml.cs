@@ -113,6 +113,7 @@ namespace Techtonica_Mod_Loader
         }
 
         private void OnLaunchGameClicked(object sender, EventArgs e) {
+            SetHideGameManagerObject();
             Process.Start($"{ProgramData.Paths.gameFolder}/Techtonica.exe");
         }
 
@@ -257,6 +258,18 @@ namespace Techtonica_Mod_Loader
             mainBorder.Child = new SettingsPanel();
             mainBorder.SetValue(Grid.RowProperty, 0);
             mainBorder.SetValue(Grid.RowSpanProperty, 2);
+        }
+
+        private void SetHideGameManagerObject() {
+            string bepinexConfigPath = $"{ProgramData.Paths.bepInExConfigFolder}/BepInEx.cfg";
+            if(!File.Exists(bepinexConfigPath)) {
+                Log.Error("Could not find BepInEx config file.");
+                return;
+            }
+
+            string text = File.ReadAllText(bepinexConfigPath);
+            text = text.Replace("HideManagerGameObject = false", "HideManagerGameObject = true");
+            File.WriteAllText(bepinexConfigPath, text);
         }
     }
 }
