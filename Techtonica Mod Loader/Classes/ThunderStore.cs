@@ -85,7 +85,10 @@ namespace Techtonica_Mod_Loader.Classes
                 return new List<ThunderStoreMod>();
             }
 
-            return JsonConvert.DeserializeObject<List<ThunderStoreMod>>(json);
+            List<ThunderStoreMod> mods = JsonConvert.DeserializeObject<List<ThunderStoreMod>>(json);
+            List<ThunderStoreMod> depricatedMods = mods.Where(mod => mod.is_deprecated).ToList();
+            mods = mods.Where(mod => !mod.is_deprecated).ToList();
+            return mods;
         }
     }
 }

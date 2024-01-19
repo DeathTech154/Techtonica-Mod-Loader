@@ -44,7 +44,7 @@
                 <Run Text=" - "/>
                 <Run x:Name="modTaglineLabel" Text="Tagline"/>
             </TextBlock>
-            <TControls:SVGButton x:Name="updateButton" Source="Update" Tip="Updaet"
+            <TControls:SVGButton x:Name="updateButton" Source="Update" Tip="Update"
                                  SVGMargin="3" Grid.Column="3" Margin="2" Width="36" Height="36"
                                  LeftClicked="OnUpdateClicked"/>
             <TControls:SVGButton x:Name="donateButton" Source="Donate" Tip="Donate"
