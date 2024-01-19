@@ -1,3 +1,15 @@
+- v1.1.0.0 - 19/01/2024
+  New features:
+  - Blocked use if game folder is invalid
+  - Changed mod option buttons to icons
+  - Blocked launching if game is already running
+  - Search bar now works correctly
+  - HideGameManagerObject is now set to true whenever you click 'Launch Game'
+  - Deprecated mods are now highlighted in the installed list, and hidden in the online list.
+  Backend stuff:
+  - Switched to new version branch strategy
+  - Removed source from main branch
+
 - v1.0.3.0 - 01/01/2024
   Fixed:
   - Crash that occurred after installing a dependant mod.
