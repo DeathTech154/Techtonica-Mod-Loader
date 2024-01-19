@@ -23,6 +23,7 @@ using Techtonica_Mod_Loader.Classes;
 using Techtonica_Mod_Loader.Panels;
 using System.Windows.Automation;
 using MyLogger;
+using System.Windows.Threading;
 
 namespace Techtonica_Mod_Loader
 {
@@ -37,26 +38,34 @@ namespace Techtonica_Mod_Loader
         // Objects & Variables
 
         public static MainWindow current => (MainWindow)Application.Current.MainWindow;
+        private DispatcherTimer processCheckTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(1) };
 
         // Events
 
         private async void OnProgramLoaded(object sender, RoutedEventArgs e) {
+            loader.Visibility = Visibility.Visible;
+            mainGrid.Visibility = Visibility.Hidden;
+
             InitialiseLogger();
             FileStructureUtils.CreateFolderStructure();
             FileStructureUtils.GenerateSVGFiles();
 
+            bool foundGameFolder = true;
             await LoadData();
             if (string.IsNullOrEmpty(ProgramData.Paths.gameFolder)) {
                 if (!FileStructureUtils.FindGameFolder()) {
                     GuiUtils.ShowWarningMessage("Couldn't Find Game Folder", "Please go to the settings and set your game folder before installing mods or launching the game.");
                 }
+                else {
+                    foundGameFolder = true;
+                }
+            }
+            else {
+                foundGameFolder = true;
             }
 
             string version = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
             Title = "Techtonica Mod Loader v" + version;
-
-            loader.Visibility = Visibility.Visible;
-            mainGrid.Visibility = Visibility.Hidden;
 
             double widthDiff = Settings.userSettings.lastWidth - Width;
             Left -= widthDiff / 2.0;
@@ -66,10 +75,18 @@ namespace Techtonica_Mod_Loader
             
             Width = Settings.userSettings.lastWidth;
             Height = Settings.userSettings.lastHeight;
-            
+
             await ModManager.CheckForUpdates();
             InitialiseGUI();
+
+            if (!foundGameFolder) {
+                OpenSettingsWindow(); 
+            }
+            
             CheckForUpdates();
+
+            processCheckTimer.Tick += OnProcessCheckTimerTick;
+            processCheckTimer.Start();
 
             if (!ProgramData.skipLoadingScreenDelay && ProgramData.isDebugBuild) {
                 await Task.Delay(3000); // Let users bask in the glory of the loading screen
@@ -83,7 +100,20 @@ namespace Techtonica_Mod_Loader
             SaveData();
         }
 
+        private void OnProcessCheckTimerTick(object sender, EventArgs e) {
+            Process[] techtonicaProcess = Process.GetProcessesByName("Techtonica");
+            if (techtonicaProcess.Length != 0) {
+                launchGameButton.IsEnabled = false;
+                launchGameButton.ButtonText = "Game Running";
+            }
+            else {
+                launchGameButton.IsEnabled = true;
+                launchGameButton.ButtonText = "Launch Game";
+            }
+        }
+
         private void OnLaunchGameClicked(object sender, EventArgs e) {
+            SetHideGameManagerObject();
             Process.Start($"{ProgramData.Paths.gameFolder}/Techtonica.exe");
         }
 
@@ -118,7 +148,7 @@ namespace Techtonica_Mod_Loader
         }
 
         private void OnSettingsClicked(object sender, EventArgs e) {
-            mainBorder.Child = new SettingsPanel();
+            OpenSettingsWindow();
         }
 
         private void OnSelectedProfileChanged(object sender, EventArgs e) {
@@ -138,6 +168,12 @@ namespace Techtonica_Mod_Loader
 
         private void OnCheckForUpdatesClicked(object sender, RoutedEventArgs e) {
             CallUpdateWindow();
+        }
+
+        private void OnSearchBarKeyPressed(object sender, EventArgs e) {
+            if(mainBorder.Child is ModListPanel panel) {
+                panel.SearchModsList(searchBar.Input);
+            }
         }
 
         // Public Functions
@@ -216,6 +252,24 @@ namespace Techtonica_Mod_Loader
             sortBox.SetSelectedItem(StringUtils.GetModListSortOptionName(Settings.userSettings.defaultSort));
 
             LoadDefaultModList();
+        }
+
+        private void OpenSettingsWindow() {
+            mainBorder.Child = new SettingsPanel();
+            mainBorder.SetValue(Grid.RowProperty, 0);
+            mainBorder.SetValue(Grid.RowSpanProperty, 2);
+        }
+
+        private void SetHideGameManagerObject() {
+            string bepinexConfigPath = $"{ProgramData.Paths.bepInExConfigFolder}/BepInEx.cfg";
+            if(!File.Exists(bepinexConfigPath)) {
+                Log.Error("Could not find BepInEx config file.");
+                return;
+            }
+
+            string text = File.ReadAllText(bepinexConfigPath);
+            text = text.Replace("HideManagerGameObject = false", "HideManagerGameObject = true");
+            File.WriteAllText(bepinexConfigPath, text);
         }
     }
 }

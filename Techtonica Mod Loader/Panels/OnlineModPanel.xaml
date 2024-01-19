@@ -21,7 +21,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -35,8 +35,9 @@
                 <Run Text=" - "/>
                 <Run x:Name="modTaglineLabel" Text="Tagline"/>
             </TextBlock>
-            <TControls:TButton x:Name="downloadButton" ButtonText="Download" Grid.Column="3" Margin="2" Height="30"
-                               LeftClicked="OnDownloadClicked"/>
+            <TControls:SVGButton x:Name="downloadButton" Source="Download" Tip="Download"
+                                 SVGMargin="3" Margin="2" Grid.Column="3" Width="36" Height="36"
+                                 LeftClicked="OnDownloadClicked"/>
 
             <TControls:MarkdownViewer x:Name="markdownViewer" Grid.Row="1" Grid.ColumnSpan="100" Margin="2,0" Height="Auto" MaxHeight="0"/>
         </Grid>

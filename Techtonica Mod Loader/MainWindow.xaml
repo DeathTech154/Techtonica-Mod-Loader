@@ -35,7 +35,7 @@
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <Controls:TFancyButton ButtonText="Launch Game" Margin="10,0"
+                        <Controls:TFancyButton x:Name="launchGameButton" ButtonText="Launch Game" Margin="10,0"
                                                LeftClicked="OnLaunchGameClicked"/>
                         <Controls:TFancyButton ButtonText="Install From File" Grid.Row="1" Width="165" Height="40" 
                                                LeftClicked="OnInstallFromFileClicked"/>
@@ -71,7 +71,8 @@
                                         SelectedItemChanged="OnModsToShowChanged"/>
 
                         <!--Search-->
-                        <Controls:TTextBox Hint="Search..." Grid.Row="2" Height="34" Margin="65,0,8,0" Grid.Column="0"/>
+                        <Controls:TTextBox x:Name="searchBar" Hint="Search..." FontSize="14" Grid.Row="2" Height="34" Margin="65,0,8,0" Grid.Column="0"
+                                           InputChanged="OnSearchBarKeyPressed"/>
                         <TextBlock Text="Search: " Foreground="White" FontSize="16" Margin="5,0"
                                HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2"/>
                         <Controls:TComboBox x:Name="sortBox" 
@@ -84,14 +85,14 @@
             </Grid>
 
             <!--Mod List-->
-            <Border x:Name="mainBorder" Grid.Row="1" Margin="10,5,10,10"/>
+            <Border x:Name="mainBorder" Grid.Row="1"  Margin="10,5,10,10"/>
 
             <!--Shader-->
             <Rectangle x:Name="shader" Fill="Black" Opacity="0.7" Grid.RowSpan="2" Visibility="Hidden"/>
 
             <!--Downloading Blocker-->
             <Controls:DownloadingBlocker x:Name="downloadingGUI" Visibility="Hidden" Grid.RowSpan="2"/>
-
+            
         </Grid>
     </Grid>
     

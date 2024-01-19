@@ -109,11 +109,11 @@ namespace Techtonica_Mod_Loader.Panels
             MainWindow.current.mainBorder.Child = new ModConfigPanel(config, mod.name);
         }
 
-        private void ViewModPageClicked(object sender, EventArgs e) {
+        private void OnViewModPageClicked(object sender, EventArgs e) {
             GuiUtils.OpenURL(ModManager.GetMod(modID).link);
         }
 
-        private void DeleteModClicked(object sender, EventArgs e) {
+        private void OnDeleteModClicked(object sender, EventArgs e) {
             if(GuiUtils.GetUserConfirmation("Delete Mod?", "Are you sure you want to delete this mod?")) {
                 Profile profile = ProfileManager.GetActiveProfile();
                 Mod mod = ModManager.GetMod(modID);
@@ -137,7 +137,15 @@ namespace Techtonica_Mod_Loader.Panels
             enabledBox.IsChecked = ProfileManager.GetActiveProfile().IsModEnabled(modID);
             enabledBox.IsEditable = mod.canBeToggled;
             modNameLabel.Text = mod.name;
-            modTaglineLabel.Text = mod.tagLine;
+
+            if (mod.isDeprecated) {
+                modNameLabel.Foreground = Brushes.Red;
+                modTaglineLabel.Foreground = Brushes.Red;
+                modTaglineLabel.Text = "Depricated";
+            }
+            else {
+                modTaglineLabel.Text = mod.tagLine;
+            }
 
             string iconPath = string.IsNullOrEmpty(mod.iconLink) ? "pack://application:,,,/UnknownModIcon.png" : mod.iconLink;
             icon.Source = new BitmapImage(new Uri(iconPath));
