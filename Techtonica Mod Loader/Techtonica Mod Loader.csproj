@@ -5,7 +5,7 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <RootNamespace>Techtonica_Mod_Loader</RootNamespace>
     <UseWPF>true</UseWPF>
-    <Version>1.1.0.0</Version>
+    <Version>1.2.0.0</Version>
     <Company>DeeTeeNetwork</Company>
     <Authors>DeathTech</Authors>
     <Description>A mod loader for the game Techtonica made by DeathTech and the modding team.</Description>
@@ -13,8 +13,8 @@
     <PackageProjectUrl>https://github.com/DeathTech154/Techtonica-Mod-Loader</PackageProjectUrl>
     <RepositoryUrl>https://github.com/DeathTech154/Techtonica-Mod-Loader</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
-    <AssemblyVersion>1.1.0.0</AssemblyVersion>
-    <FileVersion>1.1.0.0</FileVersion>
+    <AssemblyVersion>1.2.0.0</AssemblyVersion>
+    <FileVersion>1.2.0.0</FileVersion>
     <ApplicationIcon>TML Logo.ico</ApplicationIcon>
   </PropertyGroup>
 
