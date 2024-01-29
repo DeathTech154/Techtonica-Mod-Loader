@@ -213,8 +213,12 @@ namespace Techtonica_Mod_Loader.Classes
 
                 string pluginsFolder = $"{ProgramData.Paths.unzipFolder}/plugins";
                 string patchersFolder = $"{ProgramData.Paths.unzipFolder}/patchers";
+                string dataFolder = $"{ProgramData.Paths.unzipFolder}/Techtonica_Data";
+                string rootFolder = $"{ProgramData.Paths.unzipFolder}/Techtonica";
                 bool hasPluginFiles = Directory.Exists(pluginsFolder);
                 bool hasPatcherFiles = Directory.Exists(patchersFolder);
+                bool hasDataFiles = Directory.Exists(dataFolder);
+                bool hasRootFiles = Directory.Exists(rootFolder);
 
                 if (hasPluginFiles) {
                     string targetFolder = $"{ProgramData.Paths.bepInExPluginsFolder}\\{name}";
@@ -228,7 +232,17 @@ namespace Techtonica_Mod_Loader.Classes
                     InstallFiles(dllFiles, ProgramData.Paths.bepInExPatchersFolder);
                 }
 
-                if (!hasPluginFiles && !hasPatcherFiles){
+                if (hasDataFiles) {
+                    List<string> dataFiles = Directory.GetFiles(dataFolder).ToList();
+                    InstallFiles(dataFiles, ProgramData.Paths.gameDataFolder);
+                }
+
+                if (hasRootFiles) {
+                    List<string> rootFiles = Directory.GetFiles(rootFolder).ToList();
+                    InstallFiles(rootFiles, ProgramData.Paths.gameFolder);
+                }
+
+                if (!hasPluginFiles && !hasPatcherFiles && !hasDataFiles && !hasRootFiles){
                     List<string> dllFiles = FileStructureUtils.SearchForDllFiles(ProgramData.Paths.unzipFolder);
                     InstallFiles(dllFiles, ProgramData.Paths.bepInExPluginsFolder);
                 }

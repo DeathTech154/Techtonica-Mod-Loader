@@ -70,6 +70,7 @@ namespace Techtonica_Mod_Loader
             };
             
             public static string gameFolder => Settings.userSettings.gameFolder;
+            public static string gameDataFolder = $"{gameFolder}/Techtonica_Data";
             public static string bepInExConfigFolder => $"{gameFolder}/BepInEx/config";
             public static string bepInExPatchersFolder => $"{gameFolder}/BepInEx/patchers";
             public static string bepInExPluginsFolder => $"{gameFolder}/BepInEx/plugins";
